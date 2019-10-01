@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  node:
+    image: node:10.16-slim
+    container_name: "node-container"
+    working_dir: "/home/node/app"
+    volumes:
+      - ./:/home/node/app
+    ports: 
+      - "3000:3000"
+    command: "npm run nodemon"

@@ -1,0 +1,31 @@
+{
+  "name": "zombie-survival-social-network",
+  "version": "0.0.1",
+  "description": "API Zombie Survival Social Network",
+  "main": "index.js",
+  "scripts": {
+    "test": "tests",
+    "nodemon": "nodemon src/app/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nelsondiaas/zombie-survival-social-network.git"
+  },
+  "author": "Nelson Dias",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nelsondiaas/zombie-survival-social-network/issues"
+  },
+  "homepage": "https://github.com/nelsondiaas/zombie-survival-social-network#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "sequelize": "^5.19.1",
+    "sequelize-cli": "^5.5.1",
+    "sqlite3": "^4.1.0"
+  },
+  "devDependencies": {
+    "dotenv": "^8.1.0",
+    "nodemon": "^1.19.3"
+  }
+}
