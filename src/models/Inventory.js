@@ -3,7 +3,7 @@ const db = require('../service/sqlite3.service');
 
 const model = {
 
-    id: {
+    inventory_id: {
         type: Sequelize.INTEGER(10),
         allowNull: false,
         autoIncrement: true,
@@ -32,7 +32,6 @@ const model = {
 
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
-
 }
 
 const Inventory = db.define('inventory', model);

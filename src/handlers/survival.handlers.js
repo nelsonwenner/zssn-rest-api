@@ -10,8 +10,8 @@ const create = async (request, response) => {
         const inventory = await inventoryRepository.create();
         const survival = await survivalRepository.create(survivalData);
 
-        survival.id = inventory.id;
-
+        survival.inventory_id = inventory.inventory_id;
+        
         await survival.save();
 
         return response.status(201).json({survival, inventory});
@@ -23,7 +23,6 @@ const create = async (request, response) => {
                 return response.status(401).json({error: error.message });
         }
     }
-
 }
 
 const listAll = async (request, response) => {
@@ -40,7 +39,6 @@ const listAll = async (request, response) => {
                 return response.status(401).json({error: error.message });
         }
     }
-
 }
 
 module.exports = { create, listAll };

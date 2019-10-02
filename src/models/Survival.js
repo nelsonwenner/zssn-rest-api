@@ -4,11 +4,20 @@ const Inventory = require('./Inventory');
 
 const model = {
     
-    id: {
+    survival_id: {
         type: Sequelize.INTEGER(10),
         allowNull: false,
         autoIncrement: true,
         primaryKey: true 
+    },
+
+    inventory_id: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: 'inventory',
+            key: 'inventory_id',
+            onDelete: 'cascade'
+        }
     },
 
     name: {
@@ -39,6 +48,6 @@ const model = {
 const Survival = db.define('survival', model);
 
 /* Relations 1:1 */
-Survival.hasOne(Inventory, {as: 'Inventory', foreignKey: 'id', onDelete: 'cascade'});
+Survival.hasOne(Inventory, {as: 'Inventory', foreignKey: 'inventory_id', onDelete: 'cascade'});
 
 module.exports = Survival;
