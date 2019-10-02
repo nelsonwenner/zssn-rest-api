@@ -10,7 +10,7 @@ const create = async (request, response) => {
         const inventory = await inventoryRepository.create();
         const survival = await survivalRepository.create(survivalData);
 
-        survival.inventory_id = inventory.id;
+        survival.id = inventory.id;
 
         await survival.save();
 
