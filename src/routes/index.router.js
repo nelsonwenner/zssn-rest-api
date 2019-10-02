@@ -1,7 +1,7 @@
-const tests = require('./tests.router');
+const survival = require('./survival.router');
 
 module.exports = [
 
-    tests
+    survival,
 
 ];

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../service/sqlite3.service');
-const Inventory = require('./ Inventory');
+const Inventory = require('./Inventory');
 
 const model = {
     
@@ -38,7 +38,7 @@ const model = {
 
 const Survival = db.define('survival', model);
 
-// Relations 1:1
-Survival.hasOne(Inventory);
+/* Relations 1:1 */
+Survival.hasOne(Inventory, {foreignKey: "inventory_id", onDelete: 'cascade'});
 
 module.exports = Survival;
