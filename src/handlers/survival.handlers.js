@@ -11,11 +11,31 @@ const create = async (request, response) => {
         const survival = await survivalRepository.create(survivalData);
 
         survival.inventory_id = inventory.inventory_id;
-        
+
         await survival.save();
 
         return response.status(201).json({survival, inventory});
 
+    } catch (error) {
+        switch (error.message) {
+            case error.message:
+                console.log(error.message);
+                return response.status(401).json({error: error.message });
+        }
+    }
+}
+
+const updatePlace = async (request, response) => {
+
+    try {
+        
+        const { id } = request.params;
+        const data = request.body;
+
+        const updated = await survivalRepository.update(id, data, true);
+
+        return response.status(200).json({updated});
+        
     } catch (error) {
         switch (error.message) {
             case error.message:
@@ -41,4 +61,4 @@ const listAll = async (request, response) => {
     }
 }
 
-module.exports = { create, listAll };
+module.exports = { create, listAll, updatePlace };

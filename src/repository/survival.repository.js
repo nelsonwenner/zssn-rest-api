@@ -12,4 +12,30 @@ const listAll = async () => {
     return await survivalModel.findAll({attributes: attributesSurvival ,include: [{as: 'Inventory', model: inventoryModel, attributes: attributesInventory}]});
 }
 
-module.exports = { create, listAll };
+const update = async (id, data, flag) => {
+    const dataModel = await survivalModel.findOne({where: {survival_id: id}});
+
+    let keys = Object.keys(data);
+
+    let oldPlace = {'latitude': null, 'longitude': null};
+
+    keys.forEach(item => {
+
+        if (flag && item == 'latitude' || item == 'longitude') {
+
+            if (item == 'latitude') oldPlace[item] = dataModel[item];
+            if (item == 'longitude') oldPlace[item] = dataModel[item];
+
+            dataModel[item] = data[item];
+            
+        }
+
+        dataModel[item] = data[item];
+    });
+
+    if (flag) dataModel['lastPlace'] = `latitude: ${oldPlace['latitude']}, longitude: ${oldPlace['longitude']}`;
+
+    return await dataModel.save();
+}
+
+module.exports = { create, listAll, update };
