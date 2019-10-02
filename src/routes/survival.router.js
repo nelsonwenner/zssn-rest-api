@@ -6,6 +6,6 @@ module.exports = [
 
     router.post('/api/v1/survival', survivalHandlers.create),
     router.get('/api/v1/survival', survivalHandlers.listAll),
-    router.put('/api/v1/survival/:id', midlleware.validatorUpdatePlace, survivalHandlers.updatePlace)
+    router.put('/api/v1/survival/:id', midlleware.validatorUpdatePlace, survivalHandlers.updateLocation)
 
 ];

@@ -1,7 +1,7 @@
 const inventoryModel = require('../models/Inventory');
 
-const create = async () => {
-    const invetory = new inventoryModel();
+const create = async (data) => {
+    const invetory = new inventoryModel(data);
     return await invetory.save();
 }
 

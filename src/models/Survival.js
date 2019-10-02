@@ -20,6 +20,11 @@ const model = {
         }
     },
 
+    isInfected: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+    },
+
     name: {
         type: Sequelize.STRING(30),
         allowNull: false

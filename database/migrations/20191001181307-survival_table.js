@@ -20,6 +20,11 @@ module.exports = {
                     onDelete: 'CASCADE'
                 }
         },
+
+        isInfected: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false
+        },
         
         name: {
             type: Sequelize.STRING(30),

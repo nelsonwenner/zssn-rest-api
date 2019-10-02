@@ -5,16 +5,18 @@ const create = async (request, response) => {
     
     try {
         
-        const survivalData = request.body;
+        const { name, age, sex, latitude, longitude, inventory } = request.body;
+        
+        const inventoryModel = await inventoryRepository.create(inventory);
+        const survivalModel = await survivalRepository.create(
+        {"name": name, "age": age, "sex": sex, "latitude": latitude, "longitude": longitude}
+        );
 
-        const inventory = await inventoryRepository.create();
-        const survival = await survivalRepository.create(survivalData);
+        survivalModel.inventory_id = inventoryModel.inventory_id;
 
-        survival.inventory_id = inventory.inventory_id;
+        await survivalModel.save();
 
-        await survival.save();
-
-        return response.status(201).json({survival, inventory});
+        return response.status(201).json({survivalModel, inventoryModel});
 
     } catch (error) {
         switch (error.message) {
@@ -25,7 +27,7 @@ const create = async (request, response) => {
     }
 }
 
-const updatePlace = async (request, response) => {
+const updateLocation = async (request, response) => {
 
     try {
         
@@ -61,4 +63,4 @@ const listAll = async (request, response) => {
     }
 }
 
-module.exports = { create, listAll, updatePlace };
+module.exports = { create, listAll, updateLocation };
