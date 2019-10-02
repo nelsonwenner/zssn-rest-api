@@ -39,6 +39,6 @@ const model = {
 const Survival = db.define('survival', model);
 
 /* Relations 1:1 */
-Survival.hasOne(Inventory, {foreignKey: "inventory_id", onDelete: 'cascade'});
+Survival.hasOne(Inventory, {as: 'Inventory', foreignKey: 'id', onDelete: 'cascade'});
 
 module.exports = Survival;
