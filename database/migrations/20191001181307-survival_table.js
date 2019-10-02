@@ -28,17 +28,27 @@ module.exports = {
     
         age: {
             type: Sequelize.INTEGER(2),
-            allowNull: false,
+            allowNull: false
         },
     
         sex: {
             type: Sequelize.STRING(9),
-            allowNull: false,
+            allowNull: false
+        },
+    
+        latitude: {
+            type: Sequelize.STRING(10),
+            allowNull: false
+        },
+    
+        longitude: {
+            type: Sequelize.STRING(10),
+            allowNull: false
         },
     
         lastPlace: {
-            type: Sequelize.STRING(100),
-            allowNull: false,
+            type: Sequelize.STRING(50),
+            defaultValue: 'latitude: 0, longitude: 0'
         },
     
         createdAt: Sequelize.DATE,
