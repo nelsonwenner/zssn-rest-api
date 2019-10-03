@@ -13,7 +13,7 @@ const listAll = async () => {
 }
 
 const update = async (id, data, flag) => {
-    const dataModel = await survivalModel.findOne({where: {survival_id: id}});
+    const dataModel = await survivalModel.findOne({where: {survival_id: id}, include: [{as: 'Inventory', model: inventoryModel}]});
 
     let keys = Object.keys(data);
 
@@ -38,4 +38,9 @@ const update = async (id, data, flag) => {
     return await dataModel.save();
 }
 
-module.exports = { create, listAll, update };
+const getInstance = async (id) => {
+    const attributesInventory = ['water', 'food', 'medication', 'ammunition']
+    return await survivalModel.findOne({where: {survival_id: id}, include: [{as: 'Inventory', model: inventoryModel, attributes: attributesInventory}]});
+}
+
+module.exports = { create, listAll, update, getInstance };

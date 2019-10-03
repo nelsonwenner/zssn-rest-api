@@ -9,7 +9,7 @@ const validatorUpdatePlace = async (request, response, next) => {
     if (latitude && longitude != 'undefined' && latitude && longitude != '' && keys.length == 2) {
 
         next();
-
+        
     } else {
 
         return response.status(400).json({"erros": errorTypes.ERROR_VALIDATOR_UPDATE_PLACE });

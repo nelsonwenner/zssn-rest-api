@@ -63,4 +63,20 @@ const listAll = async (request, response) => {
     }
 }
 
-module.exports = { create, listAll, updateLocation };
+const trade = async (request, response) => {
+
+    try {
+
+        const data = request.body;
+        console.log("\n\nTESTS: ", data); // Continuar
+        
+    } catch (error) {
+        switch (error.message) {
+            case error.message:
+                console.log(error.message);
+                return response.status(401).json({error: error.message });
+        }
+    }
+}
+
+module.exports = { create, listAll, updateLocation, trade };

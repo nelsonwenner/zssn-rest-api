@@ -53,7 +53,7 @@ module.exports = {
     
         lastPlace: {
             type: Sequelize.STRING(50),
-            defaultValue: 'latitude: 0, longitude: 0'
+            defaultValue: 'latitude: null, longitude: null'
         },
     
         createdAt: Sequelize.DATE,
