@@ -9,8 +9,7 @@ const create = async (request, response) => {
         
         const inventoryModel = await inventoryRepository.create(inventory);
         const survivalModel = await survivalRepository.create(
-        {"name": name, "age": age, "sex": sex, "latitude": latitude, "longitude": longitude}
-        );
+        {"name": name, "age": age, "sex": sex, "latitude": latitude, "longitude": longitude});
 
         survivalModel.inventory_id = inventoryModel.inventory_id;
 

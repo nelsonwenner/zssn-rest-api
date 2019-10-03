@@ -4,7 +4,8 @@ const { getPoints, verifyValuesInventory } = require('../repository/inventory.re
 const { 
     ERROR_SURVIVAL_INFECTED,
     ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S1,
-    ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S2
+    ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S2,
+    ERROR_ATTRIBUTS_INVALID
 } = require('../utils/errorTypes');
 
 const validatorTrade = async (request, response, next) => {
@@ -13,6 +14,10 @@ const validatorTrade = async (request, response, next) => {
         
         const dataBody = request.body;
 
+        if (!verifyParams(dataBody)){
+            throw new Error(ERROR_ATTRIBUTS_INVALID);
+        } 
+        
         const { survival01_id, survival02_id } = request.params;
             
         const survival01 = await survivalRepository.getInstance(survival01_id);
@@ -60,10 +65,23 @@ const validatorTrade = async (request, response, next) => {
                 return response.status(400).json({error: ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S1});
             case ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S2:
                 return response.status(400).json({error: ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S2});
+            case ERROR_ATTRIBUTS_INVALID:
+                return response.status(400).json({error: ERROR_ATTRIBUTS_INVALID});
             case error.message:
                 return response.status(401).json({error: error.message }); // Remover quando finalizar o projeto
         }
     }
+}
+
+const verifyParams = (payload) => {
+    const keysBody = Object.keys(payload);
+    const keysAuthorized = {'water': 'water', 'food': 'food', 'medication': 'medication', 'ammunition': 'ammunition'};
+    let verify = [];
+    keysBody.forEach((key) => {
+        if (key == keysAuthorized[key]) verify.push(true);
+    });
+    if (verify.length == keysBody.length) return true;
+    return false;
 }
 
 module.exports = { validatorTrade };
