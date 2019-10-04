@@ -29,14 +29,14 @@ const validatorTrade = async (request, response, next) => {
             
             let payload =  {
                 "survival01": [{
-                    "intance": survival01,
+                    "instance": survival01,
                     "qntPointsBodyResquest": getPoints(dataBody)
                 }],
                 "survival02": [{
-                    "intance": survival02,
+                    "instance": survival02,
                     "qntPoints": getPoints(survival02.dataValues.Inventory.dataValues)
                 }], 
-                "keysDataBody": Object.keys(dataBody),   
+                "keysDataBody": Object.keys(dataBody),
             }
 
             if (verifyValuesInventory(dataBody, survival01.dataValues.Inventory.dataValues)) {

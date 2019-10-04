@@ -66,16 +66,62 @@ const trade = async (request, response) => {
 
     try {
 
-        const data = request.body;
-        console.log("\n\nTESTS: ", data); // Continuar
+        console.log("entrou");
+        const itensPoints = ["water", "food", "medication", "ammunition"];
+
+        const { survival01, survival02 } = request.body;
+
+        let qntPointsBodyResquest = survival01[0].qntPointsBodyResquest;
+        let inventary02 = survival02[0].instance.dataValues.Inventory.dataValues;
+        
+        let status = true;
+        let values = 0;
+        
+        while (status) {
+
+            let key = itensPoints[randomForInterval(0, 3)];
+            let qntItem = inventary02[key];
+            
+            if (values == qntPointsBodyResquest) status = false;
+
+            else if (key == 'water' && qntItem != 0) {
+                // remover 1 item 
+                values += 4;
+            }
+
+            else if (key == 'food' && qntItem != 0) {
+                // remover 1 item 
+                values += 3;
+            }
+
+            else if (key == 'medication' && qntItem != 0) {
+                // remover 1 item 
+                values += 2;
+            }
+
+            else if (key == 'ammunition' && qntItem != 0) {
+                // remover 1 item 
+                values += 1;
+            }
+        
+        }
+
+        //console.log(`\nKey: ${key}\nValor: ${qntItem}`);
+        console.log(`\nqntPointsBodyResquest: ${qntPointsBodyResquest}\nqntPointSurvival2: ${values}`);
+        
+
+        //console.log("\n\nTESTS: ", survival02[0].instance.dataValues.Inventory.dataValues); 
         
     } catch (error) {
         switch (error.message) {
             case error.message:
-                console.log(error.message);
                 return response.status(401).json({error: error.message });
         }
     }
+}
+
+randomForInterval = (min, max) => {
+    return Math.floor(Math.random() * (max - min) + min);
 }
 
 module.exports = { create, listAll, updateLocation, trade };
