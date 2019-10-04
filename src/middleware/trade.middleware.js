@@ -1,5 +1,7 @@
 const survivalRepository = require('../repository/survival.repository');
 const { getPoints, verifyValuesInventory } = require('../repository/inventory.repository');
+const { verifyParams } = require('../validator/inventory.validator');
+const { INVENTORY_ATTRIBUTES } = require('../utils/attributes');
 
 const { 
     ERROR_SURVIVAL_INFECTED,
@@ -13,8 +15,8 @@ const validatorTrade = async (request, response, next) => {
     try {
         
         const dataBody = request.body;
-
-        if (!verifyParams(dataBody)){
+        
+        if (!verifyParams(dataBody, INVENTORY_ATTRIBUTES)){
             throw new Error(ERROR_ATTRIBUTS_INVALID);
         } 
         
@@ -71,17 +73,6 @@ const validatorTrade = async (request, response, next) => {
                 return response.status(401).json({error: error.message }); // Remover quando finalizar o projeto
         }
     }
-}
-
-const verifyParams = (payload) => {
-    const keysBody = Object.keys(payload);
-    const keysAuthorized = {'water': 'water', 'food': 'food', 'medication': 'medication', 'ammunition': 'ammunition'};
-    let verify = [];
-    keysBody.forEach((key) => {
-        if (key == keysAuthorized[key]) verify.push(true);
-    });
-    if (verify.length == keysBody.length) return true;
-    return false;
 }
 
 module.exports = { validatorTrade };

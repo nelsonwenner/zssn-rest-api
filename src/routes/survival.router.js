@@ -1,7 +1,7 @@
 const router = require('./config.router');
 const survivalHandlers = require('../handlers/survival.handlers');
-const middlewareSurvival = require('../validator/survival.middleware');
-const middlewareTrade = require('../validator/trade.middleware');
+const middlewareSurvival = require('../middleware/survival.middleware');
+const middlewareTrade = require('../middleware/trade.middleware');
 
 module.exports = [
 
