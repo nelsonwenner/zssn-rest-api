@@ -2,11 +2,15 @@ const errorTypes = require('../utils/errorTypes');
 
 const validatorUpdatePlace = async (request, response, next) => {
     
-    const { latitude, longitude } = request.body; 
+    const { survivalId , latitude, longitude } = request.body; 
     
     let keys = Object.keys(request.body);
 
-    if (latitude && longitude != 'undefined' && latitude && longitude != '' && keys.length == 2) {
+    if (latitude && longitude != 'undefined' && 
+        latitude && longitude != ''          && 
+        survivalId != 'undefined'            &&
+        survivalId != ''                     &&
+        keys.length == 3) {
 
         next();
         

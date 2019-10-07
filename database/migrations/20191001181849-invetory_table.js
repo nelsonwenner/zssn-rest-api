@@ -5,12 +5,23 @@ module.exports = {
     
       const promesse =  queryInterface.createTable('inventory', { 
 
-        inventory_id: {
-            type: Sequelize.INTEGER(10),
+        inventoryId: {
+            type: Sequelize.INTEGER,
             allowNull: false,
             autoIncrement: true,
             primaryKey: true 
         },
+        
+        /*
+        survivalId: {
+            type: Sequelize.INTEGER,
+            references: {
+                model: 'survival',
+                key: 'survivalId',
+                onDelete: 'CASCADE'
+            }
+        },
+        */
     
         water: {
             type: Sequelize.INTEGER(),
@@ -31,7 +42,7 @@ module.exports = {
             type: Sequelize.INTEGER(),
             defaultValue: 0
         },
-    
+        
         createdAt: Sequelize.DATE,
         updatedAt: Sequelize.DATE
 

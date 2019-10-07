@@ -1,25 +1,35 @@
 const Sequelize = require('sequelize');
 const db = require('../service/sqlite3.service');
 const Inventory = require('./Inventory');
+const Location = require('./Location');
 
 const model = {
     
-    survival_id: {
-        type: Sequelize.INTEGER(10),
+    survivalId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true 
     },
-
-    inventory_id: {
+    /*
+    inventoryId: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'inventory',
-            key: 'inventory_id',
+            model: 'Inventory',
+            key:  {allowNull: false},
             onDelete: 'cascade'
         }
     },
 
+    locationId: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: 'Location',
+            key: {allowNull: false},
+            onDelete: 'cascade'
+        }
+    },
+    */
     isInfected: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
@@ -40,21 +50,6 @@ const model = {
         allowNull: false
     },
 
-    latitude: {
-        type: Sequelize.STRING(10),
-        allowNull: false
-    },
-
-    longitude: {
-        type: Sequelize.STRING(10),
-        allowNull: false
-    },
-
-    lastPlace: {
-        type: Sequelize.STRING(50),
-        defaultValue: 'latitude: null, longitude: null'
-    },
-
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
 
@@ -63,6 +58,9 @@ const model = {
 const Survival = db.define('survival', model);
 
 /* Relations 1:1 */
-Survival.hasOne(Inventory, {as: 'Inventory', foreignKey: 'inventory_id', onDelete: 'cascade'});
+Survival.hasOne(Inventory, {as: 'inventory', foreignKey: 'InventoryId', onDelete: 'cascade'});
+
+/* Relations 1:1 */
+Survival.hasOne(Location, {as: 'lastLocation', foreignKey: 'LocationId', onDelete: 'cascade'});
 
 module.exports = Survival;
