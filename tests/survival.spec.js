@@ -4,49 +4,55 @@ const expect = require('chai').expect;
 const survivalModel = require('../src/models/Survival');
 const should = chai.should();
 
-
 chai.use(chaiHttp);
 
 describe('\n\nTesting ZSNN', () => {
     
-    const remove = async (id) => {
-        return await survivalModel.destroy({where: {survivalId: id}, force: true})
-    }
-    
     it('Create survival', (done) => {
-      
+
         const payload = {
-            "name": "felipe",
-            "age": 19,
+            "name": "nelson",
+            "age": 27,
             "sex": "masculino",
             "inventory": {
-                "water": 6,
-                "medication": 8,
-                "food": 6
+                "water": 2,
+                "food": 1,
+                "medication": 2,
+                "ammunition": 1
             },
             "lastLocation": {
-                "latitude": 666.78888958,
-                "longitude": -111.18975632
+                "latitude": 100.6546578,
+                "longitude": -55.4213957
             }
         }
-        /*
+        
         chai.request('http://localhost:3000')
         .post('/api/v1/survivals/')
         .send(payload)
         .end((error, response) => {
 
-            remove(response.body.survivalModel.survivalId);
             response.should.have.status(201);
             done();
-           
         });
-        */
-
-       remove(1);
-        
     });
-    
 
+    it('Update position', (done) => {
+
+        const payload = {
+            "survivalId": 1,
+            "latitude": -222.2569874,
+            "longitude": 111.5698745
+        }
+
+        chai.request('http://localhost:3000')
+        .put('/api/v1/locations/')
+        .send(payload)
+        .end((error, response) => {
+
+            response.should.have.status(200);
+            done();
+        });
+    });
 });
 
 

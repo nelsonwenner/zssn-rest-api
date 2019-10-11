@@ -8,7 +8,6 @@ const create = async (survivalData) => {
 }
 
 const listAll = async () => {
-    
     const attributesLocation = ['latitude', 'longitude']
     const attributesSurvival = ['survivalId', 'isInfected', 'name', 'age', 'sex']
     const attributesInventory = ['water', 'food', 'medication', 'ammunition']
@@ -18,8 +17,7 @@ const listAll = async () => {
 }
 
 const getInstance = async (id) => {
-    const attributesInventory = ['water', 'food', 'medication', 'ammunition']
-    return await survivalModel.findOne({where: {survival_id: id}, include: [{as: 'Inventory', model: inventoryModel, attributes: attributesInventory}]});
+    return await survivalModel.findOne({where: {survivalId: id}});
 }
 
 module.exports = { create, listAll, getInstance };

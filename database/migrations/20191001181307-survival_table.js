@@ -36,6 +36,11 @@ module.exports = {
             type: Sequelize.BOOLEAN,
             defaultValue: false
         },
+
+        reportsCount: {
+            type: Sequelize.INTEGER,
+            defaultValue: 0,
+        },
     
         name: {
             type: Sequelize.STRING(30),

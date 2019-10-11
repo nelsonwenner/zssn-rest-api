@@ -7,10 +7,12 @@ const create = async (data) => {
 }
 
 const update = async (id, data) => {
-    let dataModel = await locationModel.findOne({where: {locationId: id}, include: [{as: 'survival', model: survivalModel}]});
-    dataModel.latitude = data.latitude;
-    dataModel.longitude = data.longitude;
-    return await dataModel.save();
+    const dataSurvival = await survivalModel.findOne(
+    {where: {survivalId: id}, include: [{as: 'lastLocation', model: locationModel}]});
+    const { lastLocation } = dataSurvival.dataValues;
+    lastLocation.latitude = data.latitude;
+    lastLocation.longitude = data.longitude;
+    return await lastLocation.save();
 }
 
 module.exports = { create, update };

@@ -11,7 +11,7 @@ const model = {
         autoIncrement: true,
         primaryKey: true 
     },
-    /*
+    
     inventoryId: {
         type: Sequelize.INTEGER,
         references: {
@@ -31,10 +31,15 @@ const model = {
             onDelete: 'set null'
         }
     },
-    */
+    
     isInfected: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
+    },
+
+    reportsCount: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
     },
 
     name: {
