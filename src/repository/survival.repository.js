@@ -8,6 +8,7 @@ const create = async (survivalData) => {
 }
 
 const listAll = async () => {
+    
     const attributesLocation = ['latitude', 'longitude']
     const attributesSurvival = ['survivalId', 'isInfected', 'name', 'age', 'sex']
     const attributesInventory = ['water', 'food', 'medication', 'ammunition']

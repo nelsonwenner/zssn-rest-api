@@ -16,8 +16,9 @@ const model = {
         type: Sequelize.INTEGER,
         references: {
             model: 'Inventory',
-            key:  {allowNull: false},
-            onDelete: 'cascade'
+            key:  'inventoryId',
+            as: 'inventory',
+            onDelete: 'set null'
         }
     },
 
@@ -25,8 +26,9 @@ const model = {
         type: Sequelize.INTEGER,
         references: {
             model: 'Location',
-            key: {allowNull: false},
-            onDelete: 'cascade'
+            key: 'locationId',
+            as: 'lastLocation',
+            onDelete: 'set null'
         }
     },
     */
@@ -58,9 +60,9 @@ const model = {
 const Survival = db.define('survival', model);
 
 /* Relations 1:1 */
-Survival.hasOne(Inventory, {as: 'inventory', foreignKey: 'InventoryId', onDelete: 'cascade'});
+Survival.hasOne(Inventory, {as: 'inventory', foreignKey: 'inventoryId', onDelete: 'set null'});
 
 /* Relations 1:1 */
-Survival.hasOne(Location, {as: 'lastLocation', foreignKey: 'LocationId', onDelete: 'cascade'});
+Survival.hasOne(Location, {as: 'lastLocation', foreignKey: 'locationId', onDelete: 'set null'});
 
 module.exports = Survival;

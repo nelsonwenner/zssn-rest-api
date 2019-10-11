@@ -11,18 +11,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true 
       },
-
-      /*
-      survivalId: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: 'survival',
-            key: 'survivalId',
-            onDelete: 'CASCADE'
-        }
-      },
-      */
-
+      
       latitude: {
         type: Sequelize.DOUBLE,
         allowNull: true,

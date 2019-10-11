@@ -11,27 +11,27 @@ module.exports = {
             autoIncrement: true,
             primaryKey: true 
         },
-        /*
+        
         inventoryId: {
             type: Sequelize.INTEGER,
-            onDelete: 'cascade',
             references: {
                 model: 'Inventory',
-                key: 'InventoryId',
+                key: 'inventoryId',
                 as: 'inventory',
+                onDelete: 'set null'
             }
         },
     
         locationId: {
             type: Sequelize.INTEGER,
-            onDelete: 'cascade',
             references: {
                 model: 'Location',
-                key: 'LocationId',
+                key: 'locationId',
                 as: 'lastLocation',
+                onDelete: 'set null'
             }
         },
-        */
+        
         isInfected: {
             type: Sequelize.BOOLEAN,
             defaultValue: false

@@ -12,17 +12,6 @@ module.exports = {
             primaryKey: true 
         },
         
-        /*
-        survivalId: {
-            type: Sequelize.INTEGER,
-            references: {
-                model: 'survival',
-                key: 'survivalId',
-                onDelete: 'CASCADE'
-            }
-        },
-        */
-    
         water: {
             type: Sequelize.INTEGER(),
             defaultValue: 0
