@@ -6,7 +6,8 @@ const {
     ERROR_ATTRIBUTS_INVALID,
     ERROR_SURVIVORS_NOT_EXISTS,
     ERROR_ATTRIBUTES_EMPTY,
-    ERROR_SURVIVOR_REPORT
+    ERROR_SURVIVOR_REPORT,
+    ERROR_SURVIVAL_INFECTED
 } = require('../utils/errorTypes');
 
 const validatorReport = async (request, response, next) => {
@@ -39,6 +40,11 @@ const validatorReport = async (request, response, next) => {
             throw new Error(ERROR_SURVIVOR_REPORT);
         }
 
+        if (senderSurvival.dataValues.isInfected == true ||
+            targetSurvival.dataValues.isInfected == true) {
+            throw new Error(ERROR_SURVIVAL_INFECTED);
+        }
+
         request.body = {sender: senderSurvival, target: targetSurvival};
 
         next();
@@ -53,6 +59,8 @@ const validatorReport = async (request, response, next) => {
                 return response.status(400).json({error: ERROR_ATTRIBUTES_EMPTY});
             case ERROR_SURVIVOR_REPORT:
                 return response.status(400).json({error: ERROR_SURVIVOR_REPORT});
+            case ERROR_SURVIVAL_INFECTED:
+                return response.status(400).json({error: ERROR_SURVIVAL_INFECTED});
             case error.message:
                 return response.status(401).json({error: error.message });
         }

@@ -45,7 +45,24 @@ describe('\n\nTesting ZSNN', () => {
         }
 
         chai.request('http://localhost:3000')
-        .put('/api/v1/locations/')
+        .put('/api/v1/survivals/locations/')
+        .send(payload)
+        .end((error, response) => {
+
+            response.should.have.status(200);
+            done();
+        });
+    });
+
+    it('Report survivor', (done) => {
+
+        const payload = {
+            "sender": 1,
+            "target": 3
+        }
+
+        chai.request('http://localhost:3000')
+        .patch('/api/v1/survivals/reports/')
         .send(payload)
         .end((error, response) => {
 

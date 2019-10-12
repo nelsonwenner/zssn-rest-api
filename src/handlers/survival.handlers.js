@@ -66,11 +66,21 @@ const report = async (request, response) => {
 
     try {
 
-        const { sender, target } = request.body;
+        const { target } = request.body;
 
-        console.log("\n\nTESTS: ", request.body);
-        
+        if (target.reportsCount < 3) {
+            target.reportsCount++;
+            
+            await target.save();
+          
+            if (target.reportsCount == 3) {
+                target.isInfected = true;
 
+                await target.save();
+            }
+        }
+
+        return response.status(200).json({error: target });
 
     } catch (error) {
         switch (error.message) {
