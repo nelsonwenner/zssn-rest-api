@@ -9,7 +9,7 @@ const create = async (survivalData) => {
 
 const listAll = async () => {
     const attributesLocation = ['latitude', 'longitude']
-    const attributesSurvival = ['survivalId', 'isInfected', 'reportsCount', 'name', 'age', 'sex']
+    const attributesSurvival = ['survivalId', 'isInfected', 'name', 'age', 'sex']
     const attributesInventory = ['water', 'food', 'medication', 'ammunition']
     return await survivalModel.findAll({attributes: attributesSurvival ,include: [
     {as: 'inventory', model: inventoryModel, attributes: attributesInventory}, 

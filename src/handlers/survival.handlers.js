@@ -67,7 +67,7 @@ const report = async (request, response) => {
     try {
 
         const { target } = request.body;
-
+    
         if (target.reportsCount < 3) {
             target.reportsCount++;
             
@@ -77,6 +77,8 @@ const report = async (request, response) => {
                 target.isInfected = true;
 
                 await target.save();
+               
+                await inventoryRepository.remove(target.inventoryId);
             }
         }
 
