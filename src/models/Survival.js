@@ -41,7 +41,7 @@ const model = {
         type: Sequelize.INTEGER,
         defaultValue: 0,
     },
-
+    
     name: {
         type: Sequelize.STRING(30),
         allowNull: false

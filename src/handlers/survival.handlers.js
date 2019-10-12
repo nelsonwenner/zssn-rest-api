@@ -56,7 +56,6 @@ const listAll = async (request, response) => {
     } catch (error) {
         switch (error.message) {
             case error.message:
-                console.log(error.message);
                 return response.status(401).json({error: error.message });
         }
     }
@@ -92,5 +91,21 @@ const report = async (request, response) => {
     }
 }
 
-module.exports = { create, listAll, updateLocation, report };
+const trade = async (request, response) => {
+
+    try {
+
+        const { sender, target } = request.body;
+
+        console.log("\n\nTESTS: ", sender);
+
+    } catch (error) {
+        switch (error.message) {
+            case error.message:
+                return response.status(401).json({error: error.message });
+        }
+    }
+}
+
+module.exports = { create, listAll, updateLocation, report, trade };
 

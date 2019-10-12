@@ -6,6 +6,7 @@ const ERROR_ATTRIBUTS_INVALID = "Invalid attribute detected";
 const ERROR_SURVIVORS_NOT_EXISTS = "Survivor not exists";
 const ERROR_ATTRIBUTES_EMPTY = "Attributes empty";
 const ERROR_SURVIVOR_REPORT = "You cannot report yourself";
+const ERROR_IDS_EQUALS = "Ids equals, invalid operation";
 
 module.exports = { 
     ERROR_VALIDATOR_UPDATE_PLACE,
@@ -15,5 +16,6 @@ module.exports = {
     ERROR_ATTRIBUTS_INVALID,
     ERROR_SURVIVORS_NOT_EXISTS,
     ERROR_ATTRIBUTES_EMPTY,
-    ERROR_SURVIVOR_REPORT 
+    ERROR_SURVIVOR_REPORT,
+    ERROR_IDS_EQUALS 
 };
