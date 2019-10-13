@@ -57,12 +57,41 @@ describe('\n\nTesting ZSNN', () => {
     it('Report survivor', (done) => {
 
         const payload = {
-            "sender": 1,
-            "target": 3
+            "sender": 3,
+            "target": 6
         }
 
         chai.request('http://localhost:3000')
         .patch('/api/v1/survivals/reports/')
+        .send(payload)
+        .end((error, response) => {
+
+            response.should.have.status(200);
+            done();
+        });
+    });
+
+    it('Trade from items', (done) => {
+
+        const payload = {
+            "sender": {
+                "senderId": 3,
+                "water": 1,
+                "food": 0,
+                "medication": 0,
+                "ammunition": 0
+            },
+            "target": {
+                "targetId": 4,
+                "water": 1,
+                "food": 0,
+                "medication": 0,
+                "ammunition": 0
+            }
+        }
+
+        chai.request('http://localhost:3000')
+        .put('/api/v1/survivals/trades/')
         .send(payload)
         .end((error, response) => {
 

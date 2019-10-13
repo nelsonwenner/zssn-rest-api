@@ -9,7 +9,7 @@ const remove = async (id) => {
     return await inventoryModel.destroy({where: {inventoryId: id}});
 } 
 
-const getPoints = (json) => {
+const calcPoints = (json) => {
     let keys = Object.keys(json);
     let points = 0;
     keys.forEach((key) => {
@@ -23,7 +23,6 @@ const getPoints = (json) => {
 
 const verifyValuesInventory = (dataBody, myInventory) => {
     const keysBody = Object.keys(dataBody);
-    console.log(keysBody);
     let verify = [];
     keysBody.forEach((key) => {
         if (myInventory[key] >= dataBody[key]) verify.push(true);
@@ -32,4 +31,4 @@ const verifyValuesInventory = (dataBody, myInventory) => {
     return false;
 }
 
-module.exports = { create, getPoints, verifyValuesInventory, remove };
+module.exports = { create, calcPoints, verifyValuesInventory, remove };

@@ -1,13 +1,14 @@
-const { getPoints, verifyValuesInventory } = require('../repository/inventory.repository');
+const { calcPoints, verifyValuesInventory } = require('../repository/inventory.repository');
 const survivalRepository = require('../repository/survival.repository');
 const { verifyParams } = require('../validator/inventory.validator');
 const { INVENTORY_ATTRIBUTES } = require('../utils/attributes');
 
 const { 
     ERROR_SURVIVAL_INFECTED,
-    ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S1,
-    ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S2,
+    ERROR_QUANTITY_ITENS_INVENTORY_INVALID,
+    ERROR_AMOUNT_POINTS_NOT_EQUALS,
     ERROR_ATTRIBUTS_INVALID,
+    ERROR_SURVIVORS_NOT_EXISTS,
     ERROR_IDS_EQUALS
 } = require('../utils/errorTypes');
 
@@ -22,6 +23,10 @@ const validatorTrade = async (request, response, next) => {
         
         const senderSurvivor = await survivalRepository.getInstance(senderId);
         const targetSurvivor = await survivalRepository.getInstance(targetId);
+
+        if (senderSurvivor == null || targetSurvivor == null) {
+            throw new Error(ERROR_SURVIVORS_NOT_EXISTS);
+        }
 
         if (senderSurvivor.isInfected || 
             targetSurvivor.isInfected ) {
@@ -45,19 +50,19 @@ const validatorTrade = async (request, response, next) => {
                 requestInventory: senderRequestInventory,
                 inventory: inventorySender,
                 keysItens: keys(senderRequestInventory),
-                qntPointsBodyResquest: getPoints(senderRequestInventory),
+                qntPointsBodyResquest: calcPoints(senderRequestInventory),
             },
             target: {
                 requestInventory: targetRequestInventory,
                 inventory: inventoryTarget,
                 keysItens: keys(targetRequestInventory),
-                qntPointsBodyResquest: getPoints(targetRequestInventory)
+                qntPointsBodyResquest: calcPoints(targetRequestInventory)
             }, 
         }
 
-        if (verifyValuesInventory(senderRequestInventory, inventorySender.dataValues) && 
-            verifyValuesInventory(targetRequestInventory, inventoryTarget.dataValues)) {
-                
+        if (verifyValuesInventory(senderRequestInventory, inventorySender) && 
+            verifyValuesInventory(targetRequestInventory, inventoryTarget)) {
+
             if (payload.sender.qntPointsBodyResquest ==
                 payload.target.qntPointsBodyResquest) {
                 
@@ -66,23 +71,25 @@ const validatorTrade = async (request, response, next) => {
                 next();
                 
             } else {
-                throw new Error(ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S2);
+                throw new Error(ERROR_QUANTITY_ITENS_INVENTORY_INVALID);
             }
 
         } else {
-            throw new Error(ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S1);
+            throw new Error(ERROR_AMOUNT_POINTS_NOT_EQUALS);
         }
     
     } catch (error) {
         switch (error.message) {
             case ERROR_SURVIVAL_INFECTED:
                 return response.status(400).json({error: ERROR_SURVIVAL_INFECTED});
-            case ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S1:
-                return response.status(400).json({error: ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S1});
-            case ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S2:
-                return response.status(400).json({error: ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S2});
+            case ERROR_QUANTITY_ITENS_INVENTORY_INVALID:
+                return response.status(400).json({error: ERROR_QUANTITY_ITENS_INVENTORY_INVALID});
+            case ERROR_AMOUNT_POINTS_NOT_EQUALS:
+                return response.status(400).json({error: ERROR_AMOUNT_POINTS_NOT_EQUALS});
             case ERROR_ATTRIBUTS_INVALID:
                 return response.status(400).json({error: ERROR_ATTRIBUTS_INVALID});
+            case ERROR_SURVIVORS_NOT_EXISTS:
+                return response.status(404).json({error: ERROR_SURVIVORS_NOT_EXISTS});
             case ERROR_IDS_EQUALS:
                 return response.status(400).json({error: ERROR_IDS_EQUALS});
             case error.message:

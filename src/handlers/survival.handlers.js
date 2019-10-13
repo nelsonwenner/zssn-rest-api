@@ -40,7 +40,6 @@ const updateLocation = async (request, response) => {
     } catch (error) {
         switch (error.message) {
             case error.message:
-                console.log(error.message);
                 return response.status(401).json({error: error.message });
         }
     }
@@ -110,7 +109,7 @@ const trade = async (request, response) => {
         await sender.inventory.save();
         await target.inventory.save();
 
-        return response.status(200).json({sender: sender.inventory.dataValues, targer: target.inventory.dataValues});
+        return response.status(200).json({sender: sender.inventory, targer: target.inventory});
 
     } catch (error) {
         switch (error.message) {
