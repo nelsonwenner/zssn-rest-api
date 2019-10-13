@@ -23,6 +23,7 @@ const getPoints = (json) => {
 
 const verifyValuesInventory = (dataBody, myInventory) => {
     const keysBody = Object.keys(dataBody);
+    console.log(keysBody);
     let verify = [];
     keysBody.forEach((key) => {
         if (myInventory[key] >= dataBody[key]) verify.push(true);

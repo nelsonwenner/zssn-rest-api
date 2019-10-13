@@ -17,8 +17,8 @@ const validatorTrade = async (request, response, next) => {
         
         const { sender, target } = request.body;
         
-        const { senderId, ...senderInventory } = sender;
-        const { targetId, ...targetInventory } = target;
+        const { senderId, ...senderRequestInventory } = sender;
+        const { targetId, ...targetRequestInventory } = target;
         
         const senderSurvivor = await survivalRepository.getInstance(senderId);
         const targetSurvivor = await survivalRepository.getInstance(targetId);
@@ -32,28 +32,31 @@ const validatorTrade = async (request, response, next) => {
             throw new Error(ERROR_IDS_EQUALS);
         }
 
-        if (!verifyParams(senderInventory, INVENTORY_ATTRIBUTES) ||
-            !verifyParams(targetInventory, INVENTORY_ATTRIBUTES)){
+        if (!verifyParams(senderRequestInventory, INVENTORY_ATTRIBUTES) ||
+            !verifyParams(targetRequestInventory, INVENTORY_ATTRIBUTES)){
             throw new Error(ERROR_ATTRIBUTS_INVALID);
         } 
         
-        const inventorySender = senderSurvivor.dataValues.inventory.dataValues;
-        const inventoryTarget = targetSurvivor.dataValues.inventory.dataValues;
+        const inventorySender = senderSurvivor.dataValues.inventory;
+        const inventoryTarget = targetSurvivor.dataValues.inventory;
 
-        let payload =  {
+        let payload = {
             sender: {
-                instance: senderSurvivor,
-                qntPointsBodyResquest: getPoints(senderInventory)
+                requestInventory: senderRequestInventory,
+                inventory: inventorySender,
+                keysItens: keys(senderRequestInventory),
+                qntPointsBodyResquest: getPoints(senderRequestInventory),
             },
             target: {
-                instance: targetSurvivor,
-                qntPointsBodyResquest: getPoints(targetInventory)
+                requestInventory: targetRequestInventory,
+                inventory: inventoryTarget,
+                keysItens: keys(targetRequestInventory),
+                qntPointsBodyResquest: getPoints(targetRequestInventory)
             }, 
-            keysDataBody: Object.keys(senderInventory)
         }
 
-        if (verifyValuesInventory(senderInventory, inventorySender) &&
-            verifyValuesInventory(targetInventory, inventoryTarget)) {
+        if (verifyValuesInventory(senderRequestInventory, inventorySender.dataValues) && 
+            verifyValuesInventory(targetRequestInventory, inventoryTarget.dataValues)) {
                 
             if (payload.sender.qntPointsBodyResquest ==
                 payload.target.qntPointsBodyResquest) {
@@ -62,12 +65,10 @@ const validatorTrade = async (request, response, next) => {
 
                 next();
                 
-                return response.status(200).json({result: "Qnt de itens iguais"});
-                
             } else {
                 throw new Error(ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S2);
             }
-                
+
         } else {
             throw new Error(ERROR_QUANTITY_ITENS_INVENTORY_INVALID_S1);
         }
@@ -88,6 +89,14 @@ const validatorTrade = async (request, response, next) => {
                 return response.status(401).json({error: error.message }); // Remover quando finalizar o projeto
         }
     }
+}
+
+const keys = (json) => {
+    let newKey = [];
+    Object.keys(json).forEach((k) => {
+        if (json[k] != 0) newKey.push(k);
+    });
+    return newKey;
 }
 
 module.exports = { validatorTrade };

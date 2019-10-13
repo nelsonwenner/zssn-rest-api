@@ -97,7 +97,20 @@ const trade = async (request, response) => {
 
         const { sender, target } = request.body;
 
-        console.log("\n\nTESTS: ", sender);
+        sender.keysItens.forEach(key => {
+            sender.inventory[key] -= sender.requestInventory[key];
+            target.inventory[key] += sender.requestInventory[key];
+        });
+
+        target.keysItens.forEach(key => {
+            target.inventory[key] -= target.requestInventory[key];
+            sender.inventory[key] += target.requestInventory[key];
+        });
+        
+        await sender.inventory.save();
+        await target.inventory.save();
+
+        return response.status(200).json({sender: sender.inventory.dataValues, targer: target.inventory.dataValues});
 
     } catch (error) {
         switch (error.message) {
