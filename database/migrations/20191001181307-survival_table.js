@@ -37,7 +37,7 @@ module.exports = {
             defaultValue: false
         },
 
-        reportsCount: {
+        flags: {
             type: Sequelize.INTEGER,
             defaultValue: 0,
         },

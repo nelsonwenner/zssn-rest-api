@@ -54,15 +54,15 @@ describe('\n\nTesting ZSNN', () => {
         });
     });
 
-    it('Report survivor', (done) => {
+    it('Flags survivor', (done) => {
 
         const payload = {
-            "sender": 3,
-            "target": 6
+            "sender": 1,
+            "target": 3
         }
 
         chai.request('http://localhost:3000')
-        .patch('/api/v1/survivals/reports/')
+        .patch('/api/v1/survivals/flags/')
         .send(payload)
         .end((error, response) => {
 
@@ -75,14 +75,14 @@ describe('\n\nTesting ZSNN', () => {
 
         const payload = {
             "sender": {
-                "senderId": 3,
+                "senderId": 1,
                 "water": 1,
                 "food": 0,
                 "medication": 0,
                 "ammunition": 0
             },
             "target": {
-                "targetId": 4,
+                "targetId": 3,
                 "water": 1,
                 "food": 0,
                 "medication": 0,

@@ -5,10 +5,6 @@ const create = async (data) => {
     return await invetory.save();
 }
 
-const remove = async (id) => {
-    return await inventoryModel.destroy({where: {inventoryId: id}});
-} 
-
 const calcPoints = (json) => {
     let keys = Object.keys(json);
     let points = 0;
@@ -31,4 +27,4 @@ const verifyValuesInventory = (dataBody, myInventory) => {
     return false;
 }
 
-module.exports = { create, calcPoints, verifyValuesInventory, remove };
+module.exports = { create, calcPoints, verifyValuesInventory };

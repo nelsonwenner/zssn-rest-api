@@ -11,6 +11,11 @@ module.exports = {
             autoIncrement: true,
             primaryKey: true 
         },
+
+        points: {
+            type: Sequelize.INTEGER,
+            defaultValue: 0
+        },
         
         water: {
             type: Sequelize.INTEGER(),

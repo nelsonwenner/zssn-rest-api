@@ -22,4 +22,22 @@ const getInstance = async (id) => {
     [{as: 'inventory', model: inventoryModel, attributes: attributesInventory}]});
 }
 
-module.exports = { create, listAll, getInstance };
+const infectedOrNotInfected = async (isInfected) => {
+    return await survivalModel.count({where: {isInfected: isInfected }});
+}
+
+const sumAllItems = async () => {
+    const data = {'water': 0.0, 'food': 0.0, 'medication': 0.0, 'ammunition': 0.0};
+    const inventorys = await survivalModel.findAll({where: {isInfected: false}, 
+    include: [{as: 'inventory', model: inventoryModel}]});
+    
+    inventorys.forEach(({ inventory }) => {
+        data['water'] += inventory.water;
+        data['food'] += inventory.food;
+        data['medication'] += inventory.medication;
+        data['ammunition'] += inventory.ammunition;
+    });
+    return data;
+}
+
+module.exports = { create, listAll, getInstance, infectedOrNotInfected, sumAllItems };

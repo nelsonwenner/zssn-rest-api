@@ -10,6 +10,11 @@ const model = {
         primaryKey: true 
     },
 
+    points: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+    },
+
     water: {
         type: Sequelize.INTEGER(),
         defaultValue: 0

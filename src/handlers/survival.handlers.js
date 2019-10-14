@@ -60,23 +60,21 @@ const listAll = async (request, response) => {
     }
 }
 
-const report = async (request, response) => {
+const flag = async (request, response) => {
 
     try {
 
         const { target } = request.body;
     
-        if (target.reportsCount < 3) {
-            target.reportsCount++;
+        if (target.flags < 3) {
+            target.flags++;
             
             await target.save();
           
-            if (target.reportsCount == 3) {
+            if (target.flags == 3) {
                 target.isInfected = true;
 
                 await target.save();
-               
-                await inventoryRepository.remove(target.inventoryId);
             }
         }
 
@@ -119,5 +117,62 @@ const trade = async (request, response) => {
     }
 }
 
-module.exports = { create, listAll, updateLocation, report, trade };
+const report = async (request, response) => {
+
+    try {
+
+        const items = await survivalRepository.sumAllItems();
+        const survivorAll = await survivalRepository.listAll();
+        const isInfecteds = await survivalRepository.infectedOrNotInfected(true);
+        const notInfecteds = await survivalRepository.infectedOrNotInfected(false);
+
+        const payload = [
+            {
+                description: "Percentage of infected survivors", 
+                percentage: {
+                    values: ((100 / survivorAll.length ) * isInfecteds)
+                }
+            },
+            {
+                description: "Percentage of not infected survivors",
+                percentage: {
+                    values: ((100 / survivorAll.length ) * notInfecteds)
+                }
+            },
+            {
+                description: "Average amount of each resource type per survivor",
+                water: {
+                    average: {
+                        values: (items.water / notInfecteds)
+                    }
+                },
+                food: {
+                    average: {
+                        values: (items.food / notInfecteds)
+                    }
+                },
+                medication: {
+                    average: {
+                        values: (items.medication / notInfecteds)
+                    }
+                },
+                ammunition: {
+                    average: {
+                        values: (items.ammunition / notInfecteds)
+                    }
+                }
+            }
+        ]
+
+        return response.status(200).json(payload);
+
+    } catch (error) {
+        switch (error.message) {
+            case error.message:
+                return response.status(401).json({error: error.message });
+        }
+    }
+}
+
+module.exports = { create, listAll, updateLocation, flag, trade, report };
 

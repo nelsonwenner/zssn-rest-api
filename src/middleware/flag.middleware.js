@@ -10,7 +10,7 @@ const {
     ERROR_SURVIVAL_INFECTED
 } = require('../utils/errorTypes');
 
-const validatorReport = async (request, response, next) => {
+const validatorFlag = async (request, response, next) => {
     
     try {
         
@@ -67,4 +67,4 @@ const validatorReport = async (request, response, next) => {
     }
 }
 
-module.exports = { validatorReport };
+module.exports = { validatorFlag };

@@ -37,7 +37,7 @@ const model = {
         defaultValue: false
     },
 
-    reportsCount: {
+    flags: {
         type: Sequelize.INTEGER,
         defaultValue: 0,
     },
