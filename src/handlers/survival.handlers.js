@@ -14,7 +14,7 @@ const create = async (request, response) => {
 
         survivalModel.set('inventoryId', inventoryModel.inventoryId);
         survivalModel.set('locationId', locationModel.locationId);
-
+        
         inventoryModel.set('points', inventoryRepository.calcPoints(inventoryModel.dataValues));
 
         await survivalModel.save();
@@ -106,9 +106,6 @@ const trade = async (request, response) => {
             target.inventory[key] -= target.requestInventory[key];
             sender.inventory[key] += target.requestInventory[key];
         });
-
-        sender.inventory.points = inventoryRepository.calcPoints(sender.inventory.dataValues);
-        target.inventory.points = inventoryRepository.calcPoints(target.inventory.dataValues);
 
         await sender.inventory.save();
         await target.inventory.save();
