@@ -15,7 +15,10 @@ const create = async (request, response) => {
         survivalModel.set('inventoryId', inventoryModel.inventoryId);
         survivalModel.set('locationId', locationModel.locationId);
 
+        inventoryModel.set('points', inventoryRepository.calcPoints(inventoryModel.dataValues));
+
         await survivalModel.save();
+        await inventoryModel.save();
 
         return response.status(201).json({survivalModel, inventoryModel, locationModel});
 
@@ -103,7 +106,10 @@ const trade = async (request, response) => {
             target.inventory[key] -= target.requestInventory[key];
             sender.inventory[key] += target.requestInventory[key];
         });
-        
+
+        sender.inventory.points = inventoryRepository.calcPoints(sender.inventory.dataValues);
+        target.inventory.points = inventoryRepository.calcPoints(target.inventory.dataValues);
+
         await sender.inventory.save();
         await target.inventory.save();
 
@@ -125,6 +131,7 @@ const report = async (request, response) => {
         const survivorAll = await survivalRepository.listAll();
         const isInfecteds = await survivalRepository.infectedOrNotInfected(true);
         const notInfecteds = await survivalRepository.infectedOrNotInfected(false);
+        const amountLost = await survivalRepository.amountPointsInfected();
 
         const payload = [
             {
@@ -160,6 +167,12 @@ const report = async (request, response) => {
                     average: {
                         values: (items.ammunition / notInfecteds)
                     }
+                }
+            },
+            {
+                description: "Points lost because of infected survivor.",
+                points: {
+                    values: amountLost
                 }
             }
         ]

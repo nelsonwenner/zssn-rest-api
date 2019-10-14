@@ -59,7 +59,7 @@ const validatorTrade = async (request, response, next) => {
                 qntPointsBodyResquest: calcPoints(targetRequestInventory)
             }, 
         }
-
+        
         if (verifyValuesInventory(senderRequestInventory, inventorySender) && 
             verifyValuesInventory(targetRequestInventory, inventoryTarget)) {
 
@@ -71,11 +71,11 @@ const validatorTrade = async (request, response, next) => {
                 next();
                 
             } else {
-                throw new Error(ERROR_QUANTITY_ITENS_INVENTORY_INVALID);
+                throw new Error(ERROR_AMOUNT_POINTS_NOT_EQUALS);
             }
 
         } else {
-            throw new Error(ERROR_AMOUNT_POINTS_NOT_EQUALS);
+            throw new Error(ERROR_QUANTITY_ITENS_INVENTORY_INVALID);
         }
     
     } catch (error) {

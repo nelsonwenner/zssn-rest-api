@@ -10,7 +10,7 @@ const create = async (survivalData) => {
 const listAll = async () => {
     const attributesLocation = ['latitude', 'longitude']
     const attributesSurvival = ['survivalId', 'isInfected', 'name', 'age', 'sex']
-    const attributesInventory = ['water', 'food', 'medication', 'ammunition']
+    const attributesInventory = ['water', 'food', 'medication', 'ammunition', 'points']
     return await survivalModel.findAll({attributes: attributesSurvival ,include: [
     {as: 'inventory', model: inventoryModel, attributes: attributesInventory}, 
     {as: 'lastLocation', model: locationModel, attributes: attributesLocation}]});
@@ -40,4 +40,9 @@ const sumAllItems = async () => {
     return data;
 }
 
-module.exports = { create, listAll, getInstance, infectedOrNotInfected, sumAllItems };
+const amountPointsInfected = async () => {
+    return await survivalModel.sum('points', {where: {isInfected: true}, 
+    include: [{as: 'inventory', model: inventoryModel}]});
+}
+
+module.exports = { create, listAll, getInstance, infectedOrNotInfected, sumAllItems, amountPointsInfected };
