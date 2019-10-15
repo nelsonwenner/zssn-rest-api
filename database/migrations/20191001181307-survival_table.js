@@ -14,21 +14,21 @@ module.exports = {
         
         inventoryId: {
             type: Sequelize.INTEGER,
+            onDelete: 'cascade',
             references: {
                 model: 'Inventory',
                 key: 'inventoryId',
                 as: 'inventory',
-                onDelete: 'set null'
             }
         },
-    
+        
         locationId: {
             type: Sequelize.INTEGER,
+            onDelete: 'cascade',
             references: {
                 model: 'Location',
                 key: 'locationId',
                 as: 'lastLocation',
-                onDelete: 'set null'
             }
         },
         
