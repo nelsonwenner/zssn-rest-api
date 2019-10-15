@@ -1,30 +1,47 @@
 const Sequelize = require('sequelize');
 const db = require('../service/sqlite3.service');
 const Inventory = require('./Inventory');
+const Location = require('./Location');
 
 const model = {
     
-    survival_id: {
-        type: Sequelize.INTEGER(10),
+    survivalId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true 
     },
-
-    inventory_id: {
+    
+    inventoryId: {
         type: Sequelize.INTEGER,
+        onDelete: 'cascade',
         references: {
-            model: 'inventory',
-            key: 'inventory_id',
-            onDelete: 'cascade'
+            model: 'Inventory',
+            key:  'inventoryId',
+            as: 'inventory',
         }
     },
 
+    locationId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'cascade',
+        references: {
+            model: 'Location',
+            key: 'locationId',
+            as: 'lastLocation',
+        }
+    },
+    
     isInfected: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
     },
 
+    flags: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+    },
+    
     name: {
         type: Sequelize.STRING(30),
         allowNull: false
@@ -40,21 +57,6 @@ const model = {
         allowNull: false
     },
 
-    latitude: {
-        type: Sequelize.STRING(10),
-        allowNull: false
-    },
-
-    longitude: {
-        type: Sequelize.STRING(10),
-        allowNull: false
-    },
-
-    lastPlace: {
-        type: Sequelize.STRING(50),
-        defaultValue: 'latitude: 0, longitude: 0'
-    },
-
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
 
@@ -63,6 +65,9 @@ const model = {
 const Survival = db.define('survival', model);
 
 /* Relations 1:1 */
-Survival.hasOne(Inventory, {as: 'Inventory', foreignKey: 'inventory_id', onDelete: 'cascade'});
+Survival.hasOne(Inventory, {as: 'inventory', foreignKey: 'inventoryId', onDelete: 'cascade'});
+
+/* Relations 1:1 */
+Survival.hasOne(Location, {as: 'lastLocation', foreignKey: 'locationId', onDelete: 'cascade'});
 
 module.exports = Survival;

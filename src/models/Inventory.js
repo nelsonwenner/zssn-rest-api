@@ -3,11 +3,16 @@ const db = require('../service/sqlite3.service');
 
 const model = {
 
-    inventory_id: {
-        type: Sequelize.INTEGER(10),
+    inventoryId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true 
+    },
+
+    points: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
     },
 
     water: {

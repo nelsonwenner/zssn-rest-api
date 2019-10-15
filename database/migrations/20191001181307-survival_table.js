@@ -5,27 +5,43 @@ module.exports = {
     
       const promesse = queryInterface.createTable('survival', { 
         
-        survival_id: {
-            type: Sequelize.INTEGER(10),
+        survivalId: {
+            type: Sequelize.INTEGER,
             allowNull: false,
             autoIncrement: true,
             primaryKey: true 
         },
         
-        inventory_id: {
+        inventoryId: {
             type: Sequelize.INTEGER,
+            onDelete: 'cascade',
             references: {
-                    model: 'inventory',
-                    key: 'inventory_id',
-                    onDelete: 'CASCADE'
-                }
+                model: 'Inventory',
+                key: 'inventoryId',
+                as: 'inventory',
+            }
         },
-
+        
+        locationId: {
+            type: Sequelize.INTEGER,
+            onDelete: 'cascade',
+            references: {
+                model: 'Location',
+                key: 'locationId',
+                as: 'lastLocation',
+            }
+        },
+        
         isInfected: {
             type: Sequelize.BOOLEAN,
             defaultValue: false
         },
-        
+
+        flags: {
+            type: Sequelize.INTEGER,
+            defaultValue: 0,
+        },
+    
         name: {
             type: Sequelize.STRING(30),
             allowNull: false
@@ -39,21 +55,6 @@ module.exports = {
         sex: {
             type: Sequelize.STRING(9),
             allowNull: false
-        },
-    
-        latitude: {
-            type: Sequelize.STRING(10),
-            allowNull: false
-        },
-    
-        longitude: {
-            type: Sequelize.STRING(10),
-            allowNull: false
-        },
-    
-        lastPlace: {
-            type: Sequelize.STRING(50),
-            defaultValue: 'latitude: 0, longitude: 0'
         },
     
         createdAt: Sequelize.DATE,

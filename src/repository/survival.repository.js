@@ -1,5 +1,6 @@
 const survivalModel = require('../models/Survival');
 const inventoryModel = require('../models/Inventory');
+const locationModel = require('../models/Location');
 
 const create = async (survivalData) => {
     const survival = new survivalModel(survivalData);
@@ -7,35 +8,41 @@ const create = async (survivalData) => {
 }
 
 const listAll = async () => {
-    const attributesSurvival = ['survival_id', 'isInfected', 'name', 'age', 'sex', 'latitude', 'longitude', 'lastPlace', 'createdAt', 'updatedAt']
-    const attributesInventory = ['inventory_id', 'water', 'food', 'medication', 'ammunition']
-    return await survivalModel.findAll({attributes: attributesSurvival ,include: [{as: 'Inventory', model: inventoryModel, attributes: attributesInventory}]});
+    const attributesLocation = ['latitude', 'longitude']
+    const attributesSurvival = ['survivalId', 'isInfected', 'name', 'age', 'sex']
+    const attributesInventory = ['water', 'food', 'medication', 'ammunition', 'points']
+    return await survivalModel.findAll({attributes: attributesSurvival ,include: [
+    {as: 'inventory', model: inventoryModel, attributes: attributesInventory}, 
+    {as: 'lastLocation', model: locationModel, attributes: attributesLocation}]});
 }
 
-const update = async (id, data, flag) => {
-    const dataModel = await survivalModel.findOne({where: {survival_id: id}});
+const getInstance = async (id) => {
+    const attributesInventory = ['inventoryId', 'water', 'food', 'medication', 'ammunition']
+    return await survivalModel.findOne({where: {survivalId: id}, include: 
+    [{as: 'inventory', model: inventoryModel, attributes: attributesInventory}]});
+}
 
-    let keys = Object.keys(data);
+const infectedOrNotInfected = async (isInfected) => {
+    return await survivalModel.count({where: {isInfected: isInfected }});
+}
 
-    let oldPlace = {'latitude': null, 'longitude': null};
-
-    keys.forEach(item => {
-
-        if (flag && item == 'latitude' || item == 'longitude') {
-
-            if (item == 'latitude') oldPlace[item] = dataModel[item];
-            if (item == 'longitude') oldPlace[item] = dataModel[item];
-
-            dataModel[item] = data[item];
-            
-        }
-
-        dataModel[item] = data[item];
+const sumAllItems = async () => {
+    const data = {'water': 0.0, 'food': 0.0, 'medication': 0.0, 'ammunition': 0.0};
+    const inventorys = await survivalModel.findAll({where: {isInfected: false}, 
+    include: [{as: 'inventory', model: inventoryModel}]});
+    
+    inventorys.forEach(({ inventory }) => {
+        data['water'] += inventory.water;
+        data['food'] += inventory.food;
+        data['medication'] += inventory.medication;
+        data['ammunition'] += inventory.ammunition;
     });
-
-    if (flag) dataModel['lastPlace'] = `latitude: ${oldPlace['latitude']}, longitude: ${oldPlace['longitude']}`;
-
-    return await dataModel.save();
+    return data;
 }
 
-module.exports = { create, listAll, update };
+const amountPointsInfected = async () => {
+    return await survivalModel.sum('points', {where: {isInfected: true}, 
+    include: [{as: 'inventory', model: inventoryModel}]});
+}
+
+module.exports = { create, listAll, getInstance, infectedOrNotInfected, sumAllItems, amountPointsInfected };
