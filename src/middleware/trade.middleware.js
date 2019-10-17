@@ -1,5 +1,5 @@
 const { calcPoints, verifyValuesInventory } = require('../repository/inventory.repository');
-const survivalRepository = require('../repository/survival.repository');
+const survivorRepository = require('../repository/survivor.repository');
 const { verifyParams } = require('../validator/inventory.validator');
 const { INVENTORY_ATTRIBUTES } = require('../utils/attributes');
 
@@ -21,8 +21,8 @@ const validatorTrade = async (request, response, next) => {
         const { senderId, ...senderRequestInventory } = sender;
         const { targetId, ...targetRequestInventory } = target;
         
-        const senderSurvivor = await survivalRepository.getInstance(senderId);
-        const targetSurvivor = await survivalRepository.getInstance(targetId);
+        const senderSurvivor = await survivorRepository.getInstance(senderId);
+        const targetSurvivor = await survivorRepository.getInstance(targetId);
 
         if (senderSurvivor == null || targetSurvivor == null) {
             throw new Error(ERROR_SURVIVORS_NOT_EXISTS);

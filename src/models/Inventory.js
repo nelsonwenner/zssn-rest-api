@@ -34,7 +34,7 @@ const model = {
         type: Sequelize.INTEGER(),
         defaultValue: 0
     },
-    
+
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
 }

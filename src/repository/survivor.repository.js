@@ -1,34 +1,34 @@
-const survivalModel = require('../models/Survival');
+const survivorModel = require('../models/Survivor');
 const inventoryModel = require('../models/Inventory');
 const locationModel = require('../models/Location');
 
-const create = async (survivalData) => {
-    const survival = new survivalModel(survivalData);
-    return await survival.save();
+const create = async (survivorData) => {
+    const survivor = new survivorModel(survivorData);
+    return await survivor.save();
 }
 
 const listAll = async () => {
     const attributesLocation = ['latitude', 'longitude']
-    const attributesSurvival = ['survivalId', 'isInfected', 'name', 'age', 'sex']
+    const attributesSurvivor = ['survivorId', 'isInfected', 'name', 'age', 'sex']
     const attributesInventory = ['water', 'food', 'medication', 'ammunition', 'points']
-    return await survivalModel.findAll({attributes: attributesSurvival ,include: [
+    return await survivorModel.findAll({attributes: attributesSurvivor ,include: [
     {as: 'inventory', model: inventoryModel, attributes: attributesInventory}, 
     {as: 'lastLocation', model: locationModel, attributes: attributesLocation}]});
 }
 
 const getInstance = async (id) => {
     const attributesInventory = ['inventoryId', 'water', 'food', 'medication', 'ammunition']
-    return await survivalModel.findOne({where: {survivalId: id}, include: 
+    return await survivorModel.findOne({where: {survivorId: id}, include: 
     [{as: 'inventory', model: inventoryModel, attributes: attributesInventory}]});
 }
 
 const infectedOrNotInfected = async (isInfected) => {
-    return await survivalModel.count({where: {isInfected: isInfected }});
+    return await survivorModel.count({where: {isInfected: isInfected }});
 }
 
 const sumAllItems = async () => {
     const data = {'water': 0.0, 'food': 0.0, 'medication': 0.0, 'ammunition': 0.0};
-    const inventorys = await survivalModel.findAll({where: {isInfected: false}, 
+    const inventorys = await survivorModel.findAll({where: {isInfected: false}, 
     include: [{as: 'inventory', model: inventoryModel}]});
     
     inventorys.forEach(({ inventory }) => {
@@ -41,7 +41,7 @@ const sumAllItems = async () => {
 }
 
 const amountPointsInfected = async () => {
-    return await survivalModel.sum('points', {where: {isInfected: true}, 
+    return await survivorModel.sum('points', {where: {isInfected: true}, 
     include: [{as: 'inventory', model: inventoryModel}]});
 }
 

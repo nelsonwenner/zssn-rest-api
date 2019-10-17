@@ -5,7 +5,7 @@ const Location = require('./Location');
 
 const model = {
     
-    survivalId: {
+    survivorId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
@@ -62,12 +62,12 @@ const model = {
 
 }
 
-const Survival = db.define('survival', model);
+const Survivor = db.define('survivor', model);
 
 /* Relations 1:1 */
-Survival.hasOne(Inventory, {as: 'inventory', foreignKey: 'inventoryId', onDelete: 'cascade'});
+Survivor.hasOne(Inventory, {as: 'inventory', foreignKey: 'inventoryId', onDelete: 'cascade'});
 
 /* Relations 1:1 */
-Survival.hasOne(Location, {as: 'lastLocation', foreignKey: 'locationId', onDelete: 'cascade'});
+Survivor.hasOne(Location, {as: 'lastLocation', foreignKey: 'locationId', onDelete: 'cascade'});
 
-module.exports = Survival;
+module.exports = Survivor;

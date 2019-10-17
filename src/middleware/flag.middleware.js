@@ -1,4 +1,4 @@
-const survivalRepository = require('../repository/survival.repository');
+const survivorRepository = require('../repository/survivor.repository');
 const { verifyParams  } = require('../validator/inventory.validator');
 const { LOCATION_ATTRIBUTES } = require('../utils/attributes');
 
@@ -28,24 +28,24 @@ const validatorFlag = async (request, response, next) => {
             throw new Error(ERROR_ATTRIBUTES_EMPTY);
         }
 
-        const senderSurvival = await survivalRepository.getInstance(sender);
-        const targetSurvival = await survivalRepository.getInstance(target);
+        const senderSurvivor = await survivorRepository.getInstance(sender);
+        const targetSurvivor = await survivorRepository.getInstance(target);
 
-        if (senderSurvival == null || targetSurvival == null) {
+        if (senderSurvivor == null || targetSurvivor == null) {
             throw new Error(ERROR_SURVIVORS_NOT_EXISTS);
         }
 
-        if (senderSurvival.dataValues.survivalId  == 
-            targetSurvival.dataValues.survivalId) {
+        if (senderSurvivor.dataValues.survivorId  == 
+            targetSurvivor.dataValues.survivorId) {
             throw new Error(ERROR_SURVIVOR_REPORT);
         }
 
-        if (senderSurvival.dataValues.isInfected == true ||
-            targetSurvival.dataValues.isInfected == true) {
+        if (senderSurvivor.dataValues.isInfected == true ||
+            targetSurvivor.dataValues.isInfected == true) {
             throw new Error(ERROR_SURVIVAL_INFECTED);
         }
 
-        request.body = {sender: senderSurvival, target: targetSurvival};
+        request.body = {sender: senderSurvivor, target: targetSurvivor};
 
         next();
 
