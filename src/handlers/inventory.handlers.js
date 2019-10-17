@@ -29,4 +29,19 @@ const trade = async (request, response) => {
     }
 }
 
-module.exports = { trade };
+const listAll = async (request, response) => {
+
+    try {
+
+        const data = await inventoryRepository.listAll();
+        return response.status(200).json(data);
+
+    } catch (error) {
+        switch (error.message) {
+            case error.message:
+                return response.status(401).json({error: error.message });
+        }
+    }
+}
+
+module.exports = { trade, listAll };
