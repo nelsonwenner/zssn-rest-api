@@ -3,9 +3,9 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     
-      const promesse = queryInterface.createTable('survival', { 
+      const promesse = queryInterface.createTable('survivor', { 
         
-        survivalId: {
+        survivorId: {
             type: Sequelize.INTEGER,
             allowNull: false,
             autoIncrement: true,
@@ -56,10 +56,10 @@ module.exports = {
             type: Sequelize.STRING(9),
             allowNull: false
         },
-    
+        
         createdAt: Sequelize.DATE,
         updatedAt: Sequelize.DATE
-    
+
         });
 
         return promesse;
@@ -67,7 +67,7 @@ module.exports = {
 
   down: (queryInterface, Sequelize) => {
    
-      return queryInterface.dropTable('survival');
+      return queryInterface.dropTable('survivor');
 
   }
 };

@@ -1,9 +1,11 @@
-const survival = require('./survival.router');
+const survivor = require('./survivor.router');
 const location = require('./location.router');
+const inventory = require('./inventory.router');
 
 module.exports = [
 
-    survival,
+    survivor,
+    inventory,
     location
 
 ];

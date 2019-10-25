@@ -1,5 +1,5 @@
 const locationModel = require('../models/Location');
-const survivalModel = require('../models/Survival');
+const survivorModel = require('../models/Survivor');
 
 const create = async (data) => {
     const location = new locationModel(data);
@@ -7,9 +7,9 @@ const create = async (data) => {
 }
 
 const update = async (id, data) => {
-    const dataSurvival = await survivalModel.findOne(
-    {where: {survivalId: id}, include: [{as: 'lastLocation', model: locationModel}]});
-    const { lastLocation } = dataSurvival.dataValues;
+    const dataSurvivor = await survivorModel.findOne(
+    {where: {survivorId: id}, include: [{as: 'lastLocation', model: locationModel}]});
+    const { lastLocation } = dataSurvivor.dataValues;
     lastLocation.latitude = data.latitude;
     lastLocation.longitude = data.longitude;
     return await lastLocation.save();

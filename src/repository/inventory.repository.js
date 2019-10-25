@@ -27,4 +27,8 @@ const verifyValuesInventory = (dataBody, myInventory) => {
     return false;
 }
 
-module.exports = { create, calcPoints, verifyValuesInventory };
+const listAll = async () => {
+    return await inventoryModel.findAll({});
+}
+
+module.exports = { create, calcPoints, verifyValuesInventory, listAll };

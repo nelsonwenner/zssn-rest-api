@@ -1,4 +1,4 @@
-const survivalRepository = require('../repository/survival.repository');
+const survivorRepository = require('../repository/survivor.repository');
 const inventoryRepository = require('../repository/inventory.repository');
 const locationRepository = require('../repository/location.repository');
 
@@ -6,40 +6,22 @@ const create = async (request, response) => {
     
     try {
         
-        const { lastLocation, inventory, ...survival } = request.body;
+        const { lastLocation, inventory, ...survivor } = request.body;
 
         const locationModel = await locationRepository.create(lastLocation);
         const inventoryModel = await inventoryRepository.create(inventory);
-        const survivalModel = await survivalRepository.create(survival);
-
-        survivalModel.set('inventoryId', inventoryModel.inventoryId);
-        survivalModel.set('locationId', locationModel.locationId);
+        const survivorModel = await survivorRepository.create(survivor);
+        
+        survivorModel.set('inventoryId', inventoryModel.inventoryId);
+        survivorModel.set('locationId', locationModel.locationId);
         
         inventoryModel.set('points', inventoryRepository.calcPoints(inventoryModel.dataValues));
 
-        await survivalModel.save();
+        await survivorModel.save();
         await inventoryModel.save();
 
-        return response.status(201).json({survivalModel, inventoryModel, locationModel});
+        return response.status(201).json({survivorModel, inventoryModel, locationModel});
 
-    } catch (error) {
-        switch (error.message) {
-            case error.message:
-                return response.status(401).json({error: error.message });
-        }
-    }
-}
-
-const updateLocation = async (request, response) => {
-
-    try {
-        
-        const { survivalId, ...locations } = request.body;
-        
-        const updated = await locationRepository.update(survivalId, locations);
-        
-        return response.status(200).json({updated});
-        
     } catch (error) {
         switch (error.message) {
             case error.message:
@@ -52,7 +34,7 @@ const listAll = async (request, response) => {
 
     try {
 
-        const data = await survivalRepository.listAll();
+        const data = await survivorRepository.listAll();
         return response.status(200).json(data);
 
     } catch (error) {
@@ -91,44 +73,15 @@ const flag = async (request, response) => {
     }
 }
 
-const trade = async (request, response) => {
-
-    try {
-
-        const { sender, target } = request.body;
-
-        sender.keysItens.forEach(key => {
-            sender.inventory[key] -= sender.requestInventory[key];
-            target.inventory[key] += sender.requestInventory[key];
-        });
-
-        target.keysItens.forEach(key => {
-            target.inventory[key] -= target.requestInventory[key];
-            sender.inventory[key] += target.requestInventory[key];
-        });
-
-        await sender.inventory.save();
-        await target.inventory.save();
-
-        return response.status(200).json({sender: sender.inventory, targer: target.inventory});
-
-    } catch (error) {
-        switch (error.message) {
-            case error.message:
-                return response.status(401).json({error: error.message });
-        }
-    }
-}
-
 const report = async (request, response) => {
 
     try {
 
-        const items = await survivalRepository.sumAllItems();
-        const survivorAll = await survivalRepository.listAll();
-        const isInfecteds = await survivalRepository.infectedOrNotInfected(true);
-        const notInfecteds = await survivalRepository.infectedOrNotInfected(false);
-        const amountLost = await survivalRepository.amountPointsInfected();
+        const items = await survivorRepository.sumAllItems();
+        const survivorAll = await survivorRepository.listAll();
+        const isInfecteds = await survivorRepository.infectedOrNotInfected(true);
+        const notInfecteds = await survivorRepository.infectedOrNotInfected(false);
+        const amountLost = await survivorRepository.amountPointsInfected();
 
         const payload = [
             {
@@ -173,7 +126,7 @@ const report = async (request, response) => {
                 }
             }
         ]
-
+        
         return response.status(200).json(payload);
 
     } catch (error) {
@@ -184,5 +137,5 @@ const report = async (request, response) => {
     }
 }
 
-module.exports = { create, listAll, updateLocation, flag, trade, report };
+module.exports = { create, listAll, flag, report };
 

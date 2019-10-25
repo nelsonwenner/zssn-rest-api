@@ -7,6 +7,7 @@ const ERROR_ATTRIBUTES_EMPTY = "Attributes empty";
 const ERROR_SURVIVOR_REPORT = "You cannot report yourself";
 const ERROR_IDS_EQUALS = "Ids equals, invalid operation";
 const ERROR_AMOUNT_POINTS_NOT_EQUALS = "Item points not equals";
+const ERROR_VALIDATION = "Validation Error";
 
 module.exports = { 
     ERROR_VALIDATOR_UPDATE_PLACE,
@@ -17,5 +18,6 @@ module.exports = {
     ERROR_SURVIVORS_NOT_EXISTS,
     ERROR_ATTRIBUTES_EMPTY,
     ERROR_SURVIVOR_REPORT,
-    ERROR_IDS_EQUALS, 
+    ERROR_IDS_EQUALS,
+    ERROR_VALIDATION 
 };

@@ -9,7 +9,7 @@ const autenticateDataBase = {
     define : {
         freezeTableName: true
     }
-}
+};
 
 const database = new Sequelize(autenticateDataBase);
 
