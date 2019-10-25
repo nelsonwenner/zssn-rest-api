@@ -1,6 +1,5 @@
 const { calcPoints, verifyValuesInventory } = require('../repository/inventory.repository');
 const survivorRepository = require('../repository/survivor.repository');
-const { verifyParams } = require('../validator/inventory.validator');
 const { INVENTORY_ATTRIBUTES } = require('../utils/attributes');
 
 const { 
@@ -36,7 +35,7 @@ const validatorTrade = async (request, response, next) => {
         if (senderId == targetId) {
             throw new Error(ERROR_IDS_EQUALS);
         }
-
+        
         if (!verifyParams(senderRequestInventory, INVENTORY_ATTRIBUTES) ||
             !verifyParams(targetRequestInventory, INVENTORY_ATTRIBUTES)){
             throw new Error(ERROR_ATTRIBUTS_INVALID);
@@ -96,6 +95,17 @@ const validatorTrade = async (request, response, next) => {
                 return response.status(401).json({error: error.message }); // Remover quando finalizar o projeto
         }
     }
+}
+
+const verifyParams = (payload, keysAuthorized) => {
+    const countkeys = Object.keys(keysAuthorized ).length;
+    const keysParams = Object.keys(payload);
+    let verify = [];
+    keysParams.forEach((key) => {
+        if (key == keysAuthorized[key]) verify.push(true);
+    });
+    if (verify.length == countkeys) return true;
+    return false;
 }
 
 const keys = (json) => {

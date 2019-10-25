@@ -3,7 +3,7 @@ const yup = require('yup');
 
 const validatorUpdatePasition = async (request, response, next) => {
     
-    const schema = yup.object.shape({
+    const schema = yup.object().shape({
         survivorId: yup.number().integer().positive().required(),
         latitude: yup.number().required(),
         longitude: yup.number().required()

@@ -11,7 +11,7 @@ const create = async (request, response) => {
         const locationModel = await locationRepository.create(lastLocation);
         const inventoryModel = await inventoryRepository.create(inventory);
         const survivorModel = await survivorRepository.create(survivor);
-
+        
         survivorModel.set('inventoryId', inventoryModel.inventoryId);
         survivorModel.set('locationId', locationModel.locationId);
         
