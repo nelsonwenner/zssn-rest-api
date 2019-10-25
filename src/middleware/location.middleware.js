@@ -1,22 +1,27 @@
-const errorTypes = require('../utils/errorTypes');
+const { ERROR_ATTRIBUTS_INVALID } = require('../utils/errorTypes');
+const yup = require('yup');
 
 const validatorUpdatePasition = async (request, response, next) => {
     
-    const { survivorId , latitude, longitude } = request.body; 
-    
-    let keys = Object.keys(request.body);
+    const schema = yup.object.shape({
+        survivorId: yup.number().integer().positive().required(),
+        latitude: yup.number().required(),
+        longitude: yup.number().required()
+    });
 
-    if (latitude && longitude != 'undefined' && 
-        latitude && longitude != ''          && 
-        survivorId != 'undefined'            &&
-        survivorId != ''                     &&
-        keys.length == 3) {
+    try {
         
+        if (!(await schema.isValid(request.body))) {
+           throw new Error(ERROR_ATTRIBUTS_INVALID);
+        }
+
         next();
         
-    } else {
-
-        return response.status(400).json({"erros": errorTypes.ERROR_VALIDATOR_UPDATE_PLACE });
+    } catch (error) {
+        switch (error.message) {
+            case ERROR_ATTRIBUTS_INVALID:
+                return response.status(400).json({error: ERROR_ATTRIBUTS_INVALID});
+        }
     }
 }
 
