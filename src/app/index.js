@@ -1,6 +1,15 @@
 require('dotenv').config({path: process.cwd() + '/environments/.env'});
 require('../service/sqlite3.service');
+const Server = require('./Server');
 
-const server = require('./server');
+class Index {
+    constructor() {
+        this.init();
+    }
 
-server.use(require('../routes/index.router'));
+    init () {
+        Server.use(require('../routes/index.router'));
+    }
+}
+
+new Index();

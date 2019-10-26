@@ -3,9 +3,9 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     
-    const promesse =  queryInterface.createTable('location', { 
-
-      locationId: {
+    const promise =  queryInterface.createTable('location', { 
+      
+      location_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
@@ -29,7 +29,7 @@ module.exports = {
 
       });
       
-      return promesse;
+      return promise;
 },
   
   down: (queryInterface, Sequelize) => {

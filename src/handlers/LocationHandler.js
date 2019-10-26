@@ -1,12 +1,12 @@
-const locationRepository = require('../repository/location.repository');
+const locationRepository = require('../repository/LocationRepository');
 
 const updateLocation = async (request, response) => {
 
     try {
         
-        const { survivorId, ...locations } = request.body;
+        const { survivor_id, ...locations } = request.body;
         
-        const updated = await locationRepository.update(survivorId, locations);
+        const updated = await locationRepository.update(survivor_id, locations);
         
         return response.status(200).json({updated});
         

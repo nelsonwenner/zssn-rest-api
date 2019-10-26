@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "tests": "mocha --timeout 30000 tests/",
-    "nodemon": "nodemon src/app/index.js"
+    "nodemon": "nodemon src/app/Index.js"
   },
   "repository": {
     "type": "git",

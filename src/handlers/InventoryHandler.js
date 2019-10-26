@@ -1,11 +1,11 @@
-const inventoryRepository = require('../repository/inventory.repository');
+const inventoryRepository = require('../repository/InventoryRepository');
 
 const trade = async (request, response) => {
 
     try {
 
         const { sender, target } = request.body;
-
+        
         sender.keysItens.forEach(key => {
             sender.inventory[key] -= sender.requestInventory[key];
             target.inventory[key] += sender.requestInventory[key];
@@ -16,8 +16,10 @@ const trade = async (request, response) => {
             sender.inventory[key] += target.requestInventory[key];
         });
 
-        await sender.inventory.save();
-        await target.inventory.save();
+        Promise.all([
+            sender.inventory.save(), 
+            target.inventory.save()
+        ]);
 
         return response.status(200).json({sender: sender.inventory, targer: target.inventory});
 

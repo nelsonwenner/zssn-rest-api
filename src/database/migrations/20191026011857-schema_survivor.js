@@ -3,41 +3,41 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     
-      const promesse = queryInterface.createTable('survivor', { 
+      const promise = queryInterface.createTable('survivor', { 
         
-        survivorId: {
+        survivor_id: {
             type: Sequelize.INTEGER,
             allowNull: false,
             autoIncrement: true,
             primaryKey: true 
         },
         
-        inventoryId: {
+        inventory_id: {
             type: Sequelize.INTEGER,
             onDelete: 'cascade',
             references: {
                 model: 'Inventory',
-                key: 'inventoryId',
+                key: 'inventory_id',
                 as: 'inventory',
             }
         },
         
-        locationId: {
+        location_id: {
             type: Sequelize.INTEGER,
             onDelete: 'cascade',
             references: {
                 model: 'Location',
-                key: 'locationId',
-                as: 'lastLocation',
+                key: 'location_id',
+                as: 'last_location',
             }
         },
         
-        isInfected: {
+        infected: {
             type: Sequelize.BOOLEAN,
             defaultValue: false
         },
 
-        flags: {
+        flags_infected: {
             type: Sequelize.INTEGER,
             defaultValue: 0,
         },
@@ -59,10 +59,10 @@ module.exports = {
         
         createdAt: Sequelize.DATE,
         updatedAt: Sequelize.DATE
-
+        
         });
 
-        return promesse;
+        return promise;
   },
 
   down: (queryInterface, Sequelize) => {

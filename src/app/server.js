@@ -1,9 +1,16 @@
 const Express = require('express');
 
-const server = Express();
+class Server {
+    constructor() {
+        this.server = Express();
+        this.init();
+    }
 
-server.listen(process.env.SERVER_PORT, process.env.SERVER_HOST, (msg) => {
-    console.log('\nServer start with successfully!');
-});
+    init () {
+        this.server.listen(process.env.SERVER_PORT, process.env.SERVER_HOST, (msg) => {
+            console.log('\nServer start with successfully!');
+        });
+    }
+}
 
-module.exports = server;
+module.exports = new Server().server;

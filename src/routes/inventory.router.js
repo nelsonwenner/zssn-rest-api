@@ -1,5 +1,5 @@
-const inventoryHandlers = require('../handlers/inventory.handlers');
-const middlewareTrade = require('../middleware/trade.middleware');
+const inventoryHandlers = require('../handlers/InventoryHandler');
+const middlewareTrade = require('../middleware/TradeMiddleware');
 const router = require('./config.router');
 
 module.exports = [

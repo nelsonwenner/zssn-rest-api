@@ -1,73 +1,74 @@
-const Sequelize = require('sequelize');
-const db = require('../service/sqlite3.service');
-const Inventory = require('./Inventory');
-const Location = require('./Location');
+const { Sequelize, Model } = require('sequelize');
 
-const model = {
+class Survivor extends Model {
     
-    survivorId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true 
-    },
-    
-    inventoryId: {
-        type: Sequelize.INTEGER,
-        onDelete: 'cascade',
-        references: {
-            model: 'Inventory',
-            key:  'inventoryId',
-            as: 'inventory',
-        }
-    },
+    static init(sequelize) {
+        super.init({
 
-    locationId: {
-        type: Sequelize.INTEGER,
-        onDelete: 'cascade',
-        references: {
-            model: 'Location',
-            key: 'locationId',
-            as: 'lastLocation',
-        }
-    },
-    
-    isInfected: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
-    },
+            survivor_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                autoIncrement: true,
+                primaryKey: true 
+            },
+            
+            inventory_id: {
+                type: Sequelize.INTEGER,
+                onDelete: 'cascade',
+                references: {
+                    model: 'Inventory',
+                    key:  'inventory_id',
+                    as: 'inventory',
+                }
+            },
+        
+            location_id: {
+                type: Sequelize.INTEGER,
+                onDelete: 'cascade',
+                references: {
+                    model: 'Location',
+                    key: 'location_id',
+                    as: 'last_location',
+                }
+            },
+        
+            infected: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false
+            },
+        
+            flags_infected: {
+                type: Sequelize.INTEGER,
+                defaultValue: 0,
+            },
+            
+            name: {
+                type: Sequelize.STRING(30),
+                allowNull: false
+            },
+        
+            age: {
+                type: Sequelize.INTEGER(2),
+                allowNull: false
+            },
+        
+            sex: {
+                type: Sequelize.STRING(9),
+                allowNull: false
+            },
+        
+            createdAt: Sequelize.DATE,
+            updatedAt: Sequelize.DATE
+        }, {
+            sequelize
+        });
+    }
 
-    flags: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-    },
-    
-    name: {
-        type: Sequelize.STRING(30),
-        allowNull: false
-    },
-
-    age: {
-        type: Sequelize.INTEGER(2),
-        allowNull: false
-    },
-
-    sex: {
-        type: Sequelize.STRING(9),
-        allowNull: false
-    },
-
-    createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.DATE
-
+    /* Relations 1:1 */
+    static associate (models) {
+        this.hasOne(models.Inventory, {as: 'inventory', foreignKey: 'inventory_id', onDelete: 'cascade'});
+        this.hasOne(models.Location, {as: 'last_location', foreignKey: 'location_id', onDelete: 'cascade'});
+    }
 }
-
-const Survivor = db.define('survivor', model);
-
-/* Relations 1:1 */
-Survivor.hasOne(Inventory, {as: 'inventory', foreignKey: 'inventoryId', onDelete: 'cascade'});
-
-/* Relations 1:1 */
-Survivor.hasOne(Location, {as: 'lastLocation', foreignKey: 'locationId', onDelete: 'cascade'});
 
 module.exports = Survivor;
