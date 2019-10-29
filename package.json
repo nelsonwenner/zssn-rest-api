@@ -4,7 +4,7 @@
   "description": "API Zombie Survival Social Network",
   "main": "index.js",
   "scripts": {
-    "tests": "mocha --timeout 30000 tests/",
+    "tests": "mocha --timeout 10000 tests/",
     "nodemon": "nodemon src/app/Index.js"
   },
   "repository": {
@@ -27,9 +27,9 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
     "dotenv": "^8.1.0",
     "mocha": "^6.2.1",
-    "nodemon": "^1.19.3"
+    "nodemon": "^1.19.3",
+    "supertest": "^4.0.2"
   }
 }

@@ -1,26 +1,18 @@
 const Sequelize = require('sequelize');
+const config = require('../database/config/config');
 const Survivor = require('../models/Survivor');
 const Location = require('../models/Location');
 const Inventoy = require('../models/Inventory');
 
-const autenticateDataBase = {
-    database: process.env.SQLITE3_DB,
-    username: process.env.SQLITE3_USER,
-    password: process.env.SQLITE3_PASSWORD,
-    dialect: 'sqlite',
-    storage: process.cwd() + "/src/database/database.sqlite",
-    define : {
-        freezeTableName: true
-    }
-};
+console.log("\nMode: ", process.env.NODE_ENV);
 
 class Connection {
     constructor() {
-        this.init();
+        this.connect = this.init();
     }
     
     init () {
-        let connection = new Sequelize(autenticateDataBase);
+        let connection = new Sequelize(config[process.env.NODE_ENV]);
 
         Survivor.init(connection);
         Inventoy.init(connection);
@@ -31,6 +23,8 @@ class Connection {
         connection.authenticate().then((msg) => {
             console.log("\nDatabase started successfully\n");
         });
+
+        return connection;
     }
 }
 
