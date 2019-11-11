@@ -1,4 +1,4 @@
-import { ERROR_VALIDATION } from '../utils/errorTypes';
+import notice from '../utils/errorTypes';
 import * as Yup from 'yup';
 
 class SurvivorMiddleware {
@@ -26,15 +26,15 @@ class SurvivorMiddleware {
         try {
             
             if (!(await schema.isValid(request.body))) {
-               throw new Error(ERROR_VALIDATION);
+               throw new Error(notice.ERROR_VALIDATION);
             }
             
             next();
             
         } catch (error) {
             switch (error.message) {
-                case ERROR_VALIDATION:
-                    return response.status(400).json({error: ERROR_VALIDATION});
+                case notice.ERROR_VALIDATION:
+                    return response.status(400).json({error: notice.ERROR_VALIDATION});
             }
         }
     }
