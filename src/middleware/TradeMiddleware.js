@@ -1,15 +1,15 @@
-const { calcPoints, verifyValuesInventory } = require('../repository/InventoryRepository');
-const survivorRepository = require('../repository/SurvivorRepository');
-const { INVENTORY_ATTRIBUTES } = require('../utils/attributes');
+import { calcPoints, verifyValuesInventory } from '../repository/InventoryRepository';
+import survivorRepository from '../repository/SurvivorRepository';
+import { INVENTORY_ATTRIBUTES } from '../utils/attributes';
 
-const { 
+import { 
     ERROR_SURVIVAL_INFECTED,
     ERROR_QUANTITY_ITENS_INVENTORY_INVALID,
     ERROR_AMOUNT_POINTS_NOT_EQUALS,
     ERROR_ATTRIBUTS_INVALID,
     ERROR_SURVIVORS_NOT_EXISTS,
     ERROR_IDS_EQUALS
-} = require('../utils/errorTypes');
+} from '../utils/errorTypes';
 
 class TradeMiddleware {
 
@@ -100,7 +100,7 @@ class TradeMiddleware {
     }
 }
 
-verifyParams = (payload, keysAuthorized) => {
+const verifyParams = (payload, keysAuthorized) => {
     const countkeys = Object.keys(keysAuthorized ).length;
     const keysParams = Object.keys(payload);
     let verify = [];
@@ -111,7 +111,7 @@ verifyParams = (payload, keysAuthorized) => {
     return false;
 }
 
-keys = (json) => {
+const keys = (json) => {
     let newKey = [];
     Object.keys(json).forEach((k) => {
         if (json[k] != 0) newKey.push(k);
@@ -119,4 +119,4 @@ keys = (json) => {
     return newKey;
 }
 
-module.exports = new TradeMiddleware();
+export default new TradeMiddleware();

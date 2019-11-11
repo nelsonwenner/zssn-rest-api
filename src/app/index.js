@@ -1,14 +1,17 @@
-require('dotenv').config({path: process.cwd() + '/environments/.env'});
-require('../service/sqlite3.service');
-const Server = require('./Server');
+import router from '../routes/index.router';
+import '../service/database.service';
+import { config } from 'dotenv';
+import Server from './Server';
+
+config();
 
 class Index {
     constructor() {
         this.init();
     }
 
-    init () {
-        Server.use(require('../routes/index.router'));
+    init() {
+        Server.use(router);
     }
 }
 

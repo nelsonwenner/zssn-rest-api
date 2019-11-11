@@ -1,9 +1,9 @@
-const locationHandlers = require('../handlers/LocationHandler');
-const middlewareLocation = require('../middleware/LocationMiddleware');
-const router = require('./config.router');
+import middlewareLocation from '../middleware/LocationMiddleware';
+import locationHandlers from '../handlers/LocationHandler';
+import router from './config.router';
 
-module.exports = [
+export default [
 
     router.put('/api/v1/survivors/locations/', middlewareLocation.validatorUpdatePasition, locationHandlers.updateLocation)
 
-];
+]

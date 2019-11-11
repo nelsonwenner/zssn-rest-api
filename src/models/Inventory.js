@@ -1,4 +1,4 @@
-const { Sequelize, Model } = require('sequelize');
+import Sequelize, { Model } from 'sequelize';
 
 class Inventory extends Model {
     static init(sequelize) {
@@ -39,10 +39,14 @@ class Inventory extends Model {
             createdAt: Sequelize.DATE,
             updatedAt: Sequelize.DATE
 
-        }, {
+        }, 
+        {
             sequelize
-        });
+        }
+        );
+
+        return this;
     }
 }
 
-module.exports = Inventory;
+export default Inventory;

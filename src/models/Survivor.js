@@ -1,4 +1,4 @@
-const { Sequelize, Model } = require('sequelize');
+import Sequelize, { Model } from 'sequelize';
 
 class Survivor extends Model {
     
@@ -59,9 +59,13 @@ class Survivor extends Model {
         
             createdAt: Sequelize.DATE,
             updatedAt: Sequelize.DATE
-        }, {
+        }, 
+        {
             sequelize
-        });
+        }
+        );
+
+        return this;
     }
 
     /* Relations 1:1 */
@@ -71,4 +75,4 @@ class Survivor extends Model {
     }
 }
 
-module.exports = Survivor;
+export default Survivor;

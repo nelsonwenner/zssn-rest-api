@@ -1,11 +1,11 @@
-const survivor = require('./survivor.router');
-const location = require('./location.router');
-const inventory = require('./inventory.router');
+import inventory from './inventory.router';
+import survivor from './survivor.router';
+import location from './location.router';
 
-module.exports = [
+export default [
 
     survivor,
     inventory,
     location
 
-];
+]

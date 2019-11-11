@@ -2,10 +2,9 @@
   "name": "zombie-survival-social-network",
   "version": "0.0.1",
   "description": "API Zombie Survival Social Network",
-  "main": "index.js",
+  "main": "Index.js",
   "scripts": {
-    "tests": "mocha --timeout 10000 tests/",
-    "nodemon": "nodemon src/app/Index.js"
+    "start": "nodemon src/app/Index.js"
   },
   "repository": {
     "type": "git",
@@ -30,6 +29,7 @@
     "dotenv": "^8.1.0",
     "mocha": "^6.2.1",
     "nodemon": "^1.19.3",
+    "sucrase": "^3.10.1",
     "supertest": "^4.0.2"
   }
 }

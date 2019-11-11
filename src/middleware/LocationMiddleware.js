@@ -1,5 +1,5 @@
-const { ERROR_ATTRIBUTS_INVALID } = require('../utils/errorTypes');
-const yup = require('yup');
+import { ERROR_ATTRIBUTS_INVALID } from '../utils/errorTypes';
+import yup from 'yup';
 
 class LocationMiddleware {
     
@@ -28,4 +28,4 @@ class LocationMiddleware {
     }
 }
 
-module.exports = new LocationMiddleware();
+export default new LocationMiddleware();

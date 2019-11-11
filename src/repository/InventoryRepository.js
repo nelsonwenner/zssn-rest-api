@@ -1,9 +1,9 @@
-const inventoryModel = require('../models/Inventory');
+import Inventory from '../models/Inventory';
 
 class InventoryRespository {
 
     async create(data) {
-        const invetory = new inventoryModel(data);
+        const invetory = new Inventory(data);
         return await invetory.save();
     }
 
@@ -30,9 +30,9 @@ class InventoryRespository {
     }
 
     async listAll() {
-        return await inventoryModel.findAll({});
+        return await Inventory.findAll({});
     }
 
 }
 
-module.exports = new InventoryRespository();
+export default new InventoryRespository();

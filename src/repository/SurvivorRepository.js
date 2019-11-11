@@ -1,6 +1,6 @@
-const Survivor = require('../models/Survivor');
-const Inventory = require('../models/Inventory');
-const Location = require('../models/Location');
+import Inventory from '../models/Inventory';
+import Survivor from '../models/Survivor';
+import Location from '../models/Location';
 
 class SurvivorRepository {
 
@@ -49,4 +49,4 @@ class SurvivorRepository {
 
 }
 
-module.exports = new SurvivorRepository();
+export default new SurvivorRepository();

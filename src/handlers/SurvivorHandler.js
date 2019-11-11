@@ -1,6 +1,6 @@
-const survivorRepository = require('../repository/SurvivorRepository');
-const inventoryRepository = require('../repository/InventoryRepository');
-const locationRepository = require('../repository/LocationRepository');
+import inventoryRepository from '../repository/InventoryRepository';
+import survivorRepository from '../repository/SurvivorRepository';
+import locationRepository from '../repository/LocationRepository';
 
 class SurvivorHandler {
 
@@ -142,5 +142,5 @@ class SurvivorHandler {
     }
 }
 
-module.exports = new SurvivorHandler();
+export default new SurvivorHandler();
 

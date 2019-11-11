@@ -9,7 +9,7 @@ const ERROR_IDS_EQUALS = "Ids equals, invalid operation";
 const ERROR_AMOUNT_POINTS_NOT_EQUALS = "Item points not equals";
 const ERROR_VALIDATION = "Validation Error";
 
-module.exports = { 
+export default { 
     ERROR_VALIDATOR_UPDATE_PLACE,
     ERROR_SURVIVAL_INFECTED,
     ERROR_QUANTITY_ITENS_INVENTORY_INVALID,

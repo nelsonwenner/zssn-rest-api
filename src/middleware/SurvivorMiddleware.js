@@ -1,25 +1,25 @@
-const { ERROR_VALIDATION } = require('../utils/errorTypes');
-const yup = require('yup');
+import { ERROR_VALIDATION } from '../utils/errorTypes';
+import * as Yup from 'yup';
 
 class SurvivorMiddleware {
     
     async validatorSurvivor (request, response, next) {
 
-        const schema = yup.object().shape({
-            name: yup.string().required(),
-            age: yup.number().integer().positive().required(),
-            sex: yup.string().required(),
+        const schema = Yup.object().shape({
+            name: Yup.string().required(),
+            age: Yup.number().integer().positive().required(),
+            sex: Yup.string().required(),
     
-            inventory: yup.object().shape({
-                water: yup.number().integer().positive().required(),
-                food: yup.number().integer().positive().required(),
-                medication: yup.number().integer().positive().required(),
-                ammunition: yup.number().integer().positive().required()
+            inventory: Yup.object().shape({
+                water: Yup.number().integer().positive().required(),
+                food: Yup.number().integer().positive().required(),
+                medication: Yup.number().integer().positive().required(),
+                ammunition: Yup.number().integer().positive().required()
             }),
             
-            location: yup.object().shape({
-                latitude: yup.number().required(),
-                longitude: yup.number().required()
+            location: Yup.object().shape({
+                latitude: Yup.number().required(),
+                longitude: Yup.number().required()
             })
         });
         
@@ -40,4 +40,4 @@ class SurvivorMiddleware {
     }
 }
 
-module.exports = new SurvivorMiddleware();
+export default new SurvivorMiddleware();

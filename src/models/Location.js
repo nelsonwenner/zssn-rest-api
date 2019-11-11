@@ -1,4 +1,4 @@
-const { Sequelize, Model } = require('sequelize');
+import Sequelize, { Model } from 'sequelize';
 
 class Location extends Model {
     static init(sequelize) {
@@ -26,10 +26,14 @@ class Location extends Model {
             createdAt: Sequelize.DATE,
             updatedAt: Sequelize.DATE
 
-        }, {
+        }, 
+        {
             sequelize
-        });
+        }
+        );
+
+        return this;
     }
 }
 
-module.exports = Location;
+export default Location;

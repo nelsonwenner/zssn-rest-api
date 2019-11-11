@@ -1,14 +1,14 @@
-const survivorRepository = require('../repository/SurvivorRepository');
-const yup = require('yup');
+import survivorRepository from '../repository/SurvivorRepository';
+import yup from 'yup';
 
-const { 
+import { 
     ERROR_ATTRIBUTS_INVALID,
     ERROR_SURVIVORS_NOT_EXISTS,
     ERROR_ATTRIBUTES_EMPTY,
     ERROR_SURVIVOR_REPORT,
     ERROR_SURVIVAL_INFECTED,
     ERROR_IDS_EQUALS
-} = require('../utils/errorTypes');
+} from '../utils/errorTypes';
 
 class FlagMiddleware {
 
@@ -73,4 +73,4 @@ class FlagMiddleware {
     }
 }
 
-module.exports = new FlagMiddleware();
+export default new FlagMiddleware();
