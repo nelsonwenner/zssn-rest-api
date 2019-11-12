@@ -1,14 +1,12 @@
-import { config } from 'dotenv';
+require('dotenv').config({path: process.cwd() + '/environments/.env'});
+const path = require('path');
 
-config({path: process.cwd() + '/environments/.env'});
-
-/*
 module.exports = {
  
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  storage: process.cwd() + '/database.sqlite',
+  storage: path.resolve(__dirname, '../database.sqlite'),
   dialect: "sqlite",
   define: {
     freezeTableName: true,
@@ -16,18 +14,3 @@ module.exports = {
   }
 
 };
-*/
-
-
-export default {
- 
-  username: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  storage: process.cwd() + '/src/database/database.sqlite',
-  dialect: "sqlite",
-  define: {
-    freezeTableName: true,
-  }
-};
-

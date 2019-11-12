@@ -4,8 +4,8 @@ import Location from '../models/Location';
 
 class SurvivorRepository {
 
-    async create(survivorData) {
-        const survivor = new Survivor(survivorData);
+    async create(data) {
+        const survivor = new Survivor(data);
         return await survivor.save();
     }
 

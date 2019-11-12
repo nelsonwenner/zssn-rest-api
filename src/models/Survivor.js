@@ -16,7 +16,7 @@ class Survivor extends Model {
                 type: Sequelize.INTEGER,
                 onDelete: 'cascade',
                 references: {
-                    model: 'Inventory',
+                    model: 'inventory',
                     key:  'inventory_id',
                     as: 'inventory',
                 }
@@ -26,7 +26,7 @@ class Survivor extends Model {
                 type: Sequelize.INTEGER,
                 onDelete: 'cascade',
                 references: {
-                    model: 'Location',
+                    model: 'location',
                     key: 'location_id',
                     as: 'last_location',
                 }
