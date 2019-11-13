@@ -2,12 +2,12 @@
   "name": "zombie-survival-social-network",
   "version": "0.0.1",
   "description": "API Zombie Survival Social Network",
-  "main": "Index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon src/app/Index.js",
+    "start": "nodemon src/app/server.js",
+    "build": "sucrase ./src -d ./dist --transforms imports",
     "pretest": "set NODE_ENV=test&& sequelize db:migrate",
-    "test": "set NODE_ENV=test&& jest",
-    "posttest": "set NODE_ENV=test&& sequelize db:migrate:undo:all"
+    "test": "set NODE_ENV=test&& jest --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -29,10 +29,13 @@
     "yup": "^0.27.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "dotenv": "^8.1.0",
     "jest": "^24.9.0",
+    "mocha": "^6.2.2",
     "nodemon": "^1.19.3",
     "sucrase": "^3.10.1",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
+    "youch": "^2.0.10"
   }
 }

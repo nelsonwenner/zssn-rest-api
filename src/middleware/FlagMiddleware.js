@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 class FlagMiddleware {
 
     async validatorFlag(request, response, next) {
-
+        
         const schema = Yup.object().shape({
             sender_id: Yup.number().integer().positive().required(),
             target_id: Yup.number().integer().positive().required()

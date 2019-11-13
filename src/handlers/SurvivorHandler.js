@@ -5,9 +5,9 @@ import locationRepository from '../repository/LocationRepository';
 class SurvivorHandler {
 
     async store(request, response) {
-      
+        
         try {
-            
+           
             const { location, inventory, ...survivor } = request.body;
 
             const locationModel = await locationRepository.create(location);

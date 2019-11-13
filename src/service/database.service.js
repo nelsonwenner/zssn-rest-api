@@ -17,10 +17,7 @@ class Connection {
         models
         .map(model => model.init(this.connection))
         .map(model => model.associate && model.associate(this.connection.models));
-
-        this.connection.authenticate().then((msg) => {
-            console.log("\nDatabase started successfully\n");
-        });
+        
     }
 }
 

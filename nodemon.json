@@ -2,4 +2,4 @@
     "execMap": {
       "js": "sucrase-node"
     }
-  }
+}

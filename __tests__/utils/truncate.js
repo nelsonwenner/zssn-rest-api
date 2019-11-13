@@ -1,4 +1,4 @@
-import { database } from '../../src/service/database.service';
+import database from '../../src/service/database.service';
 
 const truncate = () => {
     return Promise.all(
