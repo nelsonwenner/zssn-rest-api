@@ -1,9 +1,9 @@
-const Express = require('express');
+import { config } from 'dotenv';
+import app from './App';
 
-const server = Express();
+config();
 
-server.listen(process.env.SERVER_PORT, process.env.SERVER_HOST, (msg) => {
+app.listen(process.env.SERVER_PORT, process.env.SERVER_HOST, () => {
     console.log('\nServer start with successfully!');
 });
-
-module.exports = server;
+  

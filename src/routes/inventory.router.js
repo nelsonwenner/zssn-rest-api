@@ -1,10 +1,10 @@
-const inventoryHandlers = require('../handlers/inventory.handlers');
-const middlewareTrade = require('../middleware/trade.middleware');
-const router = require('./config.router');
+import inventoryHandlers from '../handlers/InventoryHandler';
+import middlewareTrade from '../middleware/TradeMiddleware';
+import router from './config.router';
 
-module.exports = [
+export default [
     
     router.put('/api/v1/survivors/trades/', middlewareTrade.validatorTrade, inventoryHandlers.trade),
     router.get('/api/v1/inventorys/', inventoryHandlers.listAll)
     
-];
+]

@@ -1,9 +1,9 @@
-const bodyParser = require('body-parser');
-const Express = require('express');
+import bodyParser from 'body-parser';
+import { Router } from 'express';
 
-const router = Express();
+const router = Router();
 
 router.use(bodyParser.urlencoded({extended: false}));
 router.use(bodyParser.json());
 
-module.exports = router;
+export default router;

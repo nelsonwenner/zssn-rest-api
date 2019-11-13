@@ -4,8 +4,10 @@
   "description": "API Zombie Survival Social Network",
   "main": "index.js",
   "scripts": {
-    "tests": "mocha --timeout 30000 tests/",
-    "nodemon": "nodemon src/app/index.js"
+    "start": "nodemon src/app/server.js",
+    "build": "sucrase ./src -d ./dist --transforms imports",
+    "pretest": "set NODE_ENV=test&& sequelize db:migrate",
+    "test": "set NODE_ENV=test&& jest --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,7 @@
   },
   "homepage": "https://github.com/nelsondiaas/zombie-survival-social-network#readme",
   "dependencies": {
+    "@sucrase/jest-plugin": "^2.0.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "sequelize": "^5.19.1",
@@ -27,9 +30,12 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
     "dotenv": "^8.1.0",
-    "mocha": "^6.2.1",
-    "nodemon": "^1.19.3"
+    "jest": "^24.9.0",
+    "mocha": "^6.2.2",
+    "nodemon": "^1.19.3",
+    "sucrase": "^3.10.1",
+    "supertest": "^4.0.2",
+    "youch": "^2.0.10"
   }
 }

@@ -1,44 +1,52 @@
-const Sequelize = require('sequelize');
-const db = require('../service/sqlite3.service');
+import Sequelize, { Model } from 'sequelize';
 
-const model = {
+class Inventory extends Model {
+    static init(sequelize) {
+        super.init({
 
-    inventoryId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true 
-    },
+            inventory_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                autoIncrement: true,
+                primaryKey: true 
+            },
+        
+            points: {
+                type: Sequelize.INTEGER,
+                defaultValue: 0
+            },
+        
+            water: {
+                type: Sequelize.INTEGER(),
+                defaultValue: 0
+            },
+        
+            food: {
+                type: Sequelize.INTEGER(),
+                defaultValue: 0
+            },
+        
+            medication: {
+                type: Sequelize.INTEGER(),
+                defaultValue: 0
+            },
+        
+            ammunition: {
+                type: Sequelize.INTEGER(),
+                defaultValue: 0
+            },
+        
+            createdAt: Sequelize.DATE,
+            updatedAt: Sequelize.DATE
 
-    points: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0
-    },
+        }, 
+        {
+            sequelize
+        }
+        );
 
-    water: {
-        type: Sequelize.INTEGER(),
-        defaultValue: 0
-    },
-
-    food: {
-        type: Sequelize.INTEGER(),
-        defaultValue: 0
-    },
-
-    medication: {
-        type: Sequelize.INTEGER(),
-        defaultValue: 0
-    },
-
-    ammunition: {
-        type: Sequelize.INTEGER(),
-        defaultValue: 0
-    },
-
-    createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.DATE
+        return this;
+    }
 }
 
-const Inventory = db.define('inventory', model);
-
-module.exports = Inventory;
+export default Inventory;

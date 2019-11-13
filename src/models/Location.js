@@ -1,32 +1,39 @@
-const Sequelize = require('sequelize');
-const db = require('../service/sqlite3.service');
+import Sequelize, { Model } from 'sequelize';
 
-const model = {
-    
-    locationId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true 
-    },
+class Location extends Model {
+    static init(sequelize) {
+        super.init({
 
-    latitude: {
-        type: Sequelize.DOUBLE,
-        allowNull: true,
-        defaultValue: null,
-    },
-    
-    longitude: {
-        type: Sequelize.DOUBLE,
-        allowNull: true,
-        defaultValue: null
-    },
+            location_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                autoIncrement: true,
+                primaryKey: true 
+            },
+        
+            latitude: {
+                type: Sequelize.DOUBLE,
+                allowNull: true,
+                defaultValue: null,
+            },
+            
+            longitude: {
+                type: Sequelize.DOUBLE,
+                allowNull: true,
+                defaultValue: null
+            },
+        
+            createdAt: Sequelize.DATE,
+            updatedAt: Sequelize.DATE
 
-    createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.DATE
+        }, 
+        {
+            sequelize
+        }
+        );
 
+        return this;
+    }
 }
 
-const Location = db.define('location', model);
-
-module.exports = Location;
+export default Location;
