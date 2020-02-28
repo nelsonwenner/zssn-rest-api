@@ -11,6 +11,14 @@ class Resource extends Model {
                 primaryKey: true 
             },
 
+            inventory_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                references: { model: 'inventory', key: 'inventory_id'},
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE'
+            },
+
             name: {
                 type: Sequelize.STRING,
                 allowNull: false
