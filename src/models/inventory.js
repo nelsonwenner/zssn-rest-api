@@ -18,7 +18,7 @@ class Inventory extends Model {
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE'
             },
-            
+
             createdAt: Sequelize.DATE,
             updatedAt: Sequelize.DATE
 
@@ -29,6 +29,11 @@ class Inventory extends Model {
         );
 
         return this;
+    }
+
+    /* Relations (1, N) Inventory -> Resource */
+    static associate (models) {
+        this.hasMany(models.Resource, {as: 'resources', foreignKey: 'inventory_id', onDelete: 'CASCADE'});
     }
 }
 

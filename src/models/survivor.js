@@ -47,6 +47,11 @@ class Survivor extends Model {
     static associate (models) {
         this.hasOne(models.Location, {as: 'last_location', foreignKey: 'survivor_id', onDelete: 'CASCADE'});
     }
+
+    /* Relations (1, 1) Survivor -> Inventory */
+    static associate (models) {
+        this.hasOne(models.Inventory, {as: 'inventories', foreignKey: 'survivor_id', onDelete: 'CASCADE'});
+    }
 }
 
 export default Survivor;

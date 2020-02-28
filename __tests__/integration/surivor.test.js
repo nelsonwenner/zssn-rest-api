@@ -10,6 +10,25 @@ describe('Survivors', () => {
         await truncate();
     });
     
+    it('Create itens', async (done) => {
+
+        const promisses = [];
+
+        mockes.itens.forEach(async data => {
+
+            const res = await request(app)
+                .post('/itens/')
+                .send({name: data});
+                expect(res.status).to.equal(201);
+                
+                promisses.push(res);
+        });
+
+        await Promise.all(promisses);
+
+        done();
+    });
+    
     it('Create survivor', async (done) => {
 
         const res = await request(app)
@@ -18,7 +37,6 @@ describe('Survivors', () => {
         expect(res.status).to.equal(201);
         
         done();
-
     });
 
 });

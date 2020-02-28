@@ -19,9 +19,13 @@ class Resource extends Model {
                 onDelete: 'CASCADE'
             },
 
-            name: {
-                type: Sequelize.STRING,
-                allowNull: false
+            item_id: {
+                type: Sequelize.INTEGER,
+                unique: true,
+                allowNull: false,
+                references: { model: 'item', key: 'item_id'},
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE'
             },
 
             quantity: {
