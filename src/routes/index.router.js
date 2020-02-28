@@ -1,9 +1,11 @@
-import Survivor from './survivor.router';
-import Item from './item.router';
+import inventoryRouter from './inventory.router';
+import survivorRouter from './survivor.router';
+import itemRouter from './item.router';
 
 export default [
 
-    Survivor,
-    Item
+    survivorRouter,
+    inventoryRouter,
+    itemRouter
 
 ]
