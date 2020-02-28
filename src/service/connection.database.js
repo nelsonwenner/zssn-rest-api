@@ -1,9 +1,12 @@
 import databaseConfig from '../database/config/config';
-import SurvivorModel from '../models/survivor';
-import LocationModel from '../models/location';
+import inventoryModel from '../models/inventory';
+import survivorModel from '../models/survivor';
+import locationModel from '../models/location';
+import resourceModel from '../models/resource';
+import itemModel from '../models/item';
 import Sequelize from 'sequelize';
 
-const models = [SurvivorModel, LocationModel];
+const models = [survivorModel, locationModel, inventoryModel, itemModel, resourceModel];
 
 class ConnectionDatabase {
     constructor() {

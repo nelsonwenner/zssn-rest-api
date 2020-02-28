@@ -4,6 +4,7 @@ import app from '../../src/app/app';
 import request from 'supertest';
 import { expect } from 'chai';
 
+
 describe('Survivors', () => {
 
     beforeAll(async () => {
@@ -28,7 +29,7 @@ describe('Survivors', () => {
 
         done();
     });
-    
+
     it('Create survivor', async (done) => {
 
         const res = await request(app)
@@ -39,5 +40,14 @@ describe('Survivors', () => {
         done();
     });
 
+    it('Create inventory', async (done) => {
+
+        const res = await request(app)
+            .post('/inventory/')
+            .send({survivor_id: 1});
+        expect(res.status).to.equal(201);
+        
+        done();
+    });
 });
 

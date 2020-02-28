@@ -14,7 +14,7 @@ class Inventory extends Model {
             survivor_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-                references: { model: 'survivor', key: 'survivor_id'},
+                references: { model: 'survivor', key: 'survivor_id' },
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE'
             },
@@ -37,4 +37,4 @@ class Inventory extends Model {
     }
 }
 
-export default Location;
+export default Inventory;

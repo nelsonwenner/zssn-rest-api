@@ -2,9 +2,6 @@ const survivor = {
     name: 'nelson',
     age: 27,
     sex: 'masculino',
-    inventory: {
-        
-    },
     location: {
 		latitude: 100.6546578,
 		longitude: -55.4213957
