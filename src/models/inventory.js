@@ -31,10 +31,12 @@ class Inventory extends Model {
         return this;
     }
 
-    /* Relations (1, N) Inventory -> Resource */
     static associate (models) {
+
+        /* Relations (1, N) Inventory -> Resource */
         this.hasMany(models.Resource, {as: 'resources', foreignKey: 'inventory_id', onDelete: 'CASCADE'});
     }
+    
 }
 
 export default Inventory;

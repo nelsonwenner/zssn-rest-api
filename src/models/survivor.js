@@ -43,14 +43,13 @@ class Survivor extends Model {
         return this;
     }
 
-    /* Relations (1, 1) Survivor -> Location */
     static associate (models) {
-        this.hasOne(models.Location, {as: 'last_location', foreignKey: 'survivor_id', onDelete: 'CASCADE'});
-    }
 
-    /* Relations (1, 1) Survivor -> Inventory */
-    static associate (models) {
-        this.hasOne(models.Inventory, {as: 'inventories', foreignKey: 'survivor_id', onDelete: 'CASCADE'});
+        /* Relations (1, 1) Survivor -> Location */
+        this.belongsTo(models.Location, {as: 'last_location', foreignKey: 'survivor_id', onDelete: 'CASCADE'});
+
+        /* Relations (1, 1) Survivor -> Inventory */
+        this.belongsTo(models.Inventory, {as: 'inventory', foreignKey: 'survivor_id', onDelete: 'CASCADE'});
     }
 }
 

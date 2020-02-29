@@ -44,6 +44,12 @@ class Resource extends Model {
 
         return this;
     }
+
+    static associate (models) {
+
+        /* Relations (1, 1) Resource -> Item */
+        this.belongsTo(models.Item, {as: 'item', foreignKey: 'item_id', onDelete: 'CASCADE'});
+    }
 }
 
 export default Resource;

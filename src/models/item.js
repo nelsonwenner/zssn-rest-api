@@ -28,8 +28,9 @@ class Item extends Model {
         return this;
     }
 
-    /* Relations (1, N) Item -> Resource */
     static associate (models) {
+
+        /* Relations (1, N) Item -> Resource */
         this.hasMany(models.Resource, {as: 'itens', foreignKey: 'item_id', onDelete: 'CASCADE'});
     }
 

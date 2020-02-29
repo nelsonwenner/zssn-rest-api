@@ -34,6 +34,21 @@ class SurvivorHandler {
             }
         }
     }
+
+    async index(req, res) {
+
+        try {
+            
+            const survivors = await survivorRepository.listAll();
+            return res.status(200).json(survivors);
+
+        } catch (error) {
+            switch (error.message) {
+                default:
+                    return res.json({error: error.message });
+            }
+        }
+    }
 }
 
 export default new SurvivorHandler();
