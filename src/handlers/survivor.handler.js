@@ -22,7 +22,7 @@ class SurvivorHandler {
                 item_id: data.item,
                 quantity: data.quantity}));
             });
-
+            
             await Promise.all(promisses);
 
             return res.status(201).json({survivor_id: survivor_id});

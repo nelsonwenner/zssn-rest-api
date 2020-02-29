@@ -21,7 +21,6 @@ class Resource extends Model {
 
             item_id: {
                 type: Sequelize.INTEGER,
-                unique: true,
                 allowNull: false,
                 references: { model: 'item', key: 'item_id'},
                 onUpdate: 'CASCADE',
