@@ -1,0 +1,7 @@
+const ERROR_ITEM_DOES_NOT_EXIST = "ITEM DOES NOT EXIST";
+
+export default {
+
+    ERROR_ITEM_DOES_NOT_EXIST
+
+}
