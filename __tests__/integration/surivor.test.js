@@ -12,17 +12,15 @@ describe('Survivors', () => {
     });
     
     it('Create itens', async (done) => {
-
-        const promisses = [];
         
-        mockes.itens.forEach(async data => {
+        const promisses = mockes.itens.map(async (data, index) => {
 
             const res = await request(app)
                 .post('/itens/')
                 .send({name: data});
-                expect(res.status).to.equal(201);
-            
-            promisses.push(res);
+
+            expect(res.status).to.equal(201);
+    
         });
 
         await Promise.all(promisses);
@@ -35,6 +33,7 @@ describe('Survivors', () => {
         const res = await request(app)
             .post('/survivors/')
             .send(mockes.validator01);
+
         expect(res.status).to.equal(400);
         
         done();
@@ -45,6 +44,7 @@ describe('Survivors', () => {
         const res = await request(app)
             .post('/survivors/')
             .send(mockes.validator02);
+
         expect(res.status).to.equal(400);
         
         done();
@@ -55,6 +55,7 @@ describe('Survivors', () => {
         const res = await request(app)
             .post('/survivors/')
             .send(mockes.validator03);
+
         expect(res.status).to.equal(400);
         
         done();
@@ -65,17 +66,29 @@ describe('Survivors', () => {
         const res = await request(app)
             .post('/survivors/')
             .send(mockes.validator04);
+
         expect(res.status).to.equal(400);
         
         done();
     });
+    
+    it('Item does not exists', async (done) => {
 
+        const res = await request(app)
+            .post('/survivors/')
+            .send(mockes.itemNotExists);
+
+        expect(res.status).to.equal(400);
+        
+        done();
+    });
 
     it('Create survivor', async (done) => {
 
         const res = await request(app)
             .post('/survivors/')
             .send(mockes.survivor);
+
         expect(res.status).to.equal(201);
 
         done();
