@@ -3,10 +3,11 @@ import inventoryModel from '../models/inventory';
 import survivorModel from '../models/survivor';
 import locationModel from '../models/location';
 import resourceModel from '../models/resource';
+import flagModel from '../models/flag';
 import itemModel from '../models/item';
 import Sequelize from 'sequelize';
 
-const models = [survivorModel, locationModel, inventoryModel, itemModel, resourceModel];
+const models = [survivorModel, locationModel, inventoryModel, itemModel, resourceModel, flagModel];
 
 class ConnectionDatabase {
     constructor() {
