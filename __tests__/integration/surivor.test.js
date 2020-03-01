@@ -27,7 +27,7 @@ describe('Survivors', () => {
 
         done();
     });
-
+    
     it('Data Validator from survivor, without inventory', async (done) => {
 
         const res = await request(app)

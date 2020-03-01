@@ -42,7 +42,7 @@ class Flag extends Model {
 
             const countFlagsTarget = await flagRepository.countFlags(flag.target_id);
 
-            if (countFlagsTarget == 5) {
+            if (countFlagsTarget === 5) {
 
                 const target = await survivorRepository.get(flag.target_id);
                 target.infected = true;
