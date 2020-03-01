@@ -1,5 +1,6 @@
 import inventoryRepository from '../repositories/inventory.repository';
 
+
 class InventoryHandler {
 
     async store(req, res) {

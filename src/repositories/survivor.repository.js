@@ -4,6 +4,7 @@ import inventoryModel from '../models/inventory';
 import resourceModel from '../models/resource';
 import itemModel from '../models/item';
 
+
 class SurvivorRepository {
 
     async create(data) {
@@ -13,8 +14,8 @@ class SurvivorRepository {
     async listAll() {
         const attributesResource = ['resource_id', 'inventory_id', 'item_id', 'quantity']
         const attributesSurvivor = ['survivor_id', 'infected', 'name', 'age', 'sex']
-        const attributesInventory = ['inventory_id', 'survivor_id']
         const attributesLocation = ['location_id', 'latitude', 'longitude']
+        const attributesInventory = ['inventory_id', 'survivor_id']
         const attributesItem = ['item_id', 'name']
        
         return await survivorModel.findAll({attributes: attributesSurvivor, include: [
@@ -25,6 +26,14 @@ class SurvivorRepository {
                 ]},
             ]}
         ]});
+    }
+    
+    async get(id) {
+        return await survivorModel.findByPk(id);
+    }
+    
+    async isInfected(id) {
+        return await survivorModel.findOne({where: {suvivor_id: id, infected: true}});
     }
 }
 

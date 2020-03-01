@@ -1,5 +1,6 @@
 import inventoryModel from '../models/inventory';
 
+
 class InventoryRepository {
 
     async create(data) {

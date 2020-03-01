@@ -11,7 +11,7 @@ export default async (req, res, next) => {
             inventory: Yup.array().of(
                 Yup.object().shape({
                     item: Yup.number().integer().positive().required(),
-                    quantity: Yup.number().integer().positive().required(),
+                    quantity: Yup.number().integer().required(),
                 }).required()
             ).required(),
             location: Yup.object().shape({

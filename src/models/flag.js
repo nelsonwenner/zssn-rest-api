@@ -29,7 +29,6 @@ class Flag extends Model {
 
             createdAt: Sequelize.DATE,
             updatedAt: Sequelize.DATE
-
         }, 
         {
             sequelize
@@ -38,11 +37,11 @@ class Flag extends Model {
 
         return this;
     }
-
+    
     static associate (models) {
 
         /* Sender Relations (1, 1) Flag -> Survivor */
-        this.belongsTo(models.Survivor, {as: 'flaggers', foreignKey: 'sender_id', onDelete: 'CASCADE'});
+        this.belongsTo(models.Survivor, {as: 'senders', foreignKey: 'sender_id', onDelete: 'CASCADE'});
 
         /* Target Relations (1, 1) Flag -> Survivor */
         this.belongsTo(models.Survivor, {as: 'flaggeds', foreignKey: 'target_id', onDelete: 'CASCADE'});

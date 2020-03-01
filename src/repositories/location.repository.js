@@ -1,5 +1,6 @@
 import locationModel from '../models/location';
 
+
 class LocationRepository {
 
     async create(data) {

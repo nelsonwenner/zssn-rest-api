@@ -1,5 +1,6 @@
 import resourceModel from '../models/resource';
 
+
 class ResourceRepository {
 
     async create(data) {
