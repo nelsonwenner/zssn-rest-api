@@ -21,6 +21,9 @@ class FlagRepository {
         return await flagModel.findOne({where: {sender_id: sender_id, target_id: target_id}});
     }
 
+    async countFlags(id) {
+        return await flagModel.count({where: {target_id: id}});
+    }
 }
 
 export default new FlagRepository(); 

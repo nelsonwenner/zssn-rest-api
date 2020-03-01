@@ -1,4 +1,7 @@
+import survivorRepository from '../repositories/survivor.repository';
+import flagRepository from '../repositories/flag.repository';
 import Sequelize, { Model } from 'sequelize';
+
 
 class Flag extends Model {
     static init(sequelize) {
@@ -29,11 +32,23 @@ class Flag extends Model {
 
             createdAt: Sequelize.DATE,
             updatedAt: Sequelize.DATE
-        }, 
+        },
         {
             sequelize
         }
         );
+
+        this.addHook('afterCreate', async (flag) => {
+
+            const countFlagsTarget = await flagRepository.countFlags(flag.target_id);
+
+            if (countFlagsTarget == 5) {
+
+                const target = await survivorRepository.get(flag.target_id);
+                target.infected = true;
+                await target.save();
+            }
+        });
 
         return this;
     }
