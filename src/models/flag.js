@@ -38,12 +38,13 @@ class Flag extends Model {
         }
         );
 
+        /* This trigger is fired right after inserting the flag in the database */
         this.addHook('afterCreate', async (flag) => {
 
             const countFlagsTarget = await flagRepository.countFlags(flag.target_id);
-
+           
             if (countFlagsTarget === 5) {
-
+                
                 const target = await survivorRepository.get(flag.target_id);
                 target.infected = true;
                 await target.save();

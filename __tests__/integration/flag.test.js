@@ -1,35 +1,50 @@
 import survivorRepository from '../../src/repositories/survivor.repository';
 import flagRepository from '../../src/repositories/flag.repository';
-import mockesSurvivor from '../utils/mockes.survivor';
+import survivorBuilder from '../data-builders/mockes.survivor';
+import mockesItens from '../utils/mockes.itens';
 import truncate from '../utils/truncate';
 import app from '../../src/app/app';
 import request from 'supertest';
 import { expect } from 'chai';
 
-const survivors = [
-    mockesSurvivor.survivor1,
-    mockesSurvivor.survivor2,
-    mockesSurvivor.survivor3,
-    mockesSurvivor.survivor4,
-    mockesSurvivor.survivor5,
-    mockesSurvivor.survivor6
-];
-
 
 describe('Flags', () => {
-
+    
     beforeAll(async () => {
         await truncate();
     });
 
+    const indexSurvivor = [];
+    const indexItens = [];
+
+    it('Create itens', async (done) => {
+        
+        const promisses = mockesItens.itens.map(async (data, index) => {
+
+            const res = await request(app)
+                .post('/itens/')
+                .send({name: data});
+
+            indexItens.push(res.body.item_id);
+            expect(res.status).to.equal(201);
+        });
+
+        await Promise.all(promisses);
+
+        done();
+    });
+
     it('Create list from survivors', async (done) => {
 
-        const promisses = survivors.map(async (data, index) => {
+        const quantity = [1, 2, 3, 4, 5, 6];
+
+        const promisses = quantity.map(async (data, index) => {
 
             const res = await request(app)
                 .post('/survivors/')
-                .send(data);
-
+                .send(survivorBuilder.randomSurvivor(indexItens));
+       
+            indexSurvivor.push(res.body.survivor_id);
             expect(res.status).to.equal(201);
         });
 
@@ -40,25 +55,41 @@ describe('Flags', () => {
 
     it('Infecting survivor', async (done) => {
 
-        const indexSurvivor = [1, 2, 3, 4, 5];
+        const target = indexSurvivor[indexSurvivor.length - 1];
 
-        const promisses = indexSurvivor.map(async (data, index) => {
+        const promisses = indexSurvivor.map(async (sender, index) => {
+            
+            if (sender != target) {
+                const res = await request(app)
+                    .post(`/${sender}/flags/${target}/`);
 
-            const res = await request(app)
-                .post(`/${data}/flags/${7}/`);
-
-            expect(res.status).to.equal(201);
+                expect(res.status).to.equal(201);
+            }
         });
 
         await Promise.all(promisses);
 
-        const countFlags = await flagRepository.countFlags(7);
-        const survivorTarget = await survivorRepository.get(7);
-
+        const countFlags = await flagRepository.countFlags(target);
+        const survivorTarget = await survivorRepository.get(target);
+     
         expect(countFlags).to.equal(5);
         expect(survivorTarget.infected).to.equal(true);
-
+        
         done();
     });
 
+    it('Infected survivor, tries to flag another survivor', async (done) => {
+
+        const senderInfected = indexSurvivor[indexSurvivor.length - 1];
+        const target = indexSurvivor[0];
+
+        const res = await request(app)
+            .post(`/${senderInfected}/flags/${target}/`);
+
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+
+        done();
+    });
+    
 });

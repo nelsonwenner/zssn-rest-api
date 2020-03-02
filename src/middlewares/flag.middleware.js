@@ -10,10 +10,14 @@ class FlagMiddleware {
         try {
             
             const { sender_id, target_id } = req.params;
+
+            if (sender_id === target_id) {
+                throw new Error(notice.ERROR_SURVIVOR_EQUALS);
+            }
             
             const sender = await survivorRepository.get(sender_id);
             const target = await survivorRepository.get(target_id);
-            
+
             if (!sender || !target) {
                 throw new Error(notice.ERROR_SURVIVOR_DOES_NOT_EXIST);
             }
@@ -36,6 +40,8 @@ class FlagMiddleware {
                     return res.status(400).json({error: notice.ERROR_SURVIVOR_IS_INFECTED});
                 case notice.ERROR_SURVIVOR_FLAGGED:
                     return res.status(400).json({error: notice.ERROR_SURVIVOR_FLAGGED});
+                case notice.ERROR_SURVIVOR_EQUALS:
+                    return res.status(400).json({error: notice.ERROR_SURVIVOR_EQUALS});
                 default:
                     return res.json({error: error.message });
             }

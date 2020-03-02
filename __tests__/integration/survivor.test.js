@@ -1,3 +1,5 @@
+import survivorBuilder from '../data-builders/mockes.survivor';
+import mockesItens from '../utils/mockes.itens';
 import truncate from '../utils/truncate';
 import mockes from '../utils/mockes';
 import app from '../../src/app/app';
@@ -10,15 +12,18 @@ describe('Survivors', () => {
     beforeAll(async () => {
         await truncate();
     });
+
+    const indexItens = [];
     
     it('Create itens', async (done) => {
         
-        const promisses = mockes.itens.map(async (data, index) => {
+        const promisses = mockesItens.itens.map(async (data, index) => {
 
             const res = await request(app)
                 .post('/itens/')
                 .send({name: data});
 
+            indexItens.push(res.body.item_id);
             expect(res.status).to.equal(201);
     
         });
@@ -84,10 +89,10 @@ describe('Survivors', () => {
     });
 
     it('Create survivor', async (done) => {
-
+    
         const res = await request(app)
             .post('/survivors/')
-            .send(mockes.survivor);
+            .send(survivorBuilder.randomSurvivor(indexItens));
 
         expect(res.status).to.equal(201);
 
