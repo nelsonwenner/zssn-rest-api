@@ -1,5 +1,4 @@
 import databaseConfig from '../database/config/config';
-import database from '../service/connection.database';
 import inventoryModel from '../models/inventory';
 import Sequelize from 'sequelize';
 
@@ -77,9 +76,9 @@ class InventoryRepository {
 
             await Promise.all(
                 instances.map(async (data, index) => {
-
+                    
                     await data.save({ transaction: transaction });
-        
+                    
                 })
             );
 
@@ -88,7 +87,6 @@ class InventoryRepository {
         } catch (error) {
             
             if (transaction) await transaction.rollback();
-
         }
     }
 }
