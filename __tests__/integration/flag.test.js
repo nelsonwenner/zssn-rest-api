@@ -1,6 +1,6 @@
 import survivorRepository from '../../src/repositories/survivor.repository';
 import flagRepository from '../../src/repositories/flag.repository';
-import survivorBuilder from '../data-builders/mockes.survivor';
+import survivorBuilder from '../data-builders/mockes.survivor'
 import mockesItens from '../utils/mockes.itens';
 import truncate from '../utils/truncate';
 import app from '../../src/app/app';
@@ -10,10 +10,6 @@ import { expect } from 'chai';
 
 describe('Flags', () => {
     
-    beforeAll(async () => {
-        await truncate();
-    });
-
     const indexSurvivor = [];
     const indexItens = [];
 
@@ -91,5 +87,20 @@ describe('Flags', () => {
 
         done();
     });
+
+    it('Survivor trying to infect himself', async (done) => {
+
+        const sender = indexSurvivor[0];
+        const target = indexSurvivor[0];
+
+        const res = await request(app)
+            .post(`/${sender}/flags/${target}/`);
+
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+
+        done();
+    });
+    
     
 });

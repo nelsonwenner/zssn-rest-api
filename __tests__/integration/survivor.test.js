@@ -9,10 +9,6 @@ import { expect } from 'chai';
 
 describe('Survivors', () => {
 
-    beforeAll(async () => {
-        await truncate();
-    });
-
     const indexItens = [];
     
     it('Create itens', async (done) => {

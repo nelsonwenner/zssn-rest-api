@@ -29,7 +29,13 @@ class SurvivorRepository {
     }
     
     async get(id) {
-        return await survivorModel.findByPk(id);
+        return await survivorModel.findByPk(id, {include: [
+            {as: 'inventory', model: inventoryModel, include: [
+                {as: 'resources', model: resourceModel, include: [
+                    {as: 'item', model: itemModel},
+                ]},
+            ]}
+        ]});
     }
     
     async isInfected(id) {

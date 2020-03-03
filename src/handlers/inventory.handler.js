@@ -18,6 +18,20 @@ class InventoryHandler {
             }
         }
     }
+
+    async trade(req, res) {
+
+        try {
+            
+            //return res.status(201).json(result);
+
+        } catch (error) {
+            switch (error.message) {
+                default:
+                    return res.json({error: error.message });
+            }
+        }
+    }
 }
 
 export default new InventoryHandler();
