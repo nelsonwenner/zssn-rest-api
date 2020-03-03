@@ -1,4 +1,7 @@
+import databaseConfig from '../database/config/config';
+import database from '../service/connection.database';
 import inventoryModel from '../models/inventory';
+import Sequelize from 'sequelize';
 
 
 class InventoryRepository {
@@ -49,7 +52,7 @@ class InventoryRepository {
 
     async swap(base, resources1, resources2) {
         const instances = [];
-        
+
         base.map((data, index) => {
             resources1.find(itemSender => {
                 if (itemSender.item_id == data.item) {
@@ -66,12 +69,27 @@ class InventoryRepository {
                 }
             });
         });
+    
+        const sequelize = new Sequelize(databaseConfig);
+        const transaction = await sequelize.transaction();
+       
+        try {
 
-        return instances.map(async (data, index) => {
+            await Promise.all(
+                instances.map(async (data, index) => {
 
-            await data.save();
+                    await data.save({ transaction: transaction });
+        
+                })
+            );
 
-        });
+            return await transaction.commit();
+
+        } catch (error) {
+            
+            if (transaction) await transaction.rollback();
+
+        }
     }
 }
 
