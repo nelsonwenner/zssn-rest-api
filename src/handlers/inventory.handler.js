@@ -23,6 +23,7 @@ class InventoryHandler {
 
         try {
             
+            console.log(req.body);
             //return res.status(201).json(result);
 
         } catch (error) {

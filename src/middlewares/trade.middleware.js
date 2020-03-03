@@ -1,5 +1,5 @@
-import survivorRepository from '../repositories/survivor.repository';
 import inventoryRepository from '../repositories/inventory.repository';
+import survivorRepository from '../repositories/survivor.repository';
 import notice from '../utils/error.types';
 
 
@@ -31,13 +31,34 @@ class TradeMiddleware {
                 (inventoryRepository.verifyInventoryValues(target, targetSurvivor.inventory.resources))) {
                 throw new Error(notice.ERROR_INVENTORY_INVALID);
             }
-            
+
+            const payload = {
+                sender: {
+                    survivor: senderSurvivor,
+                    points: inventoryRepository.calcPoints(sender,senderSurvivor.inventory.resources)
+                },
+                target: {
+                    survivor: targetSurvivor,
+                    points: inventoryRepository.calcPoints(target, targetSurvivor.inventory.resources)
+                }
+            }
+
+            if ((payload.sender.points != payload.target.points)) {
+                throw new Error(notice.ERROR_POINS_INCOMPATIBLE);
+            }
+
+            req.body = payload;
+
+            next();
+
         } catch (error) {
             switch (error.message) {
                 case notice.ERROR_SURVIVOR_DOES_NOT_EXIST:
                     return res.status(404).json({error: notice.ERROR_SURVIVOR_DOES_NOT_EXIST});
                 case notice.ERROR_SURVIVOR_IS_INFECTED:
                     return res.status(400).json({error: notice.ERROR_SURVIVOR_IS_INFECTED});
+                case notice.ERROR_POINS_INCOMPATIBLE:
+                    return res.status(400).json({error: notice.ERROR_POINS_INCOMPATIBLE});
                 case notice.ERROR_INVENTORY_INVALID:
                     return res.status(400).json({error: notice.ERROR_INVENTORY_INVALID});
                 case notice.ERROR_SURVIVOR_EQUALS:
