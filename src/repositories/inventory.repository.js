@@ -47,18 +47,30 @@ class InventoryRepository {
         return points;
     }
 
-    swap(base, resources1, resources2) {
+    async swap(base, resources1, resources2) {
+        const instances = [];
+        
         base.map((data, index) => {
             resources1.find(itemSender => {
                 if (itemSender.item_id == data.item) {
                     itemSender.quantity -= data.quantity;
+
                     resources2.find(itemTarget => {
                         if (itemTarget.item_id == data.item) {
                             itemTarget.quantity += data.quantity;
+
+                            instances.push(itemSender);
+                            instances.push(itemTarget);
                         }
                     });
                 }
             });
+        });
+
+        return instances.map(async (data, index) => {
+
+            await data.save();
+
         });
     }
 }

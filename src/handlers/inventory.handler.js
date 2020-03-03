@@ -24,18 +24,17 @@ class InventoryHandler {
         try {
             
             const { sender, target } = req.body;
-
-            inventoryRepository.swap(sender.reqInventory, 
-            sender.survivor.inventory.resources, 
-            target.survivor.inventory.resources);
-
-            inventoryRepository.swap(target.reqInventory, 
-            target.survivor.inventory.resources, 
-            sender.survivor.inventory.resources);
-
+           
             await Promise.all([
-                sender.survivor.inventory.save(), 
-                target.survivor.inventory.save()
+
+                await inventoryRepository.swap(sender.reqInventory, 
+                sender.survivor.inventory.resources, 
+                target.survivor.inventory.resources),
+            
+                await inventoryRepository.swap(target.reqInventory, 
+                target.survivor.inventory.resources, 
+                sender.survivor.inventory.resources)
+
             ]);
 
             return res.status(200).json({
