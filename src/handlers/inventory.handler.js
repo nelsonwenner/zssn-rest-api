@@ -23,8 +23,24 @@ class InventoryHandler {
 
         try {
             
-            console.log(req.body);
-            //return res.status(201).json(result);
+            const { sender, target } = req.body;
+
+            inventoryRepository.swap(sender.reqInventory, 
+            sender.survivor.inventory.resources, 
+            target.survivor.inventory.resources);
+
+            inventoryRepository.swap(target.reqInventory, 
+            target.survivor.inventory.resources, 
+            sender.survivor.inventory.resources);
+
+            await Promise.all([
+                sender.survivor.inventory.save(), 
+                target.survivor.inventory.save()
+            ]);
+
+            return res.status(200).json({
+            sender: sender.survivor.inventory.resources, 
+            target: target.survivor.inventory.resources});
 
         } catch (error) {
             switch (error.message) {

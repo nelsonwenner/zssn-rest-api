@@ -46,6 +46,21 @@ class InventoryRepository {
         });
         return points;
     }
+
+    swap(base, resources1, resources2) {
+        base.map((data, index) => {
+            resources1.find(itemSender => {
+                if (itemSender.item_id == data.item) {
+                    itemSender.quantity -= data.quantity;
+                    resources2.find(itemTarget => {
+                        if (itemTarget.item_id == data.item) {
+                            itemTarget.quantity += data.quantity;
+                        }
+                    });
+                }
+            });
+        });
+    }
 }
 
 export default new InventoryRepository(); 

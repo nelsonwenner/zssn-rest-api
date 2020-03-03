@@ -35,14 +35,18 @@ class TradeMiddleware {
             const payload = {
                 sender: {
                     survivor: senderSurvivor,
-                    points: inventoryRepository.calcPoints(sender,senderSurvivor.inventory.resources)
+                    reqInventory: sender,
+                    points: inventoryRepository.calcPoints(sender, 
+                    senderSurvivor.inventory.resources)
                 },
                 target: {
                     survivor: targetSurvivor,
-                    points: inventoryRepository.calcPoints(target, targetSurvivor.inventory.resources)
+                    reqInventory: target,
+                    points: inventoryRepository.calcPoints(target, 
+                    targetSurvivor.inventory.resources)
                 }
             }
-
+            
             if ((payload.sender.points != payload.target.points)) {
                 throw new Error(notice.ERROR_POINS_INCOMPATIBLE);
             }
