@@ -8,7 +8,7 @@ import request from 'supertest';
 import { expect } from 'chai';
 
 
-describe('Flags', () => {
+describe('Flagging', () => {
     
     const indexSurvivor = [];
     const indexItens = [];
@@ -74,7 +74,7 @@ describe('Flags', () => {
         done();
     });
 
-    it('Infected survivor, tries to flag another survivor', async (done) => {
+    it('Infected survivor, tries to flagging another survivor', async (done) => {
 
         const senderInfected = indexSurvivor[indexSurvivor.length - 1];
         const target = indexSurvivor[0];
@@ -90,8 +90,8 @@ describe('Flags', () => {
 
     it('Survivor trying to infect himself', async (done) => {
 
-        const sender = indexSurvivor[0];
-        const target = indexSurvivor[0];
+        const sender = indexSurvivor[1];
+        const target = indexSurvivor[1];
 
         const res = await request(app)
             .post(`/${sender}/flags/${target}/`);
@@ -101,6 +101,21 @@ describe('Flags', () => {
 
         done();
     });
-    
-    
+
+    it('Survivor flagging twice the same survivor', async (done) => {
+
+        const sender = indexSurvivor[2];
+        const target = indexSurvivor[3];
+   
+        await request(app)
+            .post(`/${sender}/flags/${target}/`);
+   
+        const res = await request(app)
+            .post(`/${sender}/flags/${target}/`);
+ 
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+
+        done();
+    });
 });
