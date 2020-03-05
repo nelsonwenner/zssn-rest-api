@@ -17,7 +17,7 @@ class FlagMiddleware {
             
             const sender = await survivorRepository.get(sender_id);
             const target = await survivorRepository.get(target_id);
-
+            
             if (!sender || !target) {
                 throw new Error(notice.ERROR_SURVIVOR_DOES_NOT_EXIST);
             }

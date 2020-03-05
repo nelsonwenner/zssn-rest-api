@@ -19,11 +19,11 @@ class TradeMiddleware {
             const senderSurvivor = await survivorRepository.get(sender_id);
             const targetSurvivor = await survivorRepository.get(target_id);
 
-            if (!sender || !target) {
+            if (!senderSurvivor || !targetSurvivor) {
                 throw new Error(notice.ERROR_SURVIVOR_DOES_NOT_EXIST);
             }
 
-            if (sender.infected || target.infected) {
+            if (senderSurvivor.infected || targetSurvivor.infected) {
                 throw new Error(notice.ERROR_SURVIVOR_IS_INFECTED);
             }
 

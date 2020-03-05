@@ -83,7 +83,7 @@ describe('Flagging', () => {
             .post(`/${senderInfected}/flags/${target}/`);
 
         expect(res.status).to.equal(400);
-        expect(res.body).to.have.property('error');
+        expect(res.body).to.have.property('error', 'SURVIVOR_IS_INFECTED');
 
         done();
     });
@@ -97,24 +97,38 @@ describe('Flagging', () => {
             .post(`/${sender}/flags/${target}/`);
 
         expect(res.status).to.equal(400);
-        expect(res.body).to.have.property('error');
+        expect(res.body).to.have.property('error', 'YOU CANNOT SELF FLEGGAR');
 
         done();
     });
 
     it('Survivor flagging twice the same survivor', async (done) => {
 
-        const sender = indexSurvivor[2];
-        const target = indexSurvivor[3];
-   
+        const sender = indexSurvivor[3];
+        const target = indexSurvivor[4];
+        
         await request(app)
             .post(`/${sender}/flags/${target}/`);
-   
+        
         const res = await request(app)
             .post(`/${sender}/flags/${target}/`);
- 
+        
         expect(res.status).to.equal(400);
-        expect(res.body).to.have.property('error');
+        expect(res.body).to.have.property('error','YOU ALREADY FLAGGED THIS SURVIVOR');
+
+        done();
+    });
+
+    it('Suvivor does not exists', async (done) => {
+
+        const sender = 1000;
+        const target = indexSurvivor[4];
+
+        const res = await request(app)
+            .post(`/${sender}/flags/${target}/`);
+    
+        expect(res.status).to.equal(404);
+        expect(res.body).to.have.property('error','SURVIVOR_DOES_NOT_EXIST');
 
         done();
     });
