@@ -1,6 +1,7 @@
 import survivorRepository from '../../src/repositories/survivor.repository';
 import flagRepository from '../../src/repositories/flag.repository';
-import survivorBuilder from '../data-builders/mockes.survivor'
+import itemRepository from '../../src/repositories/item.repository';
+import survivorBuilder from '../data-builders/mockes.survivor';
 import mockesItens from '../utils/mockes.itens';
 import truncate from '../utils/truncate';
 import app from '../../src/app/app';
@@ -13,38 +14,31 @@ describe('Flagging', () => {
     const indexSurvivor = [];
     const indexItens = [];
 
-    it('Create itens', async (done) => {
+    it('Flag config', async (done) => {
+
+        const item1 = await itemRepository.create({name: 'Fiji Water'});
+        const item2 = await itemRepository.create({name: 'Campbell Soup'});
+        const item3 = await itemRepository.create({name: 'First Aid Pouch'});
+        const item4 = await itemRepository.create({name: 'AK47'});
+
+        indexItens.push(item1.item_id);
+        indexItens.push(item2.item_id);
+        indexItens.push(item3.item_id);
+        indexItens.push(item4.item_id);
         
-        const promisses = mockesItens.itens.map(async (data, index) => {
-
-            const res = await request(app)
-                .post('/itens/')
-                .send({name: data});
-
-            indexItens.push(res.body.item_id);
-            expect(res.status).to.equal(201);
-        });
-
-        await Promise.all(promisses);
-
-        done();
-    });
-
-    it('Create list from survivors', async (done) => {
-
-        const quantity = [1, 2, 3, 4, 5, 6];
-
-        const promisses = quantity.map(async (data, index) => {
-
-            const res = await request(app)
-                .post('/survivors/')
-                .send(survivorBuilder.randomSurvivor(indexItens));
-       
-            indexSurvivor.push(res.body.survivor_id);
-            expect(res.status).to.equal(201);
-        });
-
-        await Promise.all(promisses);
+        const survivor1 = await survivorBuilder.createRandomSurvivor(indexItens);
+        const survivor2 = await survivorBuilder.createRandomSurvivor(indexItens);
+        const survivor3 = await survivorBuilder.createRandomSurvivor(indexItens);
+        const survivor4 = await survivorBuilder.createRandomSurvivor(indexItens);
+        const survivor5 = await survivorBuilder.createRandomSurvivor(indexItens);
+        const survivor6 = await survivorBuilder.createRandomSurvivor(indexItens);
+        
+        indexSurvivor.push(survivor1);
+        indexSurvivor.push(survivor2);
+        indexSurvivor.push(survivor3);
+        indexSurvivor.push(survivor4);
+        indexSurvivor.push(survivor5);
+        indexSurvivor.push(survivor6);
 
         done();
     });

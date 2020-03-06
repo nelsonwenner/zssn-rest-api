@@ -1,5 +1,5 @@
+import itemRepository from '../../src/repositories/item.repository';
 import survivorBuilder from '../data-builders/mockes.survivor';
-import mockesItens from '../utils/mockes.itens';
 import truncate from '../utils/truncate';
 import mockes from '../utils/mockes';
 import app from '../../src/app/app';
@@ -10,21 +10,29 @@ import { expect } from 'chai';
 describe('Survivors', () => {
 
     const indexItens = [];
-    
+
+    it('Survivor config', async (done) => {
+
+        const item1 = await itemRepository.create({name: 'Fiji Water'});
+        const item2 = await itemRepository.create({name: 'Campbell Soup'});
+        const item3 = await itemRepository.create({name: 'First Aid Pouch'});
+        const item4 = await itemRepository.create({name: 'AK47'});
+        
+        indexItens.push(item1.item_id);
+        indexItens.push(item2.item_id);
+        indexItens.push(item3.item_id);
+        indexItens.push(item4.item_id);
+
+        done();
+    });
+
     it('Create itens', async (done) => {
         
-        const promisses = mockesItens.itens.map(async (data, index) => {
+        const res = await request(app)
+            .post('/itens/')
+            .send({name: 'Fiji Water'});
 
-            const res = await request(app)
-                .post('/itens/')
-                .send({name: data});
-
-            indexItens.push(res.body.item_id);
-            expect(res.status).to.equal(201);
-    
-        });
-
-        await Promise.all(promisses);
+        expect(res.status).to.equal(201);
 
         done();
     });

@@ -26,7 +26,7 @@ class TradeMiddleware {
             if (senderSurvivor.infected || targetSurvivor.infected) {
                 throw new Error(notice.ERROR_SURVIVOR_IS_INFECTED);
             }
-
+            
             if ((inventoryRepository.verifyInventoryValues(sender, senderSurvivor.inventory.resources)) || 
                 (inventoryRepository.verifyInventoryValues(target, targetSurvivor.inventory.resources))) {
                 throw new Error(notice.ERROR_INVENTORY_INVALID);

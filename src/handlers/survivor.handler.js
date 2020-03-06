@@ -28,7 +28,7 @@ class SurvivorHandler {
                 const { survivor_id } = await survivorRepository.create(survivor, {transaction: transaction});
                 await locationRepository.create({survivor_id: survivor_id, ...location}, {transaction: transaction});
                 const { inventory_id } = await inventoryRepository.create({survivor_id: survivor_id}, {transaction: transaction});
-
+                
                 await Promise.all(
                     inventory.map(async (data, index) => {
 
