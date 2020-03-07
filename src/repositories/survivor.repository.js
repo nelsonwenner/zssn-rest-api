@@ -37,6 +37,10 @@ class SurvivorRepository {
             ]}
         ]});
     }
+
+    async infectedOrNotInfected(isInfected) {
+        return await survivorModel.count({where: {infected: isInfected}});
+    }
     
     async isInfected(id) {
         return await survivorModel.findOne({where: {suvivor_id: id, infected: true}});

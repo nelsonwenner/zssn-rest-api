@@ -74,6 +74,73 @@ class SurvivorHandler {
             }
         }
     }
+
+    async report(req, res) {
+
+        try {
+
+            const notInfecteds = await survivorRepository.infectedOrNotInfected(false);
+            const isInfecteds = await survivorRepository.infectedOrNotInfected(true);
+            const survivorAll = await survivorRepository.listAll();
+            const amountLost = await resourceRepository.sum(true);
+            const sumItens = await resourceRepository.sum(false);
+       
+            const payload = [
+                {
+                    description: "Percentage of infected survivors", 
+                    percentage: {
+                        values: ((100 / survivorAll.length ) * isInfecteds)
+                    }
+                },
+                {
+                    description: "Percentage of not infected survivors",
+                    percentage: {
+                        values: ((100 / survivorAll.length ) * notInfecteds)
+                    }
+                },
+                {
+                    description: "Average amount of each resource type per survivor",
+                    FijiWater: {
+                        average: {
+                            values: (sumItens['Fiji Water'] / notInfecteds)
+                        }
+                    },
+                    CampbellSoup: {
+                        average: {
+                            values: (sumItens['Campbell Soup'] / notInfecteds)
+                        }
+                    },
+                    FirstAidPouch: {
+                        average: {
+                            values: (sumItens['First Aid Pouch'] / notInfecteds)
+                        }
+                    },
+                    AK47: {
+                        average: {
+                            values: (sumItens['AK47'] / notInfecteds)
+                        }
+                    }
+                },
+                {
+                    description: "Points lost because of infected survivor.",
+                    points: {
+                        values: ((amountLost['Fiji Water'] * 14) + 
+                                (amountLost['Campbell Soup'] * 12) + 
+                                (amountLost['First Aid Pouch'] * 10) + 
+                                (amountLost['AK47'] * 8))
+                    }
+                }
+            ]
+
+            return res.status(200).json(payload);
+
+        } catch (error) {
+            switch (error.message) {
+                case error.message:
+                    return res.status(400).json({error: error.message });
+            }
+        }
+    }
 }
 
 export default new SurvivorHandler();

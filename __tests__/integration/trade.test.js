@@ -36,7 +36,7 @@ describe('Trade', () => {
 
         done();
     });
-
+    
     it(' ERROR / Suvivor does not exists on trade', async (done) => {
 
         const sender = 1000;

@@ -6,5 +6,6 @@ export default [
 
     router.post('/survivors/', survivorValidator, survivorHandler.store),
     router.get('/survivors/', survivorHandler.index),
+    router.get('/reports/', survivorHandler.report),
 
 ]
