@@ -29,7 +29,7 @@ class FlagHandler {
             const flags = await flagRespoitory.listAll();
 
             return res.status(200).json(flags);
-
+        
         } catch (error) {
             switch (error.message) {
                 default:
