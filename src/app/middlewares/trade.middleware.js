@@ -67,8 +67,6 @@ class TradeMiddleware {
                     return res.status(400).json({error: notice.ERROR_INVENTORY_INVALID});
                 case notice.ERROR_SURVIVOR_EQUALS:
                     return res.status(400).json({error: notice.ERROR_SURVIVOR_EQUALS});
-                default:
-                    return res.json({error: error.message });
             }
         }
     }

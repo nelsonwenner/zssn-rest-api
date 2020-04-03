@@ -9,7 +9,10 @@
     "build": "sucrase ./src -d ./dist --transforms imports",
     "pretest": "NODE_ENV=test sequelize db:migrate",
     "test": "NODE_ENV=test jest",
-    "postest": "NODE_ENV=test sequelize db:migrate:undo:all"
+    "postest": "NODE_ENV=test sequelize db:migrate:undo:all",
+    "pretest-windows": "set NODE_ENV=test&&sequelize db:migrate&&sequelize db:seed:all",
+    "test-windows": "set NODE_ENV=test&&jest",
+    "posttest-windows": "set NODE_ENV=test&&sequelize db:migrate:undo:all"
   },
   "repository": {
     "type": "git",

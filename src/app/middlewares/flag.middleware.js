@@ -42,8 +42,6 @@ class FlagMiddleware {
                     return res.status(400).json({error: notice.ERROR_SURVIVOR_FLAGGED});
                 case notice.ERROR_SURVIVOR_EQUALS:
                     return res.status(400).json({error: notice.ERROR_SURVIVOR_EQUALS});
-                default:
-                    return res.json({error: error.message });
             }
         }
     }

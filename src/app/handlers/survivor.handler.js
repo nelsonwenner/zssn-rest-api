@@ -54,8 +54,6 @@ class SurvivorHandler {
             switch (error.message) {
                 case notice.ERROR_ITEM_DOES_NOT_EXIST:
                     return res.status(404).json({error: notice.ERROR_ITEM_DOES_NOT_EXIST});
-                default:
-                    return res.json({error: error.message });
             }
         }
     }
@@ -136,8 +134,8 @@ class SurvivorHandler {
 
         } catch (error) {
             switch (error.message) {
-                case error.message:
-                    return res.status(400).json({error: error.message });
+                default:
+                    return res.json({error: error.message });
             }
         }
     }
