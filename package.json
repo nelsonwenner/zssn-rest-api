@@ -1,41 +1,44 @@
 {
-  "name": "zombie-survival-social-network",
+  "name": "zssn-rest-api",
   "version": "0.0.1",
   "description": "API Zombie Survival Social Network",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/app/server.js",
+    "start": "nodemon src/server.js",
+    "migrate": "npx sequelize db:migrate",
     "build": "sucrase ./src -d ./dist --transforms imports",
-    "pretest": "set NODE_ENV=test&& sequelize db:migrate",
-    "test": "set NODE_ENV=test&& jest --detectOpenHandles"
+    "pretest": "NODE_ENV=test sequelize db:migrate",
+    "test": "NODE_ENV=test jest",
+    "postest": "NODE_ENV=test sequelize db:migrate:undo:all"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nelsondiaas/zombie-survival-social-network.git"
+    "url": "git+https://github.com/nelsondiaas/zssn-rest-api.git"
   },
   "author": "Nelson Dias",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nelsondiaas/zombie-survival-social-network/issues"
+    "url": "https://github.com/nelsondiaas/zssn-rest-api/issues"
   },
-  "homepage": "https://github.com/nelsondiaas/zombie-survival-social-network#readme",
+  "homepage": "https://github.com/nelsondiaas/zssn-rest-api#readme",
   "dependencies": {
-    "@sucrase/jest-plugin": "^2.0.0",
-    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "sequelize": "^5.19.1",
-    "sequelize-cli": "^5.5.1",
-    "sqlite3": "^4.1.0",
-    "yup": "^0.27.0"
+    "pg": "^8.0.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.5",
+    "yup": "^0.28.1"
   },
   "devDependencies": {
+    "@sucrase/jest-plugin": "^2.0.0",
     "chai": "^4.2.0",
-    "dotenv": "^8.1.0",
-    "jest": "^24.9.0",
-    "mocha": "^6.2.2",
-    "nodemon": "^1.19.3",
-    "sucrase": "^3.10.1",
-    "supertest": "^4.0.2",
-    "youch": "^2.0.10"
+    "dotenv": "^8.2.0",
+    "factory-girl": "^5.0.4",
+    "faker": "^4.1.0",
+    "jest": "^25.1.0",
+    "nodemon": "^2.0.2",
+    "sequelize-cli": "^5.5.1",
+    "sucrase": "^3.12.1",
+    "supertest": "^4.0.2"
   }
 }

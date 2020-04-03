@@ -1,10 +1,11 @@
-import inventoryHandlers from '../handlers/InventoryHandler';
-import middlewareTrade from '../middleware/TradeMiddleware';
+import tradeMiddleware from '../app/middlewares/trade.middleware';
+import inventoryHandler from '../app/handlers/inventory.handler';
 import router from './config.router';
 
+
 export default [
-    
-    router.put('/api/v1/survivors/trades/', middlewareTrade.validatorTrade, inventoryHandlers.trade),
-    router.get('/api/v1/inventorys/', inventoryHandlers.listAll)
-    
+
+    router.post('/inventories/', inventoryHandler.store),
+    router.post('/:sender_id/trades/:target_id/', tradeMiddleware.trade, inventoryHandler.trade)
+
 ]

@@ -1,12 +1,46 @@
-version: "3"
+version: "3.7"
 
 services:
-  node:
-    image: node:10.16-slim
-    container_name: "node-container"
-    working_dir: "/home/node/app"
-    volumes:
-      - ./:/home/node/app
-    ports: 
-      - "3000:3000"
-    command: "npm run nodemon"
+    node:
+        container_name: "node-container"
+        image: node:10.16-slim
+        working_dir: /home/backend
+        volumes:
+            - ./:/home/backend
+        ports: 
+            - "8000:8000"
+        command: "npm run start"
+        depends_on: 
+            - postgres
+        restart: always
+        networks:
+            - database
+
+    postgres:
+        container_name: postgres-container
+        image: library/postgres:9.6-alpine
+        ports: 
+            - "5431:5432"
+        volumes: 
+            - ./docker/postgres/data:/var/lib/postgresql/data
+            - ./scripts/create-multiple-postgresql-databases.sh:/docker-entrypoint-initdb.d/create-multiple-postgresql-databases.sh
+        environment:
+            - POSTGRES_MULTIPLE_DATABASES=${DB_NAME},${DB_NAME_TEST}
+            - POSTGRES_USER=${DB_USER}
+            - POSTGRES_PASSWORD=${DB_PASS}
+        restart: always
+        networks: 
+            - database
+
+    adminer:
+        container_name: adminer-container
+        image: adminer
+        ports:
+            - 8080:8080
+        restart: always
+        networks: 
+            - database
+ 
+networks:
+  database:
+    driver: "bridge"

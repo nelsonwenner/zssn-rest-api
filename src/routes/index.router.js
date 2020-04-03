@@ -1,11 +1,13 @@
-import inventory from './inventory.router';
-import survivor from './survivor.router';
-import location from './location.router';
+import inventoryRouter from './inventory.router';
+import survivorRouter from './survivor.router';
+import itemRouter from './item.router';
+import flagRouter from './flag.router';
 
 export default [
 
-    survivor,
-    inventory,
-    location
+    survivorRouter,
+    inventoryRouter,
+    itemRouter,
+    flagRouter
 
 ]
