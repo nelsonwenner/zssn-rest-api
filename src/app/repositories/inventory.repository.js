@@ -1,4 +1,4 @@
-import databaseConfig from '../database/config/config';
+import databaseConfig from '../../config/config';
 import inventoryModel from '../models/inventory';
 import Sequelize from 'sequelize';
 

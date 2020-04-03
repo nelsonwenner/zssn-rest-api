@@ -1,5 +1,5 @@
-import flagMiddleware from '../middlewares/flag.middleware';
-import flagHandler from '../handlers/flag.handler';
+import flagMiddleware from '../app/middlewares/flag.middleware';
+import flagHandler from '../app/handlers/flag.handler';
 import router from './config.router';
 
 

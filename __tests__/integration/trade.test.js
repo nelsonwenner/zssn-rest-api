@@ -1,8 +1,7 @@
-import survivorRepository from '../../src/repositories/survivor.repository';
-import itemRepository from '../../src/repositories/item.repository';
+import survivorRepository from '../../src/app/repositories/survivor.repository';
+import itemRepository from '../../src/app/repositories/item.repository';
 import survivorBuilder from '../data-builders/mockes.survivor'
-import truncate from '../utils/truncate';
-import app from '../../src/app/app';
+import app from '../../src/app';
 import request from 'supertest';
 import { expect } from 'chai';
 
@@ -40,7 +39,7 @@ describe('Trade', () => {
     it(' ERROR / Suvivor does not exists on trade', async (done) => {
 
         const sender = 1000;
-        const target = indexSurvivor[4];
+        const target = indexSurvivor[3];
 
         const res = await request(app)
             .post(`/${sender}/trades/${target}/`);

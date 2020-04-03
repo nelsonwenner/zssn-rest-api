@@ -3,7 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     
-    return queryInterface.createTable('flag', { 
+    return queryInterface.createTable('flags', { 
 
       flag_id: {
         type: Sequelize.INTEGER,
@@ -15,7 +15,7 @@ module.exports = {
       sender_id: {
           type: Sequelize.INTEGER,
           allowNull: false,
-          references: { model: 'survivor', key: 'survivor_id'},
+          references: { model: 'survivors', key: 'survivor_id'},
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE'
       },
@@ -23,13 +23,13 @@ module.exports = {
       target_id: {
           type: Sequelize.INTEGER,
           allowNull: false,
-          references: { model: 'survivor', key: 'survivor_id'},
+          references: { model: 'survivors', key: 'survivor_id'},
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE'
       },
 
-      createdAt: Sequelize.DATE,
-      updatedAt: Sequelize.DATE
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE
       
     });
     
@@ -37,6 +37,6 @@ module.exports = {
 
   down: (queryInterface, Sequelize) => {
    
-    return queryInterface.dropTable('flag');
+    return queryInterface.dropTable('flags');
   }
 };

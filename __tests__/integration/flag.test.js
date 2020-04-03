@@ -1,10 +1,8 @@
-import survivorRepository from '../../src/repositories/survivor.repository';
-import flagRepository from '../../src/repositories/flag.repository';
-import itemRepository from '../../src/repositories/item.repository';
+import survivorRepository from '../../src/app/repositories/survivor.repository';
+import flagRepository from '../../src/app/repositories/flag.repository';
+import itemRepository from '../../src/app/repositories/item.repository';
 import survivorBuilder from '../data-builders/mockes.survivor';
-import mockesItens from '../utils/mockes.itens';
-import truncate from '../utils/truncate';
-import app from '../../src/app/app';
+import app from '../../src/app';
 import request from 'supertest';
 import { expect } from 'chai';
 

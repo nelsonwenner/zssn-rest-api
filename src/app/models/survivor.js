@@ -31,9 +31,6 @@ class Survivor extends Model {
                 type: Sequelize.STRING,
                 allowNull: false
             },
-            
-            createdAt: Sequelize.DATE,
-            updatedAt: Sequelize.DATE
         }, 
         {
             sequelize

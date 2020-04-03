@@ -3,7 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     
-    return queryInterface.createTable('location', { 
+    return queryInterface.createTable('locations', { 
       
       location_id: {
         type: Sequelize.INTEGER,
@@ -15,7 +15,7 @@ module.exports = {
       survivor_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'survivor', key: 'survivor_id'},
+        references: { model: 'survivors', key: 'survivor_id'},
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
@@ -32,8 +32,8 @@ module.exports = {
         defaultValue: null
       },
 
-      createdAt: Sequelize.DATE,
-      updatedAt: Sequelize.DATE
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE
 
       });
     
@@ -41,7 +41,7 @@ module.exports = {
   
   down: (queryInterface, Sequelize) => {
   
-    return queryInterface.dropTable('location');
+    return queryInterface.dropTable('locations');
     
   }
 };

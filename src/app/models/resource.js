@@ -14,7 +14,7 @@ class Resource extends Model {
             inventory_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-                references: { model: 'inventory', key: 'inventory_id'},
+                references: { model: 'inventories', key: 'inventory_id'},
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE'
             },
@@ -22,7 +22,7 @@ class Resource extends Model {
             item_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-                references: { model: 'item', key: 'item_id'},
+                references: { model: 'items', key: 'item_id'},
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE'
             },
@@ -31,10 +31,6 @@ class Resource extends Model {
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
-           
-            createdAt: Sequelize.DATE,
-            updatedAt: Sequelize.DATE
-
         }, 
         {
             sequelize

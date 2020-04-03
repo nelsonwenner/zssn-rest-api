@@ -17,7 +17,7 @@ class Flag extends Model {
             sender_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-                references: { model: 'survivor', key: 'survivor_id'},
+                references: { model: 'survivors', key: 'survivor_id'},
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE'
             },
@@ -25,13 +25,10 @@ class Flag extends Model {
             target_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-                references: { model: 'survivor', key: 'survivor_id'},
+                references: { model: 'survivors', key: 'survivor_id'},
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE'
             },
-
-            createdAt: Sequelize.DATE,
-            updatedAt: Sequelize.DATE
         },
         {
             sequelize

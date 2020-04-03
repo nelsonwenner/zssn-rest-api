@@ -1,13 +1,13 @@
-import databaseConfig from '../database/config/config';
-import inventoryModel from '../models/inventory';
-import survivorModel from '../models/survivor';
-import locationModel from '../models/location';
-import resourceModel from '../models/resource';
-import flagModel from '../models/flag';
-import itemModel from '../models/item';
+import databaseConfig from '../config/config';
+import inventoryModel from '../app/models/inventory';
+import survivorModel from '../app/models/survivor';
+import locationModel from '../app/models/location';
+import resourceModel from '../app/models/resource';
+import flagModel from '../app/models/flag';
+import itemModel from '../app/models/item';
 import Sequelize from 'sequelize';
 
-const models = [survivorModel, locationModel, inventoryModel, itemModel, resourceModel, flagModel];
+const models = [survivorModel, locationModel, itemModel, inventoryModel, resourceModel, flagModel];
 
 class ConnectionDatabase {
     constructor() {

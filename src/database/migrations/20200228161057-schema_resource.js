@@ -3,7 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
    
-    return queryInterface.createTable('resource', {
+    return queryInterface.createTable('resources', {
 
       resource_id: {
         type: Sequelize.INTEGER,
@@ -15,7 +15,7 @@ module.exports = {
       inventory_id: {
           type: Sequelize.INTEGER,
           allowNull: false,
-          references: { model: 'inventory', key: 'inventory_id'},
+          references: { model: 'inventories', key: 'inventory_id'},
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE'
       },
@@ -23,7 +23,7 @@ module.exports = {
       item_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'item', key: 'item_id'},
+        references: { model: 'items', key: 'item_id'},
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
@@ -33,8 +33,8 @@ module.exports = {
           allowNull: false
       },
 
-      createdAt: Sequelize.DATE,
-      updatedAt: Sequelize.DATE
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE
 
     });
     
@@ -42,6 +42,6 @@ module.exports = {
 
   down: (queryInterface, Sequelize) => {
    
-    return queryInterface.dropTable('resource');
+    return queryInterface.dropTable('resources');
   }
 };

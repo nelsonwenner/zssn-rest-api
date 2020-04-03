@@ -1,5 +1,5 @@
-import tradeMiddleware from '../middlewares/trade.middleware';
-import inventoryHandler from '../handlers/inventory.handler';
+import tradeMiddleware from '../app/middlewares/trade.middleware';
+import inventoryHandler from '../app/handlers/inventory.handler';
 import router from './config.router';
 
 

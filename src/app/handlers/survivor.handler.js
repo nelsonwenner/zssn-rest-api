@@ -3,7 +3,7 @@ import survivorRepository from '../repositories/survivor.repository';
 import locationRepository from '../repositories/location.repository';
 import resourceRepository from '../repositories/resource.repository';
 import itemRepository from '../repositories/item.repository';
-import databaseConfig from '../database/config/config';
+import databaseConfig from '../../config/config';
 import notice from '../utils/error.types';
 import Sequelize from 'sequelize';
 

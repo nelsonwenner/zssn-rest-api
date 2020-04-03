@@ -1,5 +1,5 @@
-import survivorValidator from '../validators/survivor.validator';
-import survivorHandler from '../handlers/survivor.handler';
+import survivorValidator from '../app/validators/survivor.validator';
+import survivorHandler from '../app/handlers/survivor.handler';
 import router from './config.router';
 
 export default [

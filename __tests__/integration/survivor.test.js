@@ -1,8 +1,7 @@
-import itemRepository from '../../src/repositories/item.repository';
+import itemRepository from '../../src/app/repositories/item.repository';
 import survivorBuilder from '../data-builders/mockes.survivor';
-import truncate from '../utils/truncate';
 import mockes from '../utils/mockes';
-import app from '../../src/app/app';
+import app from '../../src/app';
 import request from 'supertest';
 import { expect } from 'chai';
 

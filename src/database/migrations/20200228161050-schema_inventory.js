@@ -3,7 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     
-    return queryInterface.createTable('inventory', { 
+    return queryInterface.createTable('inventories', { 
       
       inventory_id: {
         type: Sequelize.INTEGER,
@@ -15,19 +15,19 @@ module.exports = {
       survivor_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'survivor', key: 'survivor_id'},
+        references: { model: 'survivors', key: 'survivor_id'},
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
 
-      createdAt: Sequelize.DATE,
-      updatedAt: Sequelize.DATE
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE
 
       });
   },
 
   down: (queryInterface, Sequelize) => {
    
-    return queryInterface.dropTable('inventory');
+    return queryInterface.dropTable('inventories');
   }
 };

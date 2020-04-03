@@ -14,14 +14,10 @@ class Inventory extends Model {
             survivor_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-                references: { model: 'survivor', key: 'survivor_id' },
+                references: { model: 'survivors', key: 'survivor_id' },
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE'
             },
-
-            createdAt: Sequelize.DATE,
-            updatedAt: Sequelize.DATE
-
         }, 
         {
             sequelize

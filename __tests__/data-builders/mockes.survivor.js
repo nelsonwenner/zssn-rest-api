@@ -1,7 +1,7 @@
-import inventoryRepository from '../../src/repositories/inventory.repository';
-import survivorRepository from '../../src/repositories/survivor.repository';
-import locationRepository from '../../src/repositories/location.repository';
-import resourceRepository from '../../src/repositories/resource.repository';
+import inventoryRepository from '../../src/app/repositories/inventory.repository';
+import survivorRepository from '../../src/app/repositories/survivor.repository';
+import locationRepository from '../../src/app/repositories/location.repository';
+import resourceRepository from '../../src/app/repositories/resource.repository';
 import faker from 'faker';
 
 
