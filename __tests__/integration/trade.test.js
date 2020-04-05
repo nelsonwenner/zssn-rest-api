@@ -44,7 +44,7 @@ describe(`${prefix}`, () => {
         await data.infectSurvivor(target.body.survivor_id);
       
         const res = await request(app)
-            .post(`/${sender.body.survivor_id}/trades/${target.body.survivor_id}/`);
+            .post(`/${sender.body.survivor_id}${prefix}${target.body.survivor_id}/`);
 
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('error', 'SURVIVOR_IS_INFECTED');
@@ -58,7 +58,7 @@ describe(`${prefix}`, () => {
         const target = await request(app).post('/survivors/').send(data.Survivor());
 
         const res = await request(app)
-            .post(`/${sender.body.survivor_id}/trades/${target.body.survivor_id}/`)
+            .post(`/${sender.body.survivor_id}${prefix}${target.body.survivor_id}/`)
             .send({
                 sender: [
                     {item: 1, quantity: 100},
@@ -76,6 +76,33 @@ describe(`${prefix}`, () => {
 
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('error', 'INVENTORY_INVALID');
+        
+        done();
+    });
+
+    it('It should not perform the exchange, Checking the values ​​of the informed inventory, find out if you really have these quantity of items / status: 200', async (done) => {
+    
+        const sender = await request(app).post('/survivors/').send(data.Survivor());
+        const target = await request(app).post('/survivors/').send(data.Survivor());
+  
+        const res = await request(app)
+            .post(`/${sender.body.survivor_id}${prefix}${target.body.survivor_id}/`)
+            .send({
+                sender: [
+                    {item: 1, quantity: 1},
+                    {item: 2, quantity: 0},
+                    {item: 3, quantity: 0},
+                    {item: 4, quantity: 0}
+                ],
+                target: [
+                    {item: 1, quantity: 1},
+                    {item: 2, quantity: 0},
+                    {item: 3, quantity: 0},
+                    {item: 4, quantity: 0}
+                ]
+            });
+        
+        expect(res.status).to.equal(200);
         
         done();
     });
