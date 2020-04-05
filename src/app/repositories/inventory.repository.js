@@ -33,16 +33,16 @@ class InventoryRepository {
         reqResources.map((data, index) => {
             resources.find(x => {
                 if (x.item_id === data.item && x.item.name === 'Fiji Water') {
-                    points += data.quantity * 14;
+                    points += data.quantity * x.item.value;
                 }
                 else if (x.item_id === data.item && x.item.name === 'Campbell Soup') {
-                    points += data.quantity * 12;
+                    points += data.quantity * x.item.value;
                 }
                 else if (x.item_id === data.item && x.item.name === 'First Aid Pouch') {
-                    points += data.quantity * 10;
+                    points += data.quantity * x.item.value;
                 }
                 else if (x.item_id === data.item && x.item.name === 'AK47') {
-                    points += data.quantity * 8;
+                    points += data.quantity * x.item.value;
                 }
             });
         });

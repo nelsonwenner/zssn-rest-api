@@ -15,6 +15,11 @@ class Item extends Model {
                 type: Sequelize.STRING,
                 allowNull: false
             },
+
+            value: {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
         }, 
         {
             sequelize
