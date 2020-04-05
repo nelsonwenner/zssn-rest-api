@@ -26,7 +26,6 @@ const Survivor = () => {
 const Location = () => {
 
     return Object.assign({
-
         latitude: faker.address.latitude,
         longitude: faker.address.longitude,
     });
