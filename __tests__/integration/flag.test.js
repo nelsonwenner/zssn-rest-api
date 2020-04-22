@@ -75,7 +75,7 @@ describe(`${prefix}`, () => {
         done();
     });
 
-    it('It should the survivor must not signal the same survivor twice', async (done) => {
+    it('It should the survivor must not signal the same survivor twice / status: 400', async (done) => {
 
         const sender = indexSurvivor[3];
         const target = indexSurvivor[4];
@@ -92,5 +92,17 @@ describe(`${prefix}`, () => {
         done();
     });
 
+    it('It should the survivor not flagging. Suvivor does not exists / status: 404', async (done) => {
 
+        const sender = 1000;
+        const target = indexSurvivor[4];
+
+        const res = await request(app)
+            .post(`/${sender}/flags/${target}/`);
+    
+        expect(res.status).to.equal(404);
+        expect(res.body).to.have.property('error','SURVIVOR_DOES_NOT_EXIST');
+
+        done();
+    });
 });
