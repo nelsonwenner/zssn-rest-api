@@ -45,4 +45,20 @@ describe(`${prefix}`, () => {
         done();
     });
 
+    
+    it('It should not  Infecting survivor. Infected survivor tries to flagging another survivor / status: 400', async (done) => {
+
+        const senderInfected = indexSurvivor[indexSurvivor.length - 1];
+        const target = indexSurvivor[0];
+        
+        const res = await request(app)
+            .post(`/${senderInfected}/flags/${target}/`);
+
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error', 'SURVIVOR_IS_INFECTED');
+
+        done();
+    });
+
+
 });
