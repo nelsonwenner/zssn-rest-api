@@ -21,6 +21,10 @@ class ItemRepository {
         if (count) { return true; }
         return false;
     }
+    
+    async listAll() {
+        return await itemModel.findAll({});
+    }
 }
 
 export default new ItemRepository();

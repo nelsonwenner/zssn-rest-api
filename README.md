@@ -7,16 +7,16 @@
 </h1>
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/nelsondiaas/zssn-rest-api?color=%2304D361">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/nelsonwenner/zssn-rest-api?color=%2304D361">
 
   <a href="https://github.com/nelsondiaas">
-    <img alt="Made by @nelsondiaas" src="https://img.shields.io/badge/made%20by-%40nelsondiaas-%2304D361">
+    <img alt="Made by @nelsonwenner" src="https://img.shields.io/badge/made%20by-%40nelsonwenner-%2304D361">
   </a>
 
   <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361">
 
   <a href="https://github.com/nelsondiaas/zssn-rest-api/stargazers">
-    <img alt="Stargazers" src="https://img.shields.io/github/stars/nelsondiaas/zssn-rest-api?style=social">
+    <img alt="Stargazers" src="https://img.shields.io/github/stars/nelsonwenner/zssn-rest-api?style=social">
   </a>
 </p>
 
@@ -84,4 +84,250 @@ $ npm run test
 
 $ npm run postest
 ```
+## Endpoints access
+
+<details><summary><b>API</b></summary><blockquote>
+
+<details><summary><b>Survivors</b></summary><blockquote>
+
+#### Allowed methods = [GET, POST]
+
+[POST] http://www.hostname.com/survivors/
+
+##### Sample request
+
+```json
+{
+	"name": "nelson",
+	"age": 20,
+	"sex": "masculino",
+	"inventory": [
+		{"item": 1, "quantity": 1},
+		{"item": 2, "quantity": 1},
+		{"item": 3, "quantity": 10},
+		{"item": 4, "quantity": 6}
+	],
+	"location": {
+		"latitude": 140.6546578,
+		"longitude": -33.4213957
+	}
+}
+```
+
+[GET] http://www.hostname.com/survivors/
+
+##### Sample response
+
+```json
+{
+
+  "survivor_id": 1,
+  "infected": false,
+  "name": "nelson",
+  "age": 20,
+  "sex": "masculino",
+  "last_location": {
+    "location_id": 1,
+    "latitude": 140.6546578,
+    "longitude": -33.4213957
+  },
+  "inventory": {
+    "inventory_id": 1,
+    "survivor_id": 1,
+    "resources": [
+      {
+        "resource_id": 1,
+        "inventory_id": 1,
+        "item_id": 1,
+        "quantity": 1,
+        "item": {
+          "item_id": 1,
+          "name": "Fiji Water"
+        }
+      },
+      {
+        "resource_id": 2,
+        "inventory_id": 1,
+        "item_id": 2,
+        "quantity": 1,
+        "item": {
+          "item_id": 2,
+          "name": "Campbell Soup"
+        }
+      },
+      {
+        "resource_id": 3,
+        "inventory_id": 1,
+        "item_id": 4,
+        "quantity": 6,
+        "item": {
+          "item_id": 4,
+          "name": "AK47"
+        }
+      },
+      {
+        "resource_id": 4,
+        "inventory_id": 1,
+        "item_id": 3,
+        "quantity": 10,
+        "item": {
+          "item_id": 3,
+          "name": "First Aid Pouch"
+        }
+      }
+    ]
+  }
+
+}
+```
+</details>
+
+<details><summary><b>Flags</b></summary><blockquote>
+
+#### Allowed methods = [POST]
+
+[POST] http://www.hostname.com/sender_id/flags/target_id/
+
+##### Sample request
+</details>
+
+<details><summary><b>trades</b></summary><blockquote>
+
+#### Allowed methods = [POST]
+
+[POST] http://www.hostname.com/sender_id/trades/target_id/
+
+##### Sample request
+
+```json
+{
+  "sender": [
+		{"item": 1, "quantity": 1},
+		{"item": 2, "quantity": 0},
+		{"item": 3, "quantity": 0},
+		{"item": 4, "quantity": 0}
+	],
+	"target": [
+		{"item": 1, "quantity": 1},
+		{"item": 2, "quantity": 0},
+		{"item": 3, "quantity": 0},
+		{"item": 4, "quantity": 0}
+  ]
+}
+```
+</details>
+
+<details><summary><b>itens</b></summary><blockquote>
+
+#### Allowed methods = [POST, GET]
+
+[POST] http://www.hostname.com/itens/
+
+##### Sample request
+
+```json
+{
+	"name": "AK47"
+}
+```
+[GET] http://www.hostname.com/itens/
+
+##### Sample request
+
+```json
+[
+  {
+    "item_id": 1,
+    "name": "Fiji Water",
+    "value": 14,
+    "createdAt": "2020-04-22T20:00:33.674Z",
+    "updatedAt": "2020-04-22T20:00:33.674Z"
+  },
+  {
+    "item_id": 2,
+    "name": "Campbell Soup",
+    "value": 12,
+    "createdAt": "2020-04-22T20:00:33.674Z",
+    "updatedAt": "2020-04-22T20:00:33.674Z"
+  },
+  {
+    "item_id": 3,
+    "name": "First Aid Pouch",
+    "value": 10,
+    "createdAt": "2020-04-22T20:00:33.674Z",
+    "updatedAt": "2020-04-22T20:00:33.674Z"
+  },
+  {
+    "item_id": 4,
+    "name": "AK47",
+    "value": 8,
+    "createdAt": "2020-04-22T20:00:33.674Z",
+    "updatedAt": "2020-04-22T20:00:33.674Z"
+  }
+]
+```
+</details>
+
+<details><summary><b>reports</b></summary><blockquote>
+
+#### Allowed methods = [GET]
+
+[POST] http://www.hostname.com/reports/
+
+##### Sample request
+
+```json
+[
+  {
+    "description": "Percentage of infected survivors",
+    "percentage": {
+      "values": 0
+    }
+  },
+  {
+    "description": "Percentage of not infected survivors",
+    "percentage": {
+      "values": 100
+    }
+  },
+  {
+    "description": "Average amount of each resource type per survivor",
+    "FijiWater": {
+      "average": {
+        "values": 1
+      }
+    },
+    "CampbellSoup": {
+      "average": {
+        "values": 1
+      }
+    },
+    "FirstAidPouch": {
+      "average": {
+        "values": 10
+      }
+    },
+    "AK47": {
+      "average": {
+        "values": 6
+      }
+    }
+  },
+  {
+    "description": "Points lost because of infected survivor.",
+    "points": {
+      "values": 0
+    }
+  }
+]
+```
+</details>
+
+</details>
+
+## License
+
+Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
+
+
 ---
