@@ -50,12 +50,27 @@ describe(`${prefix}`, () => {
 
         const senderInfected = indexSurvivor[indexSurvivor.length - 1];
         const target = indexSurvivor[0];
-        
+
         const res = await request(app)
             .post(`/${senderInfected}/flags/${target}/`);
 
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('error', 'SURVIVOR_IS_INFECTED');
+
+        done();
+    });
+
+    
+    it('It should Infecting not survivor. Survivor trying to infect himself. / status: 400', async (done) => {
+
+        const sender = indexSurvivor[1];
+        const target = indexSurvivor[1];
+
+        const res = await request(app)
+            .post(`/${sender}/flags/${target}/`);
+
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error', 'YOU CANNOT SELF FLEGGAR');
 
         done();
     });
