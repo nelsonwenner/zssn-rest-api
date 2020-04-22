@@ -5,6 +5,7 @@ import { expect } from 'chai';
 
 const prefix = '/trades/';
 
+const indexSurvivors = [];
 
 describe(`${prefix}`, () => {
     
@@ -38,12 +39,12 @@ describe(`${prefix}`, () => {
     });
 
     it('It should not perform the exchange, trying to trade Infected survivor, tries to trade another survivor / status: 400', async (done) => {
-    
+        
         const sender = await request(app).post('/survivors/').send(data.Survivor());
         const target = await request(app).post('/survivors/').send(data.Survivor());
      
         await data.infectSurvivor(target.body.survivor_id);
-      
+        
         const res = await request(app)
             .post(`/${sender.body.survivor_id}${prefix}${target.body.survivor_id}/`);
 
@@ -188,6 +189,42 @@ describe(`${prefix}`, () => {
         expect(res.body.target[3].quantity).to.equal(3);
         expect(res.body.target[0].quantity).to.equal(36);
         expect(res.body.target[2].quantity).to.equal(19);
+
+        indexSurvivors.push({sender: sender.body.survivor_id, target: target.body.survivor_id});
+
+        done();
+    });
+
+    it('It should perform the exchange, survivors exchanging items / test: {2/2} status: 200', async (done) => {
+        
+        const res = await request(app)
+            .post(`/${indexSurvivors[0].sender}${prefix}${indexSurvivors[0].target}/`)
+            .send({
+                sender: [
+                    {item: 1, quantity: 0},
+                    {item: 2, quantity: 0},
+                    {item: 3, quantity: 4},
+                    {item: 4, quantity: 0}
+                ],
+                target: [
+                    {item: 1, quantity: 0},
+                    {item: 2, quantity: 2},
+                    {item: 3, quantity: 0},
+                    {item: 4, quantity: 2}
+                ]
+            });
+        
+        expect(res.status).to.equal(200);
+        
+        /* Sender */
+        expect(res.body.sender[2].quantity).to.equal(5);
+        expect(res.body.sender[1].quantity).to.equal(32);
+        expect(res.body.sender[3].quantity).to.equal(17);
+        
+        /* Target */
+        expect(res.body.target[1].quantity).to.equal(16);
+        expect(res.body.target[3].quantity).to.equal(1);
+        expect(res.body.target[2].quantity).to.equal(23);
 
         done();
     });
