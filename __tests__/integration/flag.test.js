@@ -75,5 +75,22 @@ describe(`${prefix}`, () => {
         done();
     });
 
+    it('It should the survivor must not signal the same survivor twice', async (done) => {
+
+        const sender = indexSurvivor[3];
+        const target = indexSurvivor[4];
+        
+        await request(app)
+            .post(`/${sender}/flags/${target}/`);
+        
+        const res = await request(app)
+            .post(`/${sender}/flags/${target}/`);
+        
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error','YOU ALREADY FLAGGED THIS SURVIVOR');
+
+        done();
+    });
+
 
 });
