@@ -46,7 +46,7 @@ class SurvivorHandler {
                 return res.status(201).json({survivor_id: survivor_id});
 
             } catch (error) {
-
+     
                 if (transaction) await transaction.rollback();
             }
 

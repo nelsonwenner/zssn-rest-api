@@ -7,6 +7,7 @@ const prefix = '/trades/';
 
 
 describe(`${prefix}`, () => {
+    
 
     it('It should not perform the exchange, the survivor does not exist / status: 404', async (done) => {
        
@@ -40,7 +41,7 @@ describe(`${prefix}`, () => {
     
         const sender = await request(app).post('/survivors/').send(data.Survivor());
         const target = await request(app).post('/survivors/').send(data.Survivor());
-        
+     
         await data.infectSurvivor(target.body.survivor_id);
       
         const res = await request(app)
@@ -56,8 +57,8 @@ describe(`${prefix}`, () => {
     
         const sender = await request(app).post('/survivors/').send(data.Survivor());
         const target = await request(app).post('/survivors/').send(data.Survivor());
-
-        const res = await request(app)
+      
+        const { status, body } = await request(app)
             .post(`/${sender.body.survivor_id}${prefix}${target.body.survivor_id}/`)
             .send({
                 sender: [
@@ -74,8 +75,8 @@ describe(`${prefix}`, () => {
                 ]
             });
 
-        expect(res.status).to.equal(400);
-        expect(res.body).to.have.property('error', 'INVENTORY_INVALID');
+        expect(status).to.equal(400);
+        expect(body).to.have.property('error', 'INVENTORY_INVALID');
         
         done();
     });
@@ -104,6 +105,90 @@ describe(`${prefix}`, () => {
         
         expect(res.status).to.equal(200);
         
+        done();
+    });
+
+    it('It should not perform the exchange, survivors with incompatible item points / status: 400', async (done) => {
+        
+        const sender = await request(app).post('/survivors/').send(data.Survivor());
+        const target = await request(app).post('/survivors/').send(data.Survivor());
+  
+        const res = await request(app)
+            .post(`/${sender.body.survivor_id}${prefix}${target.body.survivor_id}/`)
+            .send({
+                sender: [
+                    {item: 1, quantity: 2},
+                    {item: 2, quantity: 0},
+                    {item: 3, quantity: 0},
+                    {item: 4, quantity: 0}
+                ],
+                target: [
+                    {item: 1, quantity: 1},
+                    {item: 2, quantity: 0},
+                    {item: 3, quantity: 0},
+                    {item: 4, quantity: 0}
+                ]
+            });
+        
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error', 'NUMBER OF POINTS ARE INCOMPATIBLE');
+
+        done();
+    });
+
+    it('It should perform the exchange, survivors exchanging items / test: {1/2} status: 200', async (done) => {
+        
+        const dataSender = data.Survivor();
+        const dataTarget = data.Survivor();
+
+        dataSender.inventory = [
+            {item: 1, quantity: 31},
+            {item: 2, quantity: 24},
+            {item: 3, quantity: 14},
+            {item: 4, quantity: 9}
+        ]
+
+        dataTarget.inventory = [
+            {item: 1, quantity: 31},
+            {item: 2, quantity: 24},
+            {item: 3, quantity: 14},
+            {item: 4, quantity: 9}
+        ]
+
+        const sender = await request(app).post('/survivors/').send(dataSender);
+        const target = await request(app).post('/survivors/').send(dataTarget);
+        
+        const res = await request(app)
+            .post(`/${sender.body.survivor_id}${prefix}${target.body.survivor_id}/`)
+            .send({
+                sender: [
+                    {item: 1, quantity: 5},
+                    {item: 2, quantity: 0},
+                    {item: 3, quantity: 5},
+                    {item: 4, quantity: 0}
+                ],
+                target: [
+                    {item: 1, quantity: 0},
+                    {item: 2, quantity: 6},
+                    {item: 3, quantity: 0},
+                    {item: 4, quantity: 6}
+                ]
+            });
+        
+        expect(res.status).to.equal(200);
+
+        /* Sender */
+        expect(res.body.sender[0].quantity).to.equal(26);
+        expect(res.body.sender[2].quantity).to.equal(9);
+        expect(res.body.sender[1].quantity).to.equal(30);
+        expect(res.body.sender[3].quantity).to.equal(15);
+        
+        /* Target */
+        expect(res.body.target[1].quantity).to.equal(18);
+        expect(res.body.target[3].quantity).to.equal(3);
+        expect(res.body.target[0].quantity).to.equal(36);
+        expect(res.body.target[2].quantity).to.equal(19);
+
         done();
     });
 

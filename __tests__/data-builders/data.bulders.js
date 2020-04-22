@@ -17,8 +17,8 @@ const Survivor = () => {
             {item: 4, quantity: random.int(1, 20)}
         ],
         location: {
-            latitude: faker.address.latitude(),
-            longitude: faker.address.longitude()
+            latitude: parseInt(faker.address.latitude(), 10),
+            longitude: parseInt(faker.address.longitude(), 10) 
         }
     });
 };
@@ -34,7 +34,7 @@ const Location = () => {
 const infectSurvivor = async (id) => {
     const survivor = await survivorRepository.get(id);
     survivor.infected = true;
-    await survivor.save();
+    return await survivor.save();
 } 
 
 
