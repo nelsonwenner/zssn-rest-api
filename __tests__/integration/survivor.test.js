@@ -1,104 +1,103 @@
-import itemRepository from '../../src/app/repositories/item.repository';
-import survivorBuilder from '../data-builders/mockes.survivor';
-import mockes from '../utils/mockes';
+import data from '../data-builders/data.bulders';
 import app from '../../src/app';
 import request from 'supertest';
 import { expect } from 'chai';
 
+const prefix = '/survivors/';
 
-describe('Survivors', () => {
 
-    const indexItens = [];
+describe(`${prefix}`, () => {
 
-    it('Survivor config', async (done) => {
-
-        const item1 = await itemRepository.create({name: 'Fiji Water'});
-        const item2 = await itemRepository.create({name: 'Campbell Soup'});
-        const item3 = await itemRepository.create({name: 'First Aid Pouch'});
-        const item4 = await itemRepository.create({name: 'AK47'});
+    it('It should create survivor with success / status: 201', async (done) => {
         
-        indexItens.push(item1.item_id);
-        indexItens.push(item2.item_id);
-        indexItens.push(item3.item_id);
-        indexItens.push(item4.item_id);
-
-        done();
-    });
-
-    it('Create itens', async (done) => {
+        const survivor = data.Survivor();
         
         const res = await request(app)
-            .post('/itens/')
-            .send({name: 'Fiji Water'});
-
+            .post(prefix)
+            .send(survivor);
+        
         expect(res.status).to.equal(201);
 
         done();
     });
     
-    it('Data Validator from survivor, without inventory', async (done) => {
+    it('It should cannot register survivor, without inventory / status: 400', async (done) => {
+
+        const survivor = data.Survivor();
+
+        survivor.inventory = "";
 
         const res = await request(app)
-            .post('/survivors/')
-            .send(mockes.validator01);
+            .post(prefix)
+            .send(survivor);
 
         expect(res.status).to.equal(400);
         
         done();
     });
 
-    it('Data Validator from survivor, without location', async (done) => {
+    it('It should cannot register survivor, without location / status: 400', async (done) => {
+
+        const survivor = data.Survivor();
+        
+        survivor.location = "";
 
         const res = await request(app)
-            .post('/survivors/')
-            .send(mockes.validator02);
+            .post(prefix)
+            .send(survivor);
 
         expect(res.status).to.equal(400);
         
         done();
     });
 
-    it('Data Validator from survivor, with latitude of location bigger what 180', async (done) => {
+    it('It should cannot register survivor, with latitude of location bigger what 180 / status: 400', async (done) => {
+
+        const survivor = data.Survivor();
+
+        survivor.location = {latitude: 191.6546578, longitude: -55.4213957};
 
         const res = await request(app)
-            .post('/survivors/')
-            .send(mockes.validator03);
+            .post(prefix)
+            .send(survivor);
 
         expect(res.status).to.equal(400);
         
         done();
     });
 
-    it('Data Validator from survivor, with latitude of location smaller what -180', async (done) => {
+    it('It should cannot register survivor, with latitude of location smaller what -180 / status: 400', async (done) => {
+
+        const survivor = data.Survivor();
+
+        survivor.location = {latitude: 100.6546578, longitude: -190.4213957};
 
         const res = await request(app)
-            .post('/survivors/')
-            .send(mockes.validator04);
-
-        expect(res.status).to.equal(400);
-        
-        done();
-    });
-    
-    it('Item does not exists', async (done) => {
-
-        const res = await request(app)
-            .post('/survivors/')
-            .send(mockes.itemNotExists);
+            .post(prefix)
+            .send(survivor);
 
         expect(res.status).to.equal(400);
         
         done();
     });
 
-    it('Create survivor', async (done) => {
-    
+    it('It should cannot register survivor does item not exist / status: 404', async (done) => {
+
+        const survivor = data.Survivor();
+
+        survivor.inventory = [
+            {item: 1, quantity: 4},
+            {item: 2, quantity: 2},
+            {item: 3, quantity: 1},
+            {item: 10, quantity: 6}
+        ];
+
         const res = await request(app)
-            .post('/survivors/')
-            .send(survivorBuilder.randomSurvivor(indexItens));
+            .post(prefix)
+            .send(survivor);
 
-        expect(res.status).to.equal(201);
-
+        expect(res.status).to.equal(404);
+        
         done();
     });
 });

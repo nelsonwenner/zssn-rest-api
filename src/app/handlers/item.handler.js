@@ -18,6 +18,21 @@ class ItemHandler {
             }
         }
     }
+
+    async index(req, res) {
+
+        try {
+            
+            const item = await itemRepository.listAll();
+            return res.status(200).json(item);
+
+        } catch (error) {
+            switch (error.message) {
+                default:
+                    return res.json({error: error.message });
+            }
+        }
+    }
 }
 
 export default new ItemHandler();

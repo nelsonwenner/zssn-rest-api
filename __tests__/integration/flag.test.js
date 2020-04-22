@@ -1,72 +1,52 @@
 import survivorRepository from '../../src/app/repositories/survivor.repository';
 import flagRepository from '../../src/app/repositories/flag.repository';
-import itemRepository from '../../src/app/repositories/item.repository';
-import survivorBuilder from '../data-builders/mockes.survivor';
+import data from '../data-builders/data.bulders';
 import app from '../../src/app';
 import request from 'supertest';
 import { expect } from 'chai';
 
+const prefix = '/flags/';
 
-describe('Flagging', () => {
-    
-    const indexSurvivor = [];
-    const indexItens = [];
+describe(`${prefix}`, () => {
 
-    it('Flag config', async (done) => {
+    let indexSurvivor;
 
-        const item1 = await itemRepository.create({name: 'Fiji Water'});
-        const item2 = await itemRepository.create({name: 'Campbell Soup'});
-        const item3 = await itemRepository.create({name: 'First Aid Pouch'});
-        const item4 = await itemRepository.create({name: 'AK47'});
-
-        indexItens.push(item1.item_id);
-        indexItens.push(item2.item_id);
-        indexItens.push(item3.item_id);
-        indexItens.push(item4.item_id);
-        
-        const survivor1 = await survivorBuilder.createRandomSurvivor(indexItens);
-        const survivor2 = await survivorBuilder.createRandomSurvivor(indexItens);
-        const survivor3 = await survivorBuilder.createRandomSurvivor(indexItens);
-        const survivor4 = await survivorBuilder.createRandomSurvivor(indexItens);
-        const survivor5 = await survivorBuilder.createRandomSurvivor(indexItens);
-        const survivor6 = await survivorBuilder.createRandomSurvivor(indexItens);
-        
-        indexSurvivor.push(survivor1);
-        indexSurvivor.push(survivor2);
-        indexSurvivor.push(survivor3);
-        indexSurvivor.push(survivor4);
-        indexSurvivor.push(survivor5);
-        indexSurvivor.push(survivor6);
-
-        done();
+    beforeAll(async () => {
+        indexSurvivor = await Promise.all([
+            data.createRandomSurvivor(),
+            data.createRandomSurvivor(),
+            data.createRandomSurvivor(),
+            data.createRandomSurvivor(),
+            data.createRandomSurvivor(),
+            data.createRandomSurvivor(),
+        ])    
     });
 
-    it('Infecting survivor', async (done) => {
+    it('It should perform the Infecting on survivor / status: 201', async (done) => {
 
         const target = indexSurvivor[indexSurvivor.length - 1];
 
         const promisses = indexSurvivor.map(async (sender, index) => {
             
             if (sender != target) {
-                const res = await request(app)
-                    .post(`/${sender}/flags/${target}/`);
-
+                const res = await request(app).post(`/${sender}/flags/${target}/`);
                 expect(res.status).to.equal(201);
             }
         });
-
+        
         await Promise.all(promisses);
 
         const countFlags = await flagRepository.countFlags(target);
         const survivorTarget = await survivorRepository.get(target);
-     
+        
         expect(countFlags).to.equal(5);
         expect(survivorTarget.infected).to.equal(true);
         
         done();
     });
 
-    it('Infected survivor, tries to flagging another survivor', async (done) => {
+    
+    it('It should not  Infecting survivor. Infected survivor tries to flagging another survivor / status: 400', async (done) => {
 
         const senderInfected = indexSurvivor[indexSurvivor.length - 1];
         const target = indexSurvivor[0];
@@ -80,7 +60,8 @@ describe('Flagging', () => {
         done();
     });
 
-    it('Survivor trying to infect himself', async (done) => {
+    
+    it('It should Infecting not survivor. Survivor trying to infect himself. / status: 400', async (done) => {
 
         const sender = indexSurvivor[1];
         const target = indexSurvivor[1];
@@ -94,7 +75,7 @@ describe('Flagging', () => {
         done();
     });
 
-    it('Survivor flagging twice the same survivor', async (done) => {
+    it('It should the survivor must not signal the same survivor twice / status: 400', async (done) => {
 
         const sender = indexSurvivor[3];
         const target = indexSurvivor[4];
@@ -111,7 +92,7 @@ describe('Flagging', () => {
         done();
     });
 
-    it('Suvivor does not exists', async (done) => {
+    it('It should the survivor not flagging. Suvivor does not exists / status: 404', async (done) => {
 
         const sender = 1000;
         const target = indexSurvivor[4];

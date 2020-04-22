@@ -6,7 +6,7 @@ import itemModel from '../models/item';
 
 
 class SurvivorRepository {
-
+    
     async create(data) {
         return await survivorModel.create(data);
     }
