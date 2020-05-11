@@ -49,15 +49,7 @@ $ cp .env.example .env
 
 /* Run Container of docker */
 
-$ docker-compose up -d
-
-/* Access container of backend */
-
-$ docker exec -it node-container /bin/bash
-
-/* Database migrates */
-
-$ npm run migrate
+$ docker-compose up
 ```
    1. Open the host [localhost:8000](http://localhost:8000) and start using it
 
