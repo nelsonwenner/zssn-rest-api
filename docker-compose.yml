@@ -4,12 +4,12 @@ services:
     node:
         container_name: "node-container"
         image: node:10.16-slim
+        entrypoint: ./.docker/entrypoint.sh
         working_dir: /home/backend
         volumes:
             - ./:/home/backend
         ports: 
             - "8000:8000"
-        command: "npm run start"
         depends_on: 
             - postgres
         restart: always
@@ -23,11 +23,11 @@ services:
             - "5431:5432"
         volumes: 
             - ./docker/postgres/data:/var/lib/postgresql/data
-            - ./scripts/create-multiple-postgresql-databases.sh:/docker-entrypoint-initdb.d/create-multiple-postgresql-databases.sh
+            - ./.docker/create-multiple-postgresql-databases.sh:/docker-entrypoint-initdb.d/create-multiple-postgresql-databases.sh
         environment:
-            - POSTGRES_MULTIPLE_DATABASES=${DB_NAME},${DB_NAME_TEST}
-            - POSTGRES_USER=${DB_USER}
-            - POSTGRES_PASSWORD=${DB_PASS}
+            - POSTGRES_MULTIPLE_DATABASES=database,test
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=root@123
         restart: always
         networks: 
             - database
