@@ -26,7 +26,7 @@
   "homepage": "https://github.com/nelsondiaas/zssn-rest-api#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.1",
+    "express": "^4.22.3",
     "pg": "^8.0.0",
     "pg-hstore": "^2.3.3",
     "random": "^2.2.0",
@@ -38,7 +38,7 @@
     "chai": "^4.2.0",
     "dotenv": "^8.2.0",
     "faker": "^4.1.0",
-    "jest": "^25.1.0",
+    "jest": "^30.5.2",
     "nodemon": "^2.0.2",
     "sequelize-cli": "^5.5.1",
     "sucrase": "^3.12.1",
